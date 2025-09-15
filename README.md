@@ -56,7 +56,7 @@ This Arduino project implements a Bluetooth Low Energy (BLE) Human Interface Dev
    ```bash
    git clone https://github.com/sachinpandey7709/ESP32-BLUETOOTH-HID-DEVICE.git
    ```
-2. Open `blehid.ino` in Arduino IDE
+2. Open `bluetooth hid.ino` in Arduino IDE
 3. Select your board and port - ESP32-Dev Module
 4. Upload the code to your Arduino board
 
