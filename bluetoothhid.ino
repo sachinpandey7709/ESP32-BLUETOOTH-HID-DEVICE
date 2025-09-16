@@ -13,6 +13,7 @@
 #define BUTTON_9_PIN 14 // Trigger 9
 #define BUTTON_10_PIN 23  // Trigger 10
 #define BUTTON_11_PIN 24  // Trigger 11
+#define BUTTON_12_PIN 26  // Trigger 12
 
 char kbd[] = "Headphone"; // Device Name
 BleKeyboard bleKeyboard(kbd, "Espressif", 100);
@@ -29,6 +30,7 @@ bool lastState8 = HIGH;
 bool lastState9 = HIGH;
 bool lastState10 = HIGH;
 bool lastState11 = HIGH;
+bool lastState12 = HIGH;
 
 // helper to type a string char-by-char
 void sendString(const char* s, int charDelay = 10) {
@@ -60,6 +62,7 @@ void setup() {
   pinMode(BUTTON_9_PIN, INPUT_PULLUP);
   pinMode(BUTTON_10_PIN, INPUT_PULLUP);
   pinMode(BUTTON_11_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_12_PIN, INPUT_PULLUP);
 
   bleKeyboard.begin();
 }
@@ -77,6 +80,7 @@ void loop() {
     bool state9 = digitalRead(BUTTON_9_PIN);
     bool state10 = digitalRead(BUTTON_10_PIN);
     bool state11 = digitalRead(BUTTON_11_PIN);
+    bool state12 = digitalRead(BUTTON_12_PIN);
 
     // Trigger 1:
     if (lastState1 == HIGH && state1 == LOW) {
@@ -360,11 +364,44 @@ void loop() {
       bleKeyboard.releaseAll();
       delay(1000);
       }
-
+    // Trigger 11
     if (lastState11 == HIGH && state11 == LOW) {
       openRun();
       delay(700);
       const char* url = "https://youtube.com/@sachinautocad954?si=BuLuBVeXN-xsGonl";
+      sendString(url, 10);
+      delay(300);
+      bleKeyboard.press(KEY_RETURN);
+      delay(100);
+      bleKeyboard.releaseAll();
+      delay(1000);
+    }
+
+    // Trigger 12
+    if (lastState12 == HIGH && state12 == LOW) {
+      openRun();
+      delay(500);
+      sendString("chrome"); // looks like you intended Windows Terminal ("wt")
+      delay(100);
+      // Ctrl+Shift+Enter to run as admin (may show UAC)
+      bleKeyboard.press(KEY_LEFT_CTRL);
+      bleKeyboard.press(KEY_LEFT_SHIFT);
+      bleKeyboard.press(KEY_RETURN);
+      delay(120);
+      bleKeyboard.releaseAll();
+      delay(3000);
+
+      // navigate and run; your original sequence used LEFT_ARROW etc.
+      bleKeyboard.press(KEY_LEFT_ARROW);
+      delay(100);
+      bleKeyboard.releaseAll();
+      delay(100);
+      bleKeyboard.press(KEY_RETURN);
+      delay(100);
+      bleKeyboard.releaseAll();
+      delay(2000);
+
+      const char* url = "https://sachinpandey7709.github.io/Resume-Design/";
       sendString(url, 10);
       delay(300);
       bleKeyboard.press(KEY_RETURN);
@@ -385,6 +422,7 @@ void loop() {
     lastState9 = state9;
     lastState10 = state10;
     lastState11 = state11;
+    lastState12 = state12;
   }
 
   delay(10); // Small debounce
