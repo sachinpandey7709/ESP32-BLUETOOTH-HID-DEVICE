@@ -12,6 +12,7 @@
 #define BUTTON_8_PIN 12 // Trigger 8
 #define BUTTON_9_PIN 14 // Trigger 9
 #define BUTTON_10_PIN 23  // Trigger 10
+#define BUTTON_11_PIN 24  // Trigger 11
 
 char kbd[] = "Headphone"; // Device Name
 BleKeyboard bleKeyboard(kbd, "Espressif", 100);
@@ -27,6 +28,7 @@ bool lastState7 = HIGH;
 bool lastState8 = HIGH;
 bool lastState9 = HIGH;
 bool lastState10 = HIGH;
+bool lastState11 = HIGH;
 
 // helper to type a string char-by-char
 void sendString(const char* s, int charDelay = 10) {
@@ -57,6 +59,7 @@ void setup() {
   pinMode(BUTTON_8_PIN, INPUT_PULLUP);
   pinMode(BUTTON_9_PIN, INPUT_PULLUP);
   pinMode(BUTTON_10_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_11_PIN, INPUT_PULLUP);
 
   bleKeyboard.begin();
 }
@@ -73,6 +76,7 @@ void loop() {
     bool state8 = digitalRead(BUTTON_8_PIN);
     bool state9 = digitalRead(BUTTON_9_PIN);
     bool state10 = digitalRead(BUTTON_10_PIN);
+    bool state11 = digitalRead(BUTTON_11_PIN);
 
     // Trigger 1:
     if (lastState1 == HIGH && state1 == LOW) {
@@ -357,6 +361,18 @@ void loop() {
       delay(1000);
       }
 
+    if (lastState11 == HIGH && state11 == LOW) {
+      openRun();
+      delay(700);
+      const char* url = "https://youtube.com/@sachinautocad954?si=BuLuBVeXN-xsGonl";
+      sendString(url, 10);
+      delay(300);
+      bleKeyboard.press(KEY_RETURN);
+      delay(100);
+      bleKeyboard.releaseAll();
+      delay(1000);
+    }
+
     // update last states
     lastState1 = state1;
     lastState2 = state2;
@@ -368,6 +384,7 @@ void loop() {
     lastState8 = state8;
     lastState9 = state9;
     lastState10 = state10;
+    lastState11 = state11;
   }
 
   delay(10); // Small debounce
