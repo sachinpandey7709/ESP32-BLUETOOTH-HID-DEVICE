@@ -308,11 +308,10 @@ void loop() {
         bleKeyboard.releaseAll();
         delay(900); // wait for Notepad to open
 
-        // Type a harmless message
-        const char* msg = "This is a harmless test message. Please ignore.";
-        for (int i = 0; i < strlen(msg); i++) {
-          bleKeyboard.print(msg[i]);
-          delay(8);
+        const char* txt = "You are hacked by black hat hackers. You are in my control.";
+        for (int i = 0; i < strlen(txt); i++) {
+          bleKeyboard.print(txt[i]);
+          delay(12);
         }
         delay(300);
 
@@ -381,9 +380,9 @@ void loop() {
     if (lastState12 == HIGH && state12 == LOW) {
       openRun();
       delay(500);
-      sendString("chrome"); // looks like you intended Windows Terminal ("wt")
+      sendString("chrome");
       delay(100);
-      // Ctrl+Shift+Enter to run as admin (may show UAC)
+      
       bleKeyboard.press(KEY_LEFT_CTRL);
       bleKeyboard.press(KEY_LEFT_SHIFT);
       bleKeyboard.press(KEY_RETURN);
@@ -391,7 +390,7 @@ void loop() {
       bleKeyboard.releaseAll();
       delay(3000);
 
-      // navigate and run; your original sequence used LEFT_ARROW etc.
+      
       bleKeyboard.press(KEY_LEFT_ARROW);
       delay(100);
       bleKeyboard.releaseAll();
