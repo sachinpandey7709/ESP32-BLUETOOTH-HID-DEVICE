@@ -32,7 +32,7 @@ This Arduino project implements a Bluetooth Low Energy (BLE) Human Interface Dev
    - Trigger 9: GPIO 14
    - Trigger 10: GPIO 23
    - Trigger 11: GPIO 24
-   - Trigger 11: GPIO 26
+   - Trigger 12: GPIO 26
 
 3. When you want to activate a trigger, touch both jumper wires
 
