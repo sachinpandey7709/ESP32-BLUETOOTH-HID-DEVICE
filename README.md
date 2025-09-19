@@ -8,7 +8,7 @@ This Arduino project implements a Bluetooth Low Energy (BLE) Human Interface Dev
 - HID protocol implementation
 - Low power consumption
 - Easy to customize input configurations
-- Multiple triggers (20 GPIO pins) for different payloads
+- Multiple triggers (22 GPIO pins) for different payloads
 - Simple hardware trigger mechanism using jumper wires
 
 ## Requirements
@@ -41,6 +41,8 @@ This Arduino project implements a Bluetooth Low Energy (BLE) Human Interface Dev
    - Trigger 18: GPIO 20
    - Trigger 19: GPIO 29
    - Trigger 20: GPIO 30
+   - Trigger 21: GPIO 31
+   - Trigger 22: GPIO 32
 
 3. When you want to activate a trigger, touch both jumper wires
 
