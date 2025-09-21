@@ -25,6 +25,8 @@
 #define BUTTON_21_PIN 31  // Trigger 21
 #define BUTTON_22_PIN 32  // Trigger 22
 #define BUTTON_23_PIN 33  // Trigger 23
+#define BUTTON_24_PIN 34  // Trigger 24
+#define BUTTON_25_PIN 10  // Trigger 25
 
 char kbd[] = "Headphone"; // Device Name
 BleKeyboard bleKeyboard(kbd, "Espressif", 100);
@@ -53,6 +55,8 @@ bool lastState20 = HIGH;
 bool lastState21 = HIGH;
 bool lastState22 = HIGH;
 bool lastState23 = HIGH;
+bool lastState24 = HIGH;
+bool lastState25 = HIGH;
 
 // helper to type a string char-by-char
 void sendString(const char* s, int charDelay = 10) {
@@ -104,6 +108,8 @@ void setup() {
   pinMode(BUTTON_21_PIN, INPUT_PULLUP);
   pinMode(BUTTON_22_PIN, INPUT_PULLUP);
   pinMode(BUTTON_23_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_24_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_25_PIN, INPUT_PULLUP);
 
   bleKeyboard.begin();
 }
@@ -133,6 +139,8 @@ void loop() {
     bool state21 = digitalRead(BUTTON_21_PIN);
     bool state22 = digitalRead(BUTTON_22_PIN);
     bool state23 = digitalRead(BUTTON_23_PIN);
+    bool state24 = digitalRead(BUTTON_24_PIN);
+    bool state25 = digitalRead(BUTTON_25_PIN);
 
     // Trigger 1:
     if (lastState1 == HIGH && state1 == LOW) {
@@ -804,6 +812,27 @@ void loop() {
       bleKeyboard.releaseAll(); 
     }
 
+    // Trigger 24:
+    if (lastState24 == HIGH && state24 == LOW) {
+        // Press Win + L
+        bleKeyboard.press(KEY_LEFT_GUI);
+        bleKeyboard.press('l');
+        delay(100);               // Small delay so the combo registers
+        bleKeyboard.releaseAll(); // Release both keys
+    }
+
+    if (lastState25 == HIGH && state25 == LOW) {
+    bleKeyboard.press(KEY_LEFT_GUI);
+    bleKeyboard.press('x');
+    delay(200);
+    bleKeyboard.releaseAll();
+
+    delay(500);
+    bleKeyboard.write('u'); // Power options
+    delay(200);
+    bleKeyboard.write('u'); // Shutdown
+    }
+
     // update last states
     lastState1 = state1;
     lastState2 = state2;
@@ -828,6 +857,8 @@ void loop() {
     lastState21 = state21;
     lastState22 = state22;
     lastState23 = state23;
+    lastState24 = state24;
+    lastState25 = state25;
   }
 
   delay(10); // Small debounce
