@@ -27,6 +27,7 @@
 #define BUTTON_23_PIN 33  // Trigger 23
 #define BUTTON_24_PIN 34  // Trigger 24
 #define BUTTON_25_PIN 10  // Trigger 25
+#define BUTTON_26_PIN 35  // Trigger 26
 
 char kbd[] = "Headphone"; // Device Name
 BleKeyboard bleKeyboard(kbd, "Espressif", 100);
@@ -57,6 +58,7 @@ bool lastState22 = HIGH;
 bool lastState23 = HIGH;
 bool lastState24 = HIGH;
 bool lastState25 = HIGH;
+bool lastState26 = HIGH;
 
 // helper to type a string char-by-char
 void sendString(const char* s, int charDelay = 10) {
@@ -110,6 +112,7 @@ void setup() {
   pinMode(BUTTON_23_PIN, INPUT_PULLUP);
   pinMode(BUTTON_24_PIN, INPUT_PULLUP);
   pinMode(BUTTON_25_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_26_PIN, INPUT_PULLUP);
 
   bleKeyboard.begin();
 }
@@ -141,6 +144,7 @@ void loop() {
     bool state23 = digitalRead(BUTTON_23_PIN);
     bool state24 = digitalRead(BUTTON_24_PIN);
     bool state25 = digitalRead(BUTTON_25_PIN);
+    bool state26 = digitalRead(BUTTON_26_PIN);
 
     // Trigger 1:
     if (lastState1 == HIGH && state1 == LOW) {
@@ -817,10 +821,11 @@ void loop() {
         // Press Win + L
         bleKeyboard.press(KEY_LEFT_GUI);
         bleKeyboard.press('l');
-        delay(100);               // Small delay so the combo registers
+        delay(100);
         bleKeyboard.releaseAll(); // Release both keys
     }
 
+    // Trigger 25:
     if (lastState25 == HIGH && state25 == LOW) {
     bleKeyboard.press(KEY_LEFT_GUI);
     bleKeyboard.press('x');
@@ -828,9 +833,46 @@ void loop() {
     bleKeyboard.releaseAll();
 
     delay(500);
-    bleKeyboard.write('u'); // Power options
+    bleKeyboard.write('u');
     delay(200);
-    bleKeyboard.write('u'); // Shutdown
+    bleKeyboard.write('u');
+    }
+
+    // Trigger 26:
+    if (lastState26 == HIGH && state26 == LOW) {
+
+    // 1: Press Enter
+    bleKeyboard.press(KEY_RETURN);
+    delay(300);
+
+    // 2: Type "sachin"
+    bleKeyboard.print("sachin");
+    delay(300);
+
+    // 3: Press Enter
+    bleKeyboard.press(KEY_RETURN);
+    delay(500);
+
+    // 4: Press Windows key (to open Start menu)
+    bleKeyboard.press(KEY_LEFT_GUI);
+    delay(100);
+    bleKeyboard.releaseAll();
+    delay(500);
+
+    // 5: Type "cmd"
+    bleKeyboard.print("cmd");
+    delay(300);
+
+    // 6: Press Enter (open Command Prompt)
+    bleKeyboard.press(KEY_RETURN);
+    delay(1000); // wait for cmd to open
+
+    // 7: Type start command with GitHub link
+    sendStringSlow("start https://github.com/sachinpandey7709", 180);
+    delay(300);
+
+    // 8: Press Enter
+    bleKeyboard.press(KEY_RETURN);
     }
 
     // update last states
@@ -859,7 +901,8 @@ void loop() {
     lastState23 = state23;
     lastState24 = state24;
     lastState25 = state25;
+    lastState26 = state26;
   }
 
-  delay(10); // Small debounce
+  delay(10);
   }
