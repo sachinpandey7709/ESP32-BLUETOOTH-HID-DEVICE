@@ -385,7 +385,7 @@ void loop() {
       delay(100);
       bleKeyboard.releaseAll();
       delay(2000);
-      const char* url = "https://sachinpandey7709.github.io/Resume-Design/";
+      const char* url = "https://sachinpandey7709.github.io/portfolio-website/";
       sendString(url, 10);
       delay(300);
       bleKeyboard.press(KEY_RETURN);
