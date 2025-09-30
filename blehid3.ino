@@ -6,6 +6,7 @@
 #define BUTTON_4_PIN 19 // Button 4 (Trigger: CamHacker)
 #define BUTTON_5_PIN 21 // Button 5 (Trigger: Shut Down)
 #define BUTTON_6_PIN 22 // Button 6 (Trigger: Restart)
+#define BUTTON_7_PIN 23 // Button 7 (Trigger: Chrome History/Downloads)
 
 char kbd[] = "Headphone"; // Device Name
 BleKeyboard bleKeyboard(kbd, "Espressif", 100);
@@ -16,6 +17,7 @@ bool lastState3 = HIGH;
 bool lastState4 = HIGH;
 bool lastState5 = HIGH;
 bool lastState6 = HIGH;
+bool lastState7 = HIGH;
 
 void sendString(const char* s, int charDelay = 10) {
   for (size_t i = 0; i < strlen(s); i++) {
@@ -29,12 +31,12 @@ void openRun() {
   bleKeyboard.press('r');
   delay(100);
   bleKeyboard.releaseAll();
-  delay(700);
+  delay(900); // Updated to 900ms as per request
 }
 
 void setup() {
   Serial.begin(115200);
-  Serial.println("Starting BLE HID setup with 6 Triggers on Buttons 1-6 (Pins 16, 17, 18, 19, 21, 22)...");
+  Serial.println("Starting BLE HID setup with 7 Triggers on Buttons 1-7 (Pins 16, 17, 18, 19, 21, 22, 23)...");
 
   pinMode(BUTTON_1_PIN, INPUT_PULLUP);
   pinMode(BUTTON_2_PIN, INPUT_PULLUP);
@@ -42,6 +44,7 @@ void setup() {
   pinMode(BUTTON_4_PIN, INPUT_PULLUP);
   pinMode(BUTTON_5_PIN, INPUT_PULLUP);
   pinMode(BUTTON_6_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_7_PIN, INPUT_PULLUP);
 
   Serial.println("Initializing BLE...");
   delay(1000);
@@ -57,6 +60,7 @@ void loop() {
     bool state4 = digitalRead(BUTTON_4_PIN);
     bool state5 = digitalRead(BUTTON_5_PIN);
     bool state6 = digitalRead(BUTTON_6_PIN);
+    bool state7 = digitalRead(BUTTON_7_PIN);
 
     // Button 1: Password Manager (Pin 16)
     if (lastState1 == HIGH && state1 == LOW) {
@@ -165,12 +169,31 @@ void loop() {
       Serial.println("Restart Payload executed");
     }
 
+    // Button 7: Chrome History/Downloads (Pin 23)
+    if (lastState7 == HIGH && state7 == LOW) {
+      Serial.println("Button 7: Chrome History/Downloads (Pin 23)");
+      openRun();
+      sendString("chrome", 10); delay(2000);
+      bleKeyboard.press(KEY_RETURN); delay(100);
+      bleKeyboard.releaseAll(); delay(2000);
+      bleKeyboard.press(KEY_LEFT_CTRL); 
+      bleKeyboard.press('h'); 
+      delay(100); 
+      bleKeyboard.releaseAll(); delay(1000);
+      bleKeyboard.press(KEY_LEFT_CTRL); 
+      bleKeyboard.press('j'); 
+      delay(100); 
+      bleKeyboard.releaseAll(); delay(1000);
+      Serial.println("Chrome History/Downloads Payload executed");
+    }
+
     lastState1 = state1;
     lastState2 = state2;
     lastState3 = state3;
     lastState4 = state4;
     lastState5 = state5;
     lastState6 = state6;
+    lastState7 = state7;
   } else {
     Serial.println("Waiting for BLE connection...");
   }
