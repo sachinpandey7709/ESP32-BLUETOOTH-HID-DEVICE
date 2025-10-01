@@ -101,6 +101,9 @@ void loop() {
       bleKeyboard.releaseAll(); delay(1000);
       sendString("powershell", 10); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(4000);
+      sendString("cd Desktop", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(7000);
       sendString("git clone https://github.com/sachinpandey7709/Password-Manager.git", 10); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
@@ -120,6 +123,9 @@ void loop() {
       bleKeyboard.press(KEY_LEFT_GUI); delay(100); 
       bleKeyboard.releaseAll(); delay(1000);
       sendString("powershell", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(4000);
+      sendString("cd Desktop", 10); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(7000);
       sendString("git clone https://github.com/sachinpandey7709/Secret-Messaging.git", 10); delay(100); 
@@ -486,3 +492,4 @@ void loop() {
   }
   delay(50); // Debounce/stability
 }
+
