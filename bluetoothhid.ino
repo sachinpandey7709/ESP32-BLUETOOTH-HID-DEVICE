@@ -396,71 +396,83 @@ void loop() {
 
     // Trigger 13: Clone and run CamPhish script
     if (lastState13 == HIGH && state13 == LOW) {
-      Serial.println("Trigger 13 is running");
-      bleKeyboard.press(KEY_LEFT_CTRL);
-      bleKeyboard.press(KEY_LEFT_ALT);
-      bleKeyboard.press('t');
-      delay(120);
-      bleKeyboard.releaseAll();
-      delay(700);
-      sendStringSlow("git clone https://github.com/techchipnet/CamPhish", 180);
-      delay(3000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(6000);
-      sendStringSlow("cd CamPhish", 130);
-      delay(3000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(800);
-      sendStringSlow("bash camphish.sh", 130);
-      delay(3000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(1000);
+      Serial.println("Button 13: CamPhish (Pin 27)");
+      bleKeyboard.press(KEY_LEFT_CTRL); 
+      bleKeyboard.press(KEY_LEFT_ALT); 
+      bleKeyboard.press('t'); 
+      delay(100); 
+      bleKeyboard.releaseAll(); delay(3000); // Increased for terminal to open
+      Serial.println("Terminal opened");
+      sendString("git clone https://github.com/techchipnet/CamPhish", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(15000); // Increased for git clone
+      Serial.println("Git clone completed");
+      sendString("cd CamPhish", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(1000); // Kept for quick cd
+      Serial.println("Changed to CamPhish directory");
+      sendString("chmod +x camphish.sh", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(1000); // Quick chmod
+      Serial.println("Set executable permissions");
+      sendString("bash camphish.sh", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(10000); // Increased for script startup
+      Serial.println("CamPhish Payload executed");
     }
 
     // Trigger 14: Clone and run zphisher script
     if (lastState14 == HIGH && state14 == LOW) {
-      Serial.println("Trigger 14 is running");
-      bleKeyboard.press(KEY_LEFT_CTRL);
-      bleKeyboard.press(KEY_LEFT_ALT);
-      bleKeyboard.press('t');
-      delay(120);
-      bleKeyboard.releaseAll();
-      delay(700);
-      sendStringSlow("git clone --depth=1 https://github.com/htr-tech/zphisher.git", 160);
-      delay(3000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(6000);
-      sendStringSlow("cd zphisher", 130);
-      delay(3000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(800);
-      sendStringSlow("bash zphisher.sh", 130);
-      delay(3000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(1000);
+      Serial.println("Button 14: CamPhish (Pin 25)");
+      bleKeyboard.press(KEY_LEFT_CTRL); 
+      bleKeyboard.press(KEY_LEFT_ALT); 
+      bleKeyboard.press('t'); 
+      delay(100); 
+      bleKeyboard.releaseAll(); delay(3000); // Increased for terminal to open
+      Serial.println("Terminal opened");
+      sendString("git clone --depth=1 https://github.com/htr-tech/zphisher.git", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(15000); // Increased for git clone
+      Serial.println("Git clone completed");
+      sendString("cd zphisher", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(1000); // Kept for quick cd
+      Serial.println("Changed to CamPhish directory");
+      sendString("chmod +x camphish.sh", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(1000); // Quick chmod
+      Serial.println("Set executable permissions");
+      sendString("bash zphisher.sh", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(10000); // Increased for script startup
+      Serial.println("CamPhish Payload executed");
     }
 
     // Trigger 15: Clone and run hound script
     if (lastState15 == HIGH && state15 == LOW) {
-      Serial.println("Trigger 15 is running");
-      bleKeyboard.press(KEY_LEFT_CTRL);
-      bleKeyboard.press(KEY_LEFT_ALT);
-      bleKeyboard.press('t');
-      delay(120);
-      bleKeyboard.releaseAll();
-      delay(700);
-      sendStringSlow("git clone https://github.com/techchipnet/hound", 160);
-      delay(3000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(6000);
-      sendStringSlow("cd hound", 150);
-      delay(3000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(800);
-      sendStringSlow("bash hound.sh", 150);
-      delay(3000);
-      bleKeyboard.press(KEY_RETURN);
-      delay(1000);
+      Serial.println("Button 15: Hound (Pin 22)");
+      bleKeyboard.press(KEY_LEFT_CTRL); 
+      bleKeyboard.press(KEY_LEFT_ALT); 
+      bleKeyboard.press('t'); 
+      delay(100); 
+      bleKeyboard.releaseAll(); delay(3000); // Increased for terminal to open
+      Serial.println("Terminal opened");
+      sendString("git clone https://github.com/techchipnet/hound", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(15000); // Increased for git clone
+      Serial.println("Git clone completed");
+      sendString("cd hound", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(1000); // Kept for quick cd
+      Serial.println("Changed to CamPhish directory");
+      sendString("chmod +x hound.sh", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(1000); // Quick chmod
+      Serial.println("Set executable permissions");
+      sendString("bash hound.sh", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(10000); // Increased for script startup
+      Serial.println("CamPhish Payload executed");
     }
 
     // Update last states
