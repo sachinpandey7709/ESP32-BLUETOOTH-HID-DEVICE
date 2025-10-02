@@ -273,9 +273,9 @@ void loop() {
       Serial.println("CanaryTokensDetector Payload executed");
     }
 
-     // Button 12: Email Scraper (Pin 33)
-    if (lastState12 == HIGH && state12 == LOW) {
-      Serial.println("Button 12: Email Scraper (Pin 33)");
+     // Button 10: Seeker (Pin 26)
+    if (lastState10 == HIGH && state10 == LOW) {
+      Serial.println("Button 10: Seeker (Pin 26)");
       bleKeyboard.press(KEY_LEFT_CTRL); 
       bleKeyboard.press(KEY_LEFT_ALT); 
       bleKeyboard.press('t'); 
@@ -455,3 +455,4 @@ void loop() {
   }
   delay(50); // Debounce/stability
 }
+
