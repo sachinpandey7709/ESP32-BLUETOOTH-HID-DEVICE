@@ -193,7 +193,7 @@ void loop() {
       bleKeyboard.press(KEY_LEFT_CTRL); 
       bleKeyboard.press(KEY_LEFT_ALT); 
       bleKeyboard.press('t'); 
-      delay(3000); 
+      delay(100); 
       bleKeyboard.releaseAll(); delay(3000); // Increased for terminal to open
       Serial.println("Terminal opened");
       sendString("git clone https://github.com/techchipnet/HiddenWave.git", 50); delay(1000); // 50ms per char, 1000ms before RETURN
@@ -216,7 +216,7 @@ void loop() {
       bleKeyboard.press(KEY_LEFT_CTRL); 
       bleKeyboard.press(KEY_LEFT_ALT); 
       bleKeyboard.press('t'); 
-      delay(3000); 
+      delay(100); 
       bleKeyboard.releaseAll(); delay(3000); // Increased for terminal to open
       Serial.println("Terminal opened");
       sendString("git clone https://github.com/techchipnet/CanaryTokensDetector.git", 50); delay(1000); // 50ms per char, 1000ms before RETURN
@@ -243,7 +243,7 @@ void loop() {
       bleKeyboard.press(KEY_LEFT_CTRL); 
       bleKeyboard.press(KEY_LEFT_ALT); 
       bleKeyboard.press('t'); 
-      delay(3000); 
+      delay(100); 
       bleKeyboard.releaseAll(); delay(3000); // Increased for terminal to open
       Serial.println("Terminal opened");
       sendString("git clone https://github.com/thewhiteh4t/seeker.git", 50); delay(4000); // 50ms per char, 1000ms before RETURN
@@ -270,7 +270,7 @@ void loop() {
       bleKeyboard.press(KEY_LEFT_CTRL); 
       bleKeyboard.press(KEY_LEFT_ALT); 
       bleKeyboard.press('t'); 
-      delay(3000); 
+      delay(100); 
       bleKeyboard.releaseAll(); delay(3000); // Increased for terminal to open
       Serial.println("Terminal opened");
       sendString("git clone https://github.com/sachinpandey7709/File-Encryption-Awareness-Project-Ethical-Demo-.git", 50); delay(4000); // 50ms per char, 1000ms before RETURN
@@ -293,7 +293,7 @@ void loop() {
       bleKeyboard.press(KEY_LEFT_CTRL); 
       bleKeyboard.press(KEY_LEFT_ALT); 
       bleKeyboard.press('t'); 
-      delay(3000); 
+      delay(100); 
       bleKeyboard.releaseAll(); delay(3000); // Increased for terminal to open
       Serial.println("Terminal opened");
       sendString("git clone https://github.com/codewithharit/Email-Scraper.git", 50); delay(3000); // 50ms per char, 1000ms before RETURN
@@ -320,7 +320,7 @@ void loop() {
       bleKeyboard.press(KEY_LEFT_CTRL); 
       bleKeyboard.press(KEY_LEFT_ALT); 
       bleKeyboard.press('t'); 
-      delay(3000); 
+      delay(100); 
       bleKeyboard.releaseAll(); delay(3000); // Increased for terminal to open
       Serial.println("Terminal opened");
       sendString("git clone https://github.com/codewithharit/Evil-Eye.git", 50); delay(1000); // 50ms per char, 1000ms before RETURN
@@ -347,7 +347,7 @@ void loop() {
       bleKeyboard.press(KEY_LEFT_CTRL); 
       bleKeyboard.press(KEY_LEFT_ALT); 
       bleKeyboard.press('t'); 
-      delay(3000); 
+      delay(100); 
       bleKeyboard.releaseAll(); delay(3000); // Increased for terminal to open
       Serial.println("Terminal opened");
       sendString("git clone https://github.com/wishihab/userrecon.git", 50); delay(1000); // 50ms per char, 1000ms before RETURN
@@ -374,7 +374,7 @@ void loop() {
       bleKeyboard.press(KEY_LEFT_CTRL); 
       bleKeyboard.press(KEY_LEFT_ALT); 
       bleKeyboard.press('t'); 
-      delay(3000); 
+      delay(100); 
       bleKeyboard.releaseAll(); delay(3000); // Increased for terminal to open
       Serial.println("Terminal opened");
       sendString("git clone https://github.com/htr-tech/nexphisher.git", 50); delay(1000); // 50ms per char, 1000ms before RETURN
@@ -417,3 +417,4 @@ void loop() {
   }
   delay(50); // Debounce/stability
 }
+
