@@ -129,8 +129,7 @@ void loop() {
       Serial.println("Button 3: Fake Update Screen (Pin 18)");
       openRun();
       sendString("https://fakeupdate.net/win10ue/", 50); delay(100);
-      bleKeyboard.press(KEY_RETURN); delay(100);
-      bleKeyboard.press(KEY_LEFT_ALT); 
+      bleKeyboard.press(KEY_RETURN); delay(100); 
       bleKeyboard.press('F4'); 
       bleKeyboard.releaseAll(); delay(1000);
       Serial.println("Fake Update Screen Payload executed");
@@ -351,6 +350,7 @@ void loop() {
   }
   delay(50); // Debounce/stability
 }
+
 
 
 
