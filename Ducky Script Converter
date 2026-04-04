@@ -1,0 +1,100 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ducky to Arduino Converter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #2c2c2c;
+      color: #fff;
+    }header {
+  background: #3a3a3a;
+  padding: 10px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.container {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+
+textarea {
+  width: 50%;
+  height: 400px;
+  padding: 10px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  resize: none;
+}
+
+.left {
+  background: #ffffff;
+  color: #000;
+}
+
+.right {
+  background: #f0f0f0;
+  color: #000;
+}
+
+.controls {
+  text-align: center;
+  margin-top: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  background: #4CAF50;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #45a049;
+}
+
+  </style>
+</head>
+<body><header>
+  Ducky Script → Arduino Converter
+</header><div class="container">
+  <textarea id="ducky" class="left" placeholder="Enter Ducky Script here..."></textarea>
+  <textarea id="arduino" class="right" placeholder="Arduino code will appear here..."></textarea>
+</div><div class="controls">
+  <button onclick="convert()">Convert</button>
+</div><script>
+function convert() {
+  const input = document.getElementById("ducky").value.split("\n");
+  let output = "#include <Keyboard.h>\n\nvoid setup() {\n  Keyboard.begin();\n";
+
+  input.forEach(line => {
+    line = line.trim();
+
+    if (line.startsWith("DELAY")) {
+      let time = line.split(" ")[1];
+      output += `  delay(${time});\n`;
+    }
+    else if (line.startsWith("STRING")) {
+      let text = line.replace("STRING ", "");
+      output += `  Keyboard.print(\"${text}\");\n`;
+    }
+    else if (line === "ENTER") {
+      output += "  Keyboard.press(KEY_RETURN);\n";
+      output += "  Keyboard.releaseAll();\n";
+    }
+  });
+
+  output += "}\n\nvoid loop() {}";
+
+  document.getElementById("arduino").value = output;
+}
+</script></body>
+</html>
