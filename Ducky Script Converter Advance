@@ -1,0 +1,94 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ducky Converter Fixed</title>
+<style>
+body{font-family:Arial;background:#121212;color:#fff;margin:0}
+header{padding:12px;text-align:center;background:#000}
+.container{display:flex;gap:10px;padding:10px}
+textarea{width:50%;height:420px;border-radius:8px;border:none;padding:10px}
+.left{background:#fff;color:#000}
+.right{background:#eee;color:#000}
+.controls{text-align:center;margin:10px}
+button{margin:5px;padding:10px 15px;border:none;border-radius:6px;cursor:pointer}
+</style>
+</head>
+<body>
+<header>Ducky → Arduino Fixed</header><div class="container">
+<textarea id="ducky" class="left" placeholder="Ducky Script..."></textarea>
+<textarea id="arduino" class="right" placeholder="Arduino Output..."></textarea>
+</div><div class="controls">
+<button onclick="convert()">Convert</button>
+<button onclick="copyCode()">Copy</button>
+<button onclick="downloadINO()">Download .ino</button>
+<button onclick="saveScript()">Save Script</button>
+<button onclick="loadScript()">Load Script</button>
+</div><input type="file" id="fileInput" style="display:none" onchange="readFile(event)"><script>
+function convert(){
+ let input=document.getElementById("ducky").value.split("\n");
+ let out="#include <Keyboard.h>\n\nvoid setup(){\n  Keyboard.begin();\n";
+
+ input.forEach(line=>{
+  line=line.trim();
+
+  if(line.startsWith("DELAY")){
+    out+=`  delay(${line.split(" ")[1]});\n`;
+  }
+  else if(line.startsWith("STRING")){
+    out+=`  Keyboard.print("${line.substring(7)}");\n`;
+  }
+  else if(line==="ENTER"){
+    out+="  Keyboard.press(KEY_RETURN);\n  Keyboard.releaseAll();\n";
+  }
+ });
+
+ out+="}\n\nvoid loop(){}";
+ document.getElementById("arduino").value=out;
+}
+
+function copyCode(){
+ let text=document.getElementById("arduino");
+ navigator.clipboard.writeText(text.value);
+ alert("Copied!");
+}
+
+function downloadINO(){
+ let content=document.getElementById("arduino").value;
+ let blob=new Blob([content], {type:"text/plain"});
+ let url=URL.createObjectURL(blob);
+ let a=document.createElement("a");
+ a.href=url;
+ a.download="payload.ino";
+ document.body.appendChild(a);
+ a.click();
+ document.body.removeChild(a);
+ URL.revokeObjectURL(url);
+}
+
+function saveScript(){
+ let content=document.getElementById("ducky").value;
+ let blob=new Blob([content], {type:"text/plain"});
+ let url=URL.createObjectURL(blob);
+ let a=document.createElement("a");
+ a.href=url;
+ a.download="script.txt";
+ document.body.appendChild(a);
+ a.click();
+ document.body.removeChild(a);
+ URL.revokeObjectURL(url);
+}
+
+function loadScript(){
+ document.getElementById("fileInput").click();
+}
+
+function readFile(e){
+ let file=e.target.files[0];
+ let reader=new FileReader();
+ reader.onload=function(){
+  document.getElementById("ducky").value=reader.result;
+ };
+ reader.readAsText(file);
+}
+</script></body>
+</html>
