@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ESP32 Ducky</title>
+
+<style>
+body {
+  background: black;
+  color: #00ff99;
+  font-family: monospace;
+  text-align: center;
+}
+
+textarea {
+  width: 80%;
+  height: 200px;
+  background: #001a00;
+  color: #00ff99;
+  border: 2px solid #00ff99;
+  padding: 10px;
+}
+
+button {
+  margin: 5px;
+  padding: 10px;
+  background: black;
+  color: #00ff99;
+  border: 1px solid #00ff99;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #003300;
+}
+</style>
+
+</head>
+
+<body>
+
+<h2>ESP32 WiFi BLE Ducky 🔥</h2>
+
+<textarea id="script" placeholder="Write your script..."></textarea><br>
+
+<button onclick="save()">Save</button>
+<button onclick="load()">Load</button>
+<button onclick="send()">Send</button>
+<button onclick="clearBox()">Clear</button>
+
+<script>
+
+function save(){
+ fetch("/save?data=" + encodeURIComponent(script.value));
+}
+
+function load(){
+ fetch("/load")
+ .then(res => res.text())
+ .then(data => script.value = data);
+}
+
+function send(){
+ fetch("/send?data=" + encodeURIComponent(script.value));
+}
+
+function clearBox(){
+ document.getElementById("script").value = "";
+}
+
+</script>
+
+</body>
+</html>
