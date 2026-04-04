@@ -1,0 +1,166 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ducky Ultimate Pro++</title><style>
+body { font-family: Arial; background:#0d0d0d; color:#0f0; margin:0 }
+header { text-align:center; padding:12px; background:#000 }
+.container { display:flex; gap:10px; padding:10px }
+textarea {
+  width:33%;
+  height:420px;
+  border:none;
+  border-radius:8px;
+  padding:10px;
+}
+#ducky { background:#fff; color:#000 }
+#arduino { background:#eee; color:#000 }
+#preview { background:#000; color:#0f0 }
+.controls { text-align:center; margin:10px }
+button {
+  margin:5px; padding:10px 15px;
+  border:none; border-radius:6px;
+  cursor:pointer;
+}
+.toggle { background:#ff5722; color:#fff }
+</style></head>
+<body><header>Ducky → Arduino Ultimate Pro++ 🔥</header><div class="container">
+<textarea id="ducky" placeholder="Ducky Script..."></textarea>
+<textarea id="arduino" placeholder="Arduino Output..."></textarea>
+<textarea id="preview" placeholder="Live Preview..."></textarea>
+</div><div class="controls">
+<button onclick="convert()">Convert</button>
+<button onclick="copyCode()">Copy</button>
+<button onclick="downloadINO()">.ino</button>
+<button onclick="downloadTXT()">.txt</button>
+<button onclick="downloadJSON()">.json</button>
+<button onclick="loadScript()">Load</button>
+<button class="toggle" onclick="toggleMode()">Mode: USB</button>
+<button onclick="startTyping()">▶ Preview Play</button>
+</div><input type="file" id="fileInput" style="display:none" onchange="readFile(event)"><script>
+let mode="USB";
+
+const keyMap = {
+  "ENTER":"KEY_RETURN",
+  "TAB":"KEY_TAB",
+  "ESC":"KEY_ESC",
+  "DEL":"KEY_DELETE",
+  "UP":"KEY_UP_ARROW",
+  "DOWN":"KEY_DOWN_ARROW",
+  "LEFT":"KEY_LEFT_ARROW",
+  "RIGHT":"KEY_RIGHT_ARROW"
+};
+
+function toggleMode(){
+  mode = (mode==="USB") ? "ESP32" : "USB";
+  document.querySelector(".toggle").innerText = "Mode: " + mode;
+}
+
+function multiKey(keys, isBLE=false){
+ let code="";
+ keys.forEach(k=>{
+  if(k==="CTRL") code+= isBLE ? "  bleKeyboard.press(KEY_LEFT_CTRL);\n" : "  Keyboard.press(KEY_LEFT_CTRL);\n";
+  else if(k==="ALT") code+= isBLE ? "  bleKeyboard.press(KEY_LEFT_ALT);\n" : "  Keyboard.press(KEY_LEFT_ALT);\n";
+  else if(k==="GUI") code+= isBLE ? "  bleKeyboard.press(KEY_LEFT_GUI);\n" : "  Keyboard.press(KEY_LEFT_GUI);\n";
+  else if(keyMap[k]) code+= isBLE ? `  bleKeyboard.press(${keyMap[k]});\n` : `  Keyboard.press(${keyMap[k]});\n`;
+  else code+= isBLE ? `  bleKeyboard.press('${k.toLowerCase()}');\n` : `  Keyboard.press('${k.toLowerCase()}');\n`;
+ });
+ code+= isBLE ? "  delay(100);\n  bleKeyboard.releaseAll();\n" : "  delay(100);\n  Keyboard.releaseAll();\n";
+ return code;
+}
+
+function convert(){
+ let input=document.getElementById("ducky").value.split("\n");
+ let isBLE = (mode === "ESP32");
+ let out = isBLE
+ ? "#include <BleKeyboard.h>\nBleKeyboard bleKeyboard;\n\nvoid setup(){\n  bleKeyboard.begin();\n"
+ : "#include <Keyboard.h>\n\nvoid setup(){\n  Keyboard.begin();\n";
+
+ let preview="";
+
+ input.forEach(line=>{
+  line=line.trim();
+  let upper=line.toUpperCase();
+
+  if(upper.startsWith("REM")) return;
+
+  if(upper.startsWith("DELAY")){
+    let val=line.split(" ")[1];
+    out+=`  delay(${val});\n`;
+  }
+
+  else if(upper.startsWith("STRING")){
+    let text=line.substring(7);
+    out+= isBLE ? `  bleKeyboard.print("${text}");\n` : `  Keyboard.print("${text}");\n`;
+    preview+=text+"\n";
+  }
+
+  else if(upper==="ENTER"){
+    out+= isBLE
+    ? "  bleKeyboard.write(KEY_RETURN);\n"
+    : "  Keyboard.press(KEY_RETURN);\n  Keyboard.releaseAll();\n";
+    preview+="[ENTER]\n";
+  }
+
+  else{
+    let keys=upper.split(" ");
+    if(keys.length>1){
+      out+=multiKey(keys, isBLE);
+      preview+=`[${keys.join("+")}]\n`;
+    }
+  }
+
+ });
+
+ out+="}\n\nvoid loop(){}";
+
+ document.getElementById("arduino").value=out;
+ document.getElementById("preview").value=preview;
+}
+
+function startTyping(){
+ let previewText=document.getElementById("preview").value;
+ let box=document.getElementById("preview");
+ box.value="";
+ let i=0;
+ let speed=40;
+ function type(){
+  if(i<previewText.length){
+    box.value+=previewText[i];
+    i++;
+    setTimeout(type,speed);
+  }
+ }
+ type();
+}
+
+function copyCode(){
+ navigator.clipboard.writeText(document.getElementById("arduino").value);
+ alert("Copied!");
+}
+
+function downloadINO(){ downloadFile("payload.ino", document.getElementById("arduino").value); }
+function downloadTXT(){ downloadFile("script.txt", document.getElementById("ducky").value); }
+function downloadJSON(){
+ let data={ script: document.getElementById("ducky").value };
+ downloadFile("script.json", JSON.stringify(data,null,2));
+}
+
+function downloadFile(name, content){
+ let blob=new Blob([content],{type:"text/plain"});
+ let a=document.createElement("a");
+ a.href=URL.createObjectURL(blob);
+ a.download=name;
+ a.click();
+}
+
+function loadScript(){ document.getElementById("fileInput").click(); }
+
+function readFile(e){
+ let file=e.target.files[0];
+ let reader=new FileReader();
+ reader.onload=function(){ document.getElementById("ducky").value=reader.result; };
+ reader.readAsText(file);
+}
+
+</script></body>
+</html>
